@@ -57,6 +57,7 @@
           <element id="library" level="project" name="Maven: javax.mail:mail:1.4.7" />
           <element id="library" level="project" name="Maven: javax.activation:activation:1.1" />
           <element id="library" level="project" name="Maven: org.apache.taglibs:taglibs-standard-impl:1.2.5" />
+          <element id="library" level="project" name="Maven: org.jboss.weld.se:weld-se:2.3.4.Final" />
         </element>
       </element>
       <element id="directory" name="META-INF">
