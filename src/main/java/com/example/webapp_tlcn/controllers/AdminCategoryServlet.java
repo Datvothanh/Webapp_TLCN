@@ -50,7 +50,7 @@ public class AdminCategoryServlet extends HttpServlet {
                 break;
             case "/IsAvailable":
                 int catID = Integer.parseInt(request.getParameter("catID"));
-                List<Product> listProduct = ProductModel.findByCatID(catID);
+                List<Product> listProduct = ProductModel.findByCatID(catID , 0);
                 boolean isAvailable = (listProduct.size() == 0);
                 PrintWriter out = response.getWriter();
                 response.setContentType("application/json");

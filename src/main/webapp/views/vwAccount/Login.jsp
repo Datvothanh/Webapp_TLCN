@@ -1,5 +1,7 @@
 <%@ page contentType="text/html;charset=UTF-8" language="java" %>
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
+<%--<jsp:useBean id="username" scope="request" type="java.lang.String"/>--%>
+<%--<jsp:useBean id="password" scope="request" type="java.lang.String"/>--%>
 <!DOCTYPE html>
 <html lang="en">
 <head>
@@ -32,7 +34,7 @@
                 <div class="form-group">
                     <label class="sr-only" for="txtUsername">Username</label>
                     <div class="input-group">
-                        <input type="text" class="from-control form-control-lg " id="txtUsername" name="username"
+                        <input type="text" class="from-control form-control-lg " value="${username}" id="txtUsername" name="username"
                                placeholder="Username"
                                autofocus>
                         <div class="input-group-append">
@@ -46,7 +48,7 @@
                 <div class="form-group">
                     <label class="sr-only" for="txtPassword">Password</label>
                     <div class="input-group">
-                        <input type="password" class="from-control form-control-lg" id="txtPassword" name="password"
+                        <input type="password" class="from-control form-control-lg" value="${password}" id="txtPassword" name="password"
                                placeholder="Password">
                         <div class="input-group-append">
                             <span class="input-group-text bg-white">

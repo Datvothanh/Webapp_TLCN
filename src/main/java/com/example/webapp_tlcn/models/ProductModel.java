@@ -7,17 +7,18 @@ import org.sql2o.Connection;
 import java.util.List;
 
 public class ProductModel {
-    public static List<Product> findAll() {
-        final String query = "select * from products";
+    public static List<Product> findAll(int zero) {
+        final String query = "select * from products where Sell =:zero";
         try (Connection con = DbUtils.getConnection()) {
             return con.createQuery(query)
+                    .addParameter("zero", zero)
                     .executeAndFetch(Product.class);
         }
     }
 
     //Admin
     public static void add(Product p) {
-        String Sql = "INSERT INTO products (ProName, StartingPrice, CatID, TinyDes, FullDes, StepPrice, HighestPaidPrice, AutoExtend, StartDay, EndDay,UserID,Sell ,NowPrice,CountAuction,UserSellID) VALUES (:ProName,:StartingPrice,:CatID,:TinyDes,:FullDes,:StepPrice,:HighestPaidPrice,:AutoExtend,:StartDay,:EndDay,:UserID,:Sell,:NowPrice,:CountAuction,:UserSellID) ";
+        String Sql = "INSERT INTO products (ProName, StartingPrice, CatID, TinyDes, FullDes, StepPrice, HighestPaidPrice, EndDay,UserID,Sell,CountAuction,UserSellID,Top) VALUES (:ProName,:StartingPrice,:CatID,:TinyDes,:FullDes,:StepPrice,:HighestPaidPrice,:EndDay,:UserID,:Sell,:CountAuction,:UserSellID,:Top) ";
         try (Connection con = DbUtils.getConnection()) {
             con.createQuery(Sql)
                     .addParameter("ProName", p.getProName())
@@ -27,19 +28,25 @@ public class ProductModel {
                     .addParameter("FullDes", p.getFullDes())
                     .addParameter("StepPrice", p.getStepPrice())
                     .addParameter("HighestPaidPrice", p.getHighestPaidPrice())
-                    .addParameter("AutoExtend", p.getAutoExtend())
-                    .addParameter("StartDay", p.getStartDay())
                     .addParameter("EndDay", p.getEndDay())
                     .addParameter("UserID", p.getUserID())
                     .addParameter("Sell", p.getSell())
-                    .addParameter("NowPrice", p.getNowPrice())
                     .addParameter("CountAuction", p.getCountAuction())
                     .addParameter("UserSellID", p.getUserSellID())
+                    .addParameter("Top", p.getTop())
                     .executeUpdate();
         }
     }
 
-
+    public static List<Product> findByTextSearch (String txtSr , int zero) {
+        final String query = "SELECT * FROM products WHERE MATCH(ProName,TinyDes) AGAINST(:txtSr) and Sell =:zero";
+        try (Connection con = DbUtils.getConnection()) {
+            return con.createQuery(query)
+                    .addParameter("txtSr",txtSr)
+                    .addParameter("zero",zero)
+                    .executeAndFetch(Product.class);
+        }
+    }
 
     public static Product findById(int id) {
         final String query = "select * from products where ProID =:ProID";
@@ -55,7 +62,7 @@ public class ProductModel {
     }
 
     public static void update(Product p) {
-        String Sql = "UPDATE products SET  ProName = :ProName, StartingPrice = :StartingPrice, CatID = :CatID, TinyDes = :TinyDes, FullDes = :FullDes, StepPrice = :StepPrice, HighestPaidPrice = :HighestPaidPrice, AutoExtend = :AutoExtend, StartDay = :StartDay, EndDay = :EndDay , NowPrice = :NowPrice WHERE ProID = :ProID";
+        String Sql = "UPDATE products SET  ProName = :ProName, StartingPrice = :StartingPrice, CatID = :CatID, TinyDes = :TinyDes, FullDes = :FullDes, StepPrice = :StepPrice, HighestPaidPrice = :HighestPaidPrice, EndDay = :EndDay , Top = :Top WHERE ProID = :ProID";
         try (Connection con = DbUtils.getConnection()) {
             con.createQuery(Sql)
                     .addParameter("ProName", p.getProName())
@@ -65,23 +72,22 @@ public class ProductModel {
                     .addParameter("FullDes", p.getFullDes())
                     .addParameter("StepPrice", p.getStepPrice())
                     .addParameter("HighestPaidPrice", p.getHighestPaidPrice())
-                    .addParameter("AutoExtend", p.getAutoExtend())
                     .addParameter("EndDay", p.getEndDay())
-                    .addParameter("StartDay", p.getStartDay())
-                    .addParameter("NowPrice", p.getNowPrice())
                     .addParameter("ProID", p.getProID())
+                    .addParameter("Top", p.getTop())
                     .executeUpdate();
         }
     }
 
     public static void updateHighestPaidPrice(Product p) {
-        String Sql = "UPDATE products SET  HighestPaidPrice = :HighestPaidPrice , UserID = :UserID , CountAuction =:CountAuction WHERE ProID = :ProID";
+        String Sql = "UPDATE products SET  HighestPaidPrice = :HighestPaidPrice , UserID = :UserID , CountAuction =:CountAuction , Top =:Top WHERE ProID = :ProID";
         try (Connection con = DbUtils.getConnection()) {
             con.createQuery(Sql)
                     .addParameter("HighestPaidPrice", p.getHighestPaidPrice())
                     .addParameter("UserID", p.getUserID())
                     .addParameter("CountAuction",p.getCountAuction())
                     .addParameter("ProID", p.getProID())
+                    .addParameter("Top", p.getTop())
                     .executeUpdate();
         }
     }
@@ -107,18 +113,19 @@ public class ProductModel {
 
     //End
     //User
-    public static List<Product> findByCatID(int catId) {
-        final String query = "select * from products where CatID =:CatID";
+    public static List<Product> findByCatID(int catId , int zero) {
+        final String query = "select * from products where CatID =:CatID and Sell =:zero";
         try (Connection con = DbUtils.getConnection()) {
             return con.createQuery(query)
                     .addParameter("CatID", catId)
+                    .addParameter("zero", zero)
                     .executeAndFetch(Product.class);
         }
     }
     //End
 
     public static List<Product> findTop5HighestPrice() {
-        final String query = "SELECT * FROM products order by StartingPrice desc limit 5";
+        final String query = "SELECT * FROM products order by Top desc limit 5";
         try (Connection con = DbUtils.getConnection()) {
             return con.createQuery(query)
                     .executeAndFetch(Product.class);

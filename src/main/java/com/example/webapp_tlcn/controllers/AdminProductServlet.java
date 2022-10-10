@@ -14,7 +14,7 @@ import javax.servlet.http.Part;
 import java.io.IOException;
 import java.nio.file.Files;
 import java.nio.file.Path;
-import java.time.LocalDate;
+import java.time.LocalDateTime;
 import java.time.format.DateTimeFormatter;
 import java.util.List;
 
@@ -34,7 +34,7 @@ public class AdminProductServlet extends HttpServlet {
 
         switch (path) {
             case "/Index":
-                List<Product> list = ProductModel.findAll();
+                List<Product> list = ProductModel.findAll(0);
                 request.setAttribute("products", list);
                 ServletUtils.forward("/views/vwProduct/Index.jsp", request, response);
                 break;
@@ -87,21 +87,17 @@ public class AdminProductServlet extends HttpServlet {
         int userSellID = Integer.parseInt(request.getParameter("UserSellID"));
         int startingPrice = Integer.parseInt(request.getParameter("StartingPrice"));
         int stepPrice = Integer.parseInt(request.getParameter("StepPrice"));
-        int nowPrice = Integer.parseInt(request.getParameter("NowPrice"));
         int type = Integer.parseInt(request.getParameter("CatID"));
-        int autoExtend = Integer.parseInt(request.getParameter("AutoExtend"));
         int highestPaidPrice = 0;
         int sell = 0;
         int userID = -1;
         int countAuction = 0;
         String tinyDes = request.getParameter("TinyDes");
         String fullDes = request.getParameter("FullDes");
-        String strSD = request.getParameter("StartDay");
         String strED = request.getParameter("EndDay");
-        DateTimeFormatter df = DateTimeFormatter.ofPattern("dd/MM/yyyy");
-        LocalDate startDay = LocalDate.parse(strSD, df);
-        LocalDate endDay = LocalDate.parse(strED, df);
-        Product p = new Product(startingPrice , type , stepPrice, highestPaidPrice ,nowPrice, autoExtend ,userID , sell ,countAuction,userSellID,name , tinyDes, fullDes, startDay, endDay );
+        DateTimeFormatter df = DateTimeFormatter.ofPattern("yyyy/MM/dd HH:mm");
+        LocalDateTime endDay = LocalDateTime.parse(strED, df);
+        Product p = new Product(startingPrice , type , stepPrice, highestPaidPrice , userID , sell ,countAuction,userSellID,name , tinyDes, fullDes, endDay , startingPrice);
         ProductModel.add(p);
         Part partMain = request.getPart("ImageMain");
         Part partSub1 = request.getPart("ImageSub1");
@@ -130,18 +126,19 @@ public class AdminProductServlet extends HttpServlet {
         int startingPrice = Integer.parseInt(request.getParameter("StartingPrice"));
         int stepPrice = Integer.parseInt(request.getParameter("StepPrice"));
         int highestPaidPrice = Integer.parseInt(request.getParameter("HighestPaidPrice"));
-        int nowPrice = Integer.parseInt(request.getParameter("NowPrice"));
         int id = Integer.parseInt(request.getParameter("ProID"));
-        int autoExtend = Integer.parseInt(request.getParameter("AutoExtend"));
+        int top;
+        if(highestPaidPrice == 0 )
+            top = startingPrice;
+        else
+            top = startingPrice;
         String name = request.getParameter("ProName");
         String tinyDes = request.getParameter("TinyDes");
         String fullDes = request.getParameter("FullDes");
-        String strSD = request.getParameter("StartDay");
         String strED = request.getParameter("EndDay");
         DateTimeFormatter df = DateTimeFormatter.ofPattern("dd/MM/yyyy HH:mm:ss");
-        LocalDate startDay = LocalDate.parse(strSD, df);
-        LocalDate endDay = LocalDate.parse(strED, df);
-        Product p = new Product(id,startingPrice , type , stepPrice, highestPaidPrice ,nowPrice, autoExtend , name , tinyDes, fullDes, startDay, endDay);
+        LocalDateTime endDay = LocalDateTime.parse(strED, df);
+        Product p = new Product(id,startingPrice , type , stepPrice, highestPaidPrice , name , tinyDes, fullDes, endDay , top);
         ProductModel.update(p);
         ServletUtils.redirect("/Admin/Product", request, response);
     }

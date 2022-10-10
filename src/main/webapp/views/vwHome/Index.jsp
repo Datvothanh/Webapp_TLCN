@@ -15,13 +15,6 @@
             </h4>
             <div class="card-body">
                 <ul class="list-group">
-                    <li class="list-group-item active" aria-current="true">Top 5 sản phẩm gần kết thúc</li>
-                    <li class="list-group-item">A second item</li>
-                    <li class="list-group-item">A third item</li>
-                    <li class="list-group-item">A fourth item</li>
-                    <li class="list-group-item">And a fifth one</li>
-                </ul>
-                <ul class="list-group">
                     <li class="list-group-item active" aria-current="true">Top 5 sản phẩm có lượt đấu giá cao nhất</li>
                     <c:choose>
                         <c:when test="${listTop5HighestCountAuction.size() == 0}">
@@ -88,13 +81,6 @@
                                                      alt="${p.proName}" title="${p.proName}" class="card-img-top">
                                                 <div class="card-body">
                                                     <h6 class="card-title">${p.proName}</h6>
-                                                    <c:if test="${p.nowPrice != 0}">
-                                                        <h5 class="card-title text-danger">
-                                                            Giá có thể mua luôn:
-                                                            <span class="text-danger font-weight-bold"><fmt:formatNumber
-                                                                    value="${p.nowPrice}" type="number"/></span>
-                                                        </h5>
-                                                    </c:if>
                                                     <c:choose>
                                                         <c:when test="${p.highestPaidPrice == 0}">
                                                             <h5 class="card-title text-danger">
@@ -119,7 +105,7 @@
                                                         </c:otherwise>
                                                     </c:choose>
                                                     <h6 class="card-title text-dark">
-                                                        Ngày đăng sản phẩm: ${p.startDay}
+                                                        Ngày kết thúc : ${p.endDay}
                                                     </h6>
                                                     <h6 class="card-title text-dark">
                                                         Số lượt ra giá hiện tại:
@@ -248,13 +234,6 @@
                                                      alt="${p.proName}" title="${p.proName}" class="card-img-top">
                                                 <div class="card-body">
                                                     <h6 class="card-title">${p.proName}</h6>
-                                                    <c:if test="${p.nowPrice != 0}">
-                                                        <h5 class="card-title text-danger">
-                                                            Giá có thể mua luôn:
-                                                            <span class="text-danger font-weight-bold"><fmt:formatNumber
-                                                                    value="${p.nowPrice}" type="number"/></span>
-                                                        </h5>
-                                                    </c:if>
                                                     <c:choose>
                                                         <c:when test="${p.highestPaidPrice == 0}">
                                                             <h5 class="card-title text-danger">
@@ -279,7 +258,7 @@
                                                         </c:otherwise>
                                                     </c:choose>
                                                     <h6 class="card-title text-dark">
-                                                        Ngày đăng sản phẩm: ${p.startDay}
+                                                        Ngày kết thúc: ${p.endDay}
                                                     </h6>
                                                     <h6 class="card-title text-dark">
                                                         Số lượt ra giá hiện tại:

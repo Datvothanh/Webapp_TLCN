@@ -62,6 +62,10 @@
                                    class="list-group-item list-group-item-action"><i class="fa fa-caret-right"
                                                                                      aria-hidden="true"></i>
                                     Danh sách sản phẩm đang bán </a>
+                                <a href="${pageContext.request.contextPath}/Account/EndingList"
+                                   class="list-group-item list-group-item-action"><i class="fa fa-caret-right"
+                                                                                     aria-hidden="true"></i>
+                                    Danh sách sản phẩm đã kết thúc </a>
                                 <a href="${pageContext.request.contextPath}/Account/WatchList"
                                    class="list-group-item list-group-item-action"><i class="fa fa-caret-right"
                                                                                      aria-hidden="true"></i>
@@ -117,12 +121,12 @@
                                                 cấp thành người bán</a>
                                         </c:otherwise>
                                     </c:choose>
-                                    <a href="#" class="list-group-item list-group-item-action"><i class="fa fa-caret-right"
-                                                                                                  aria-hidden="true"></i> A
-                                        fourth link item</a>
-                                    <a href="#" class="list-group-item list-group-item-action disabled" tabindex="-1"
-                                       aria-disabled="true"><i class="fa fa-caret-right" aria-hidden="true"></i> A disabled link
-                                        item</a>
+                                    <a href="${pageContext.request.contextPath}/Account/AuctionList" class="list-group-item list-group-item-action"><i class="fa fa-caret-right"
+                                                                                                  aria-hidden="true"></i> Sản phẩm đang
+                                    đấu giá </a>
+                                    <a href="${pageContext.request.contextPath}/Account/SuccessList" class="list-group-item list-group-item-action">
+                                       <i class="fa fa-caret-right" aria-hidden="true"></i> Sản phẩm
+                                            đấu giá thành công</a>
                                 </div>
                             </div>
                         </div>

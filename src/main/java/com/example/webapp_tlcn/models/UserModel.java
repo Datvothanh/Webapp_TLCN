@@ -17,7 +17,7 @@ public class UserModel {
     }
 
     public static void add(User u) {
-        String Sql = "INSERT INTO users (username, password, name, email, dob, permission , code) VALUES (:username,:password,:name,:email,:dob,:permission,:code)";
+        String Sql = "INSERT INTO users (username, password, name, email, dob, permission , code, money, moneyAu) VALUES (:username,:password,:name,:email,:dob,:permission,:code, :money , :moneyAu)";
         try (Connection con = DbUtils.getConnection()) {
             con.createQuery(Sql)
                     .addParameter("username", u.getUsername())
@@ -27,6 +27,8 @@ public class UserModel {
                     .addParameter("dob",u.getDob())
                     .addParameter("permission",u.getPermission())
                     .addParameter("code" , u.getCode() )
+                    .addParameter("money" , u.getMoney() )
+                    .addParameter("moneyAu", u.getMoneyAu())
                     .executeUpdate();
         }
     }
@@ -36,6 +38,19 @@ public class UserModel {
         try (Connection con = DbUtils.getConnection()) {
             List<User> list = con.createQuery(query)
                     .addParameter("username", username)
+                    .executeAndFetch(User.class);
+            if (list.size() == 0) {
+                return null;
+            }
+            return list.get(0);
+        }
+    }
+
+    public static User findByUserId(Integer id) {
+        final String query = "select * from users where id=:id";
+        try (Connection con = DbUtils.getConnection()) {
+            List<User> list = con.createQuery(query)
+                    .addParameter("id", id)
                     .executeAndFetch(User.class);
             if (list.size() == 0) {
                 return null;
@@ -58,7 +73,7 @@ public class UserModel {
     }
 
     public static void update(User u) {
-        String Sql = "UPDATE users SET  Username = :Username, Password = :Password, Name = :Name, Email = :Email, Dob = :Dob, Permission = :Permission , Code = :Code WHERE Id = :Id";
+        String Sql = "UPDATE users SET  Username = :Username, Password = :Password, Name = :Name, Email = :Email, Dob = :Dob, Permission = :Permission , Code = :Code , money =: Money , moneyAu =: MoneyAu WHERE Id = :Id";
         try (Connection con = DbUtils.getConnection()) {
             con.createQuery(Sql)
                     .addParameter("Username", u.getUsername())
@@ -69,6 +84,19 @@ public class UserModel {
                     .addParameter("Permission", u.getPermission())
                     .addParameter("Code" , u.getCode())
                     .addParameter("Id", u.getId())
+                    .addParameter("Money", u.getMoney())
+                    .addParameter("MoneyAu", u.getMoneyAu())
+                    .executeUpdate();
+        }
+    }
+
+    public static void updateMoney(User u) {
+        String Sql = "UPDATE users SET money =:Money , moneyAu =:MoneyAu WHERE Id = :Id";
+        try (Connection con = DbUtils.getConnection()) {
+            con.createQuery(Sql)
+                    .addParameter("Id", u.getId())
+                    .addParameter("Money", u.getMoney())
+                    .addParameter("MoneyAu", u.getMoneyAu())
                     .executeUpdate();
         }
     }

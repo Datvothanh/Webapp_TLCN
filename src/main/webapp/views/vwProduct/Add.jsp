@@ -15,14 +15,9 @@
                 crossorigin="anonymous" referrerpolicy="no-referrer"></script>
 
         <script>
-            $('#txtStartDay').datetimepicker({
-                format: 'd/m/Y',
-                timepicker: false,
-                mask: true
-            });
 
             $('#txtEndDay').datetimepicker({
-                format: 'd/m/Y',
+                DateTimeFormat: "d/m/Y H:m",
                 timepicker: false,
                 mask: true
             });
@@ -81,10 +76,6 @@
                         <input type="number" class="form-control" id="numStepPrice" name="StepPrice">
                     </div>
                     <div class="form-group">
-                        <label for="txtNowPrice">Giá mua ngay (Nếu có)</label>
-                        <input type="number" class="form-control" id="txtNowPrice" name="NowPrice">
-                    </div>
-                    <div class="form-group">
                         <label for="numCatID">Loại sản phẩm (1:.. , 2:.. , 3:..)</label>
                         <input type="number" class="form-control" id="numCatID" name="CatID">
                     </div>
@@ -97,18 +88,8 @@
                         <input type="text" class="form-control" id="txtFullDes" name="FullDes">
                     </div>
                     <div class="form-group">
-                        <label for="txtStartDay">Ngày bắt đầu</label>
-                        <input type="text" class="form-control" id="txtStartDay" name="StartDay">
-                    </div>
-                    <div class="form-group">
                         <label for="txtEndDay">Ngày kết thúc</label>
                         <input type="text" class="form-control" id="txtEndDay" name="EndDay">
-                    </div>
-                    <div class="form-check">
-                        <input class="form-check-input" type="checkbox" value="1" id="autoExtend" name="AutoExtend">
-                        <label class="form-check-label" for="autoExtend">
-                            Tự động gia hạn ngày kết thúc
-                        </label>
                     </div>
                 </div>
                 <div class="card-footer">

@@ -55,7 +55,7 @@
                                                 <input value="${f.faID}" name="idFa" hidden>
                                             </label>
                                         </form>
-                                        <img src="${pageContext.request.contextPath}/public/imgs/sp/${p.proID}/main.png"
+                                        <img src="${pageContext.request.contextPath}/public/imgs/sp/${p.proID}/main.jpg"
                                              alt="${p.proName}" title="${p.proName}" class="card-img-top">
                                         <div class="card-body">
                                             <h6 class="card-title">${p.proName}</h6>

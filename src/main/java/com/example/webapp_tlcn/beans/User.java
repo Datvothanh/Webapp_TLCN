@@ -8,14 +8,15 @@ public class User {
     //2:Người ban can xác nhận
     //3:Người mua
     //4:Người mua can xac nhan
-    private int id , permission , code;
+    private int id , permission , code , money , moneyAu;
     private String username , password , name , email;
     private LocalDate dob;
 
     public User() {
     }
 
-    public User(int id, int permission, int code, String username, String password, String name, String email, LocalDate dob) {
+
+    public User(int id, int permission, int code, String username, String password, String name, String email, LocalDate dob, int money, int moneyAu) {
         this.id = id;
         this.permission = permission;
         this.code = code;
@@ -24,9 +25,11 @@ public class User {
         this.name = name;
         this.email = email;
         this.dob = dob;
+        this.money = money;
+        this.moneyAu = moneyAu;
     }
 
-    public User(int permission, int code ,String username, String password, String name, String email, LocalDate dob) {
+    public User(int permission, int code ,String username, String password, String name, String email, LocalDate dob, int money , int moneyAu) {
         this.id = -1;
         this.permission = permission;
         this.code = code;
@@ -35,6 +38,14 @@ public class User {
         this.name = name;
         this.email = email;
         this.dob = dob;
+        this.money= money;
+        this.moneyAu = moneyAu;
+    }
+
+    public User(int id, int money, int moneyAu) {
+        this.id = id;
+        this.money = money;
+        this.moneyAu = moneyAu;
     }
 
     public User(int id, int permission) {
@@ -74,7 +85,15 @@ public class User {
         return dob;
     }
 
+    public int getMoney() {
+        return money;
+    }
+
     public void setName(String name) {
         this.name = name;
+    }
+
+    public int getMoneyAu() {
+        return moneyAu;
     }
 }

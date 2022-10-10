@@ -1,4 +1,11 @@
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
+<script>
+    function SearchFunction(){
+        let txtSr = document.getElementById("txtSr").value;
+        if(txtSr != "")
+        window.location.href="${pageContext.request.contextPath}/Product/ProSearch?txtSr="+txtSr;
+    }
+</script>
 <nav class="navbar navbar-expand-lg navbar-light bg-light shadow">
     <a class="navbar-brand" href="${pageContext.request.contextPath}/Home/Index">
         <i class="fa fa-home fa-2x" aria-hidden="true"></i>
@@ -33,14 +40,19 @@
             </li>
         </ul>
         <form class="form-inline my-2 my-lg-0">
-            <input class="form-control mr-sm-2" type="search" placeholder="Search" aria-label="Search">
-            <button class="btn btn-outline-success my-2 my-sm-0" type="submit">Search</button>
+            <input class="form-control mr-sm-2" type="text" placeholder="Search" id="txtSr" name="txtSr" aria-label="Search">
+            <button onclick="SearchFunction()" class="btn btn-outline-success my-2 my-sm-0" type="button"><i
+                    class="fa fa-search" aria-hidden="true"></i>&nbsp;Search</button>
         </form>
     </div>
 
     <ul class="navbar-nav mr-auto">
         <c:choose>
             <c:when test="${auth}">
+                <c:if test="${authUser.permission != 0}">
+                    Money:${authUser.money} - MoneyAu:${authUser.moneyAu}
+
+                </c:if>
                 <form id="frmLogout" method="post" action="${pageContext.request.contextPath}/Account/Logout"></form>
                 <li class="nav-item dropdown">
                     <a class="nav-link dropdown-toggle" href="#" id="navbarDropdownR" role="button"
@@ -72,3 +84,4 @@
         </c:choose>
     </ul>
 </nav>
+

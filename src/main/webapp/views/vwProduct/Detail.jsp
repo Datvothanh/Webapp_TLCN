@@ -7,7 +7,6 @@
 <jsp:useBean id="user" scope="request" type="java.util.List<com.example.webapp_tlcn.beans.User>"/>
 <jsp:useBean id="TopAuctionHighestPrice" scope="request" type="java.util.List<com.example.webapp_tlcn.beans.Auction>"/>
 <jsp:useBean id="proCat5" scope="request" type="java.util.List<com.example.webapp_tlcn.beans.Product>"/>
-<jsp:useBean id="BanBidder" scope="request" type="java.util.List<com.example.webapp_tlcn.beans.BanBidder>"/>
 
 <t:main>
     <jsp:attribute name="js">
@@ -16,6 +15,8 @@
                 e.preventDefault();
                 const result = confirm("Bạn hãy xác nhận đấu giá !");
                 let price = Number($('#numPrice').val());
+                let presentPrice = Number($('#presentPrice').val());
+                let authUserMoney = Number($('#authUserMoney').val());
                 let start = Number($('#start').val());
                 let step = Number($('#step').val());
                 let highest = Number($('#highest').val());
@@ -32,6 +33,8 @@
                         } else {
                             if (price < (highest + step)) {
                                 alert('Số tiền đấu giá ít nhất phải bằng: ' + (highest + step));
+                            } else if (authUserMoney< (price - presentPrice) || authUserMoney < price ) {
+                                alert('Tài khoản bạn không đủ tiền');
                             } else {
                                 $('#frmAuction${product.proID}').off('submit').submit();
                             }
@@ -93,14 +96,9 @@
             </c:if>
         </c:forEach>
         <div class="card">
+            <input value="${authUser.money}" id="authUserMoney" hidden>
             <h4 class="card-header d-flex justify-content-between">
                     ${product.proName}
-                <a class="btn btn-outline-success"
-                   href="${pageContext.request.contextPath}/Product/ByCat?id=${product.catID}"
-                   role="button">
-                    <i class="bi bi-backspace-fill" aria-hidden="true"></i>
-                    Trở về
-                </a>
             </h4>
             <div class="card-body">
                 <div class="col-sm-4 mb-3">
@@ -113,13 +111,6 @@
                             <span class="text-danger font-weight-bold"><fmt:formatNumber
                                     value="${product.stepPrice}" type="number"/></span>
                         </p>
-                        <c:if test="${product.nowPrice != 0}">
-                            <h5 class="card-title text-danger">
-                                Gía có thể mua luôn:
-                                <span class="text-danger font-weight-bold"><fmt:formatNumber
-                                        value="${product.nowPrice}" type="number"/></span>
-                            </h5>
-                        </c:if>
                         <c:choose>
                             <c:when test="${product.highestPaidPrice == 0}">
                                 <p class="card-text mt-3">
@@ -139,39 +130,25 @@
                                 <h6 class="card-title text-danger">
                                     <c:forEach items="${user}" var="u">
                                         <c:if test="${u.id == product.userID}">
-                                            Người đặt giá: ${u.name} (Điểm đánh giá)
+                                            Người đặt giá: ${u.name}
                                         </c:if>
                                     </c:forEach>
                                 </h6>
                             </c:otherwise>
                         </c:choose>
                         <h6 class="card-title text-dark">
-                            Ngày đăng sản phẩm: ${product.startDay}
+                            Ngày đăng sản phẩm: ${product.endDay}
                         </h6>
                         <h6 class="card-title text-dark">
                             <c:forEach items="${user}" var="u">
                                 <c:if test="${u.id == product.userSellID}">
-                                    Người bán sản phẩm: ${u.name} (Điểm đánh giá)
+                                    Người bán sản phẩm: ${u.name}
                                 </c:if>
                             </c:forEach>
                         </h6>
                         <p class="card-text">${product.fullDes}</p>
-                        <c:set var="ban" scope="session" value="${0}"/>
                         <c:choose>
                             <c:when test="${auth == true && product.userSellID != authUser.id}">
-                                <c:forEach items="${BanBidder}" var="b">
-                                    <c:if test="${b.userID == authUser.id && b.proID == product.proID}">
-                                        <c:set var="ban" scope="session" value="${1}"/>
-                                    </c:if>
-                                </c:forEach>
-                                <c:choose>
-                                    <c:when test="${ban == 1}">
-                                        <div class="btn btn-sm bg-danger">
-                                            <i class="bi bi-bag-x" aria-hidden="true"></i>
-                                            Người bán không cho bạn đấu giá
-                                        </div>
-                                    </c:when>
-                                    <c:otherwise>
                                         <form id="frmAuction${product.proID}" method="post"
                                               action="${pageContext.request.contextPath}/Product/Auction">
                                             <label>
@@ -201,8 +178,6 @@
                                             <i class="fa fa-cart-plus" aria-hidden="true"></i>
                                             Đấu giá
                                         </a>
-                                    </c:otherwise>
-                                </c:choose>
                                 <c:set var="Test" scope="session" value="${1}"/>
                                 <c:forEach items="${favourite}" var="f">
                                     <c:if test="${f.userID == authUser.id && f.proID == product.proID && f.favourite == 0}">
@@ -255,33 +230,12 @@
                         <td>Mark</td>
                         <td>${u.name}</td>
                         <td>${a.price}</td>
-                        <c:if test="${product.userSellID == authUser.id}">
-                            <form id="frmBanBidder" method="post"
-                                  action="${pageContext.request.contextPath}/Product/BanBidder" hidden>
-                                <label>
-                                    <input value="${u.id}" name="idUser" hidden>
-                                </label>
-                                <label>
-                                    <input value="${product.proID}" name="idPro" hidden>
-                                </label>
-                                <label>
-                                    <input value="${product.countAuction}" name="countAuction" hidden>
-                                </label>
-                                <label>
-                                    <input value="${a.auID}" name="idAu" hidden>
-                                </label>
-                                <label>
-                                    <input value="${product.userID}" name="idUserHold" hidden>
-                                </label>
-                            </form>
-                            <td class="text-right">
-                                <a class="btn btn-outline-danger"
-                                   href="javascript:$('#frmBanBidder').submit()" role="button">
-                                    <i class="bi bi-person-x" aria-hidden="true"></i></a>
-                            </td>
-                        </c:if>
+
                         <c:set var="STT" scope="session" value="${STT + 1}"/>
                     </tr>
+                        <c:if test="${a.userID == authUser.id}">
+                        <input value="${a.price}" id="presentPrice" hidden>
+                        </c:if>
                     </c:when>
                     </c:choose>
                     </c:forEach>
@@ -357,13 +311,6 @@
                                                  alt="${p.proName}" title="${p.proName}" class="card-img-top">
                                             <div class="card-body">
                                                 <h6 class="card-title">${p.proName}</h6>
-                                                <c:if test="${p.nowPrice != 0}">
-                                                    <h5 class="card-title text-danger">
-                                                        Giá có thể mua luôn:
-                                                        <span class="text-danger font-weight-bold"><fmt:formatNumber
-                                                                value="${p.nowPrice}" type="number"/></span>
-                                                    </h5>
-                                                </c:if>
                                                 <c:choose>
                                                     <c:when test="${p.highestPaidPrice == 0}">
                                                         <h5 class="card-title text-danger">
@@ -388,7 +335,7 @@
                                                     </c:otherwise>
                                                 </c:choose>
                                                 <h6 class="card-title text-dark">
-                                                    Ngày đăng sản phẩm: ${p.startDay}
+                                                    Ngày đăng sản phẩm: ${p.endDay}
                                                 </h6>
                                                 <h6 class="card-title text-dark">
                                                     Số lượt ra giá hiện tại:

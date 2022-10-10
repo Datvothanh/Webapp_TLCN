@@ -1,6 +1,7 @@
 package com.example.webapp_tlcn.models;
 
 import com.example.webapp_tlcn.beans.Auction;
+import com.example.webapp_tlcn.beans.Product;
 import com.example.webapp_tlcn.utils.DbUtils;
 import org.sql2o.Connection;
 
@@ -16,24 +17,49 @@ public class AuctionModel {
         }
     }
 
+    public static Auction findById(int id) {
+        final String query = "select * from auctions where AuID =:AuID";
+        try (Connection con = DbUtils.getConnection()) {
+            List<Auction> list = con.createQuery(query)
+                    .addParameter("AuID", id)
+                    .executeAndFetch(Auction.class);
+            if (list.size() == 0) {
+                return null;
+            }
+            return list.get(0);
+        }
+    }
+
     public static void add(Auction a) {
-        String Sql = "INSERT INTO auctions (UserID, ProID, Price) VALUES (:UserID,:ProID,:Price)";
+        String Sql = "INSERT INTO auctions (UserID, ProID, Price , Paid) VALUES (:UserID,:ProID,:Price,:Paid)";
         try (Connection con = DbUtils.getConnection()) {
             con.createQuery(Sql)
                     .addParameter("UserID", a.getUserID())
                     .addParameter("ProID", a.getProID())
                     .addParameter("Price", a.getPrice())
+                    .addParameter("Paid", a.getPaid())
                     .executeUpdate();
         }
     }
 
     public static void update(Auction a) {
-        String Sql = "UPDATE auctions SET  UserID = :UserID, ProID = :ProID, Price = :Price WHERE AuID = :AuID";
+        String Sql = "UPDATE auctions SET  UserID = :UserID, ProID = :ProID, Price = :Price , Paid =:Paid WHERE AuID = :AuID";
         try (Connection con = DbUtils.getConnection()) {
             con.createQuery(Sql)
                     .addParameter("UserID", a.getUserID())
                     .addParameter("ProID", a.getProID())
                     .addParameter("Price", a.getPrice())
+                    .addParameter("Paid", a.getPaid())
+                    .addParameter("AuID" , a.getAuID())
+                    .executeUpdate();
+        }
+    }
+
+    public static void updatePaid(Auction a) {
+        String Sql = "UPDATE auctions SET  Paid = :Paid WHERE AuID = :AuID";
+        try (Connection con = DbUtils.getConnection()) {
+            con.createQuery(Sql)
+                    .addParameter("Paid", a.getPaid())
                     .addParameter("AuID" , a.getAuID())
                     .executeUpdate();
         }

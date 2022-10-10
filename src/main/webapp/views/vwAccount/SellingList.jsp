@@ -73,13 +73,6 @@
                                          alt="${p.proName}" title="${p.proName}" class="card-img-top">
                                     <div class="card-body">
                                         <h6 class="card-title">${p.proName}</h6>
-                                        <c:if test="${p.nowPrice != 0}">
-                                            <h5 class="card-title text-danger">
-                                                Giá có thể mua luôn:
-                                                <span class="text-danger font-weight-bold"><fmt:formatNumber
-                                                        value="${p.nowPrice}" type="number"/></span>
-                                            </h5>
-                                        </c:if>
                                         <c:choose>
                                             <c:when test="${p.highestPaidPrice == 0}">
                                                 <h5 class="card-title text-danger">
@@ -104,7 +97,7 @@
                                             </c:otherwise>
                                         </c:choose>
                                         <h6 class="card-title text-dark">
-                                            Ngày đăng sản phẩm: ${p.startDay}
+                                            Ngày đăng sản phẩm: ${p.endDay}
                                         </h6>
                                         <h6 class="card-title text-dark">
                                             Số lượt ra giá hiện tại:
