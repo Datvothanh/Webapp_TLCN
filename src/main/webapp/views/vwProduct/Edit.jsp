@@ -1,8 +1,30 @@
 <%@ page contentType="text/html;charset=UTF-8" language="java" %>
 <%@ taglib prefix="t" tagdir="/WEB-INF/tags" %>
+<%@ taglib prefix="fmt" uri="http://java.sun.com/jsp/jstl/fmt" %>
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
 <jsp:useBean id="product" scope="request" type="com.example.webapp_tlcn.beans.Product"/>
-<t:main>
+<t:admin>
+     <jsp:attribute name="css">
+        <link rel="stylesheet"
+              href="https://cdnjs.cloudflare.com/ajax/libs/jquery-datetimepicker/2.5.20/jquery.datetimepicker.min.css"
+              integrity="sha512-f0tzWhCwVFS3WeYaofoLWkTP62ObhewQ1EZn65oSYDZUg1+CyywGKkWzm8BxaJj5HGKI72PnMH9jYyIFz+GH7g=="
+              crossorigin="anonymous" referrerpolicy="no-referrer"/>
+    </jsp:attribute>
+    <jsp:attribute name="js">
+        <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery-datetimepicker/2.5.20/jquery.datetimepicker.full.min.js"
+                integrity="sha512-AIOTidJAcHBH2G/oZv9viEGXRqDNmfdPVPYOYKGy3fti0xIplnlgMHUGfuNRzC6FkzIo0iIxgFnr9RikFxK+sw=="
+                crossorigin="anonymous" referrerpolicy="no-referrer"></script>
+
+        <script>
+
+            $('#txtEndDay').datetimepicker({
+                DateTimeFormat: "d/m/Y H:m",
+                timepicker: false,
+                mask: true
+            });
+        </script>
+
+    </jsp:attribute>
     <jsp:body>
         <form action="" method="post">
             <div class="card">
@@ -61,8 +83,8 @@
                                value="${product.fullDes}">
                     </div>
                     <div class="form-group">
-                        <label for="txtEndDay">Ngày kết thúc</label>
-                        <input type="text" class="form-control" id="txtEndDay" name="EndDay" value="${product.proName}">
+                        <label for="txtEndDay">Ngày kết thúc (${product.endDay})</label>
+                        <input type="text" class="form-control" id="txtEndDay" name="EndDay">
                     </div>
                 </div>
                 <div class="card-footer">
@@ -85,4 +107,4 @@
             </div>
         </form>
     </jsp:body>
-</t:main>
+</t:admin>

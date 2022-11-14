@@ -21,55 +21,6 @@
                         <c:if test="${p.userSellID == authUser.id}">
                             <div class="col-sm-4 mb-3">
                                 <div class="card h-100">
-                                    <form id="frmFavourite${p.proID}" method="post"
-                                          action="${pageContext.request.contextPath}/Product/Favourite">
-                                        <label>
-                                            <input value="${authUser.id}" name="idUser" hidden>
-                                        </label>
-                                        <label>
-                                            <input value="${p.proID}" name="idPro" hidden>
-                                        </label>
-                                        <label>
-                                            <input value="1" name="favourite" hidden>
-                                        </label>
-                                    </form>
-                                    <c:forEach items="${favourite}" var="f">
-                                        <c:if test="${f.userID == authUser.id && f.proID == p.proID}">
-                                            <form id="frmFavourite-Add${p.proID}" method="post"
-                                                  action="${pageContext.request.contextPath}/Product/FavouriteEdit">
-                                                <label>
-                                                    <input value="${authUser.id}" name="idUser"
-                                                           hidden>
-                                                </label>
-                                                <label>
-                                                    <input value="${p.proID}" name="idPro" hidden>
-                                                </label>
-                                                <label>
-                                                    <input value="1" name="favourite" hidden>
-                                                </label>
-                                                <label>
-                                                    <input value="${f.faID}" name="idFa" hidden>
-                                                </label>
-                                            </form>
-                                            <form id="frmFavourite-Delete${p.proID}" method="post"
-                                                  action="${pageContext.request.contextPath}/Product/FavouriteEdit">
-                                                <label>
-                                                    <input value="${authUser.id}" name="idUser"
-                                                           hidden>
-                                                </label>
-                                                <label>
-                                                    <input value="${p.proID}" name="idPro" hidden>
-                                                </label>
-                                                <label>
-                                                    <input value="0" name="favourite" hidden>
-                                                </label>
-                                                <label>
-                                                    <input value="${f.faID}" name="idFa" hidden>
-                                                </label>
-                                            </form>
-                                        </c:if>
-                                    </c:forEach>
-
                                     <img src="${pageContext.request.contextPath}/public/imgs/sp/${p.proID}/main.jpg"
                                          alt="${p.proName}" title="${p.proName}" class="card-img-top">
                                     <div class="card-body">

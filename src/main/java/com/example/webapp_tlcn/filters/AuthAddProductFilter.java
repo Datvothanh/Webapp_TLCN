@@ -24,6 +24,11 @@ public class AuthAddProductFilter implements Filter {
     public void doFilter(ServletRequest req, ServletResponse res, FilterChain chain) throws ServletException, IOException {
         HttpServletRequest request = (HttpServletRequest) req;
         HttpSession session = request.getSession();
+        if(session.getAttribute("auth")==null){
+            session.setAttribute("auth" , false);
+            session.setAttribute("otp" , false);
+            session.setAttribute("authUser" , new User());
+        }
         boolean auth = (boolean) session.getAttribute("auth");
         User user = (User) session.getAttribute("authUser");
         int permission = user.getPermission();

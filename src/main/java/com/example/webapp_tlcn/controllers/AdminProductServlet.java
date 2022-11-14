@@ -1,6 +1,8 @@
 package com.example.webapp_tlcn.controllers;
 
+import com.example.webapp_tlcn.beans.Category;
 import com.example.webapp_tlcn.beans.Product;
+import com.example.webapp_tlcn.models.CategoryModel;
 import com.example.webapp_tlcn.models.ProductModel;
 import com.example.webapp_tlcn.utils.ServletUtils;
 
@@ -17,6 +19,7 @@ import java.nio.file.Path;
 import java.time.LocalDateTime;
 import java.time.format.DateTimeFormatter;
 import java.util.List;
+import java.util.Objects;
 
 @MultipartConfig(
         fileSizeThreshold = 2 * 1024 * 1024,
@@ -39,7 +42,9 @@ public class AdminProductServlet extends HttpServlet {
                 ServletUtils.forward("/views/vwProduct/Index.jsp", request, response);
                 break;
             case "/Add":
+                List<Category> listCategory = CategoryModel.findAll();
                 Product ProEnd = ProductModel.ProEnd();
+                request.setAttribute("categories", listCategory);
                 request.setAttribute("proEnd", ProEnd);
                 ServletUtils.forward("/views/vwProduct/Add.jsp", request, response);
                 break;
@@ -53,6 +58,11 @@ public class AdminProductServlet extends HttpServlet {
 //                    ServletUtils.redirect("Admin/Product/" , request , response);//Đưa về lại trang mà mình muốn
                     ServletUtils.forward("/views/204.jsp", request, response);
                 }
+                break;
+            case "/End":
+                List<Product> productList = ProductModel.findAll(1);
+                request.setAttribute("products", productList);
+                ServletUtils.forward("/views/vwProduct/End.jsp", request, response);
                 break;
             default:
                 ServletUtils.forward("/views/404.jsp", request, response);
@@ -75,10 +85,22 @@ public class AdminProductServlet extends HttpServlet {
             case "/Update":
                 updateProduct(request, response);
                 break;
+            case "/End":
+                updateShip(request,response);
+                break;
             default:
                 ServletUtils.forward("/views/404.jsp", request, response);
                 break;
         }
+    }
+
+    private void updateShip(HttpServletRequest request, HttpServletResponse response) throws IOException {
+        int idPro = Integer.parseInt(request.getParameter("idPro"));
+        int ship = Integer.parseInt(request.getParameter("ship"));
+        Product product = new Product(idPro , ship);
+        ProductModel.updateShip(product);
+        String url = request.getHeader("referer");
+        ServletUtils.redirect(url, request, response);
     }
 
     private void addProduct(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
@@ -97,7 +119,7 @@ public class AdminProductServlet extends HttpServlet {
         String strED = request.getParameter("EndDay");
         DateTimeFormatter df = DateTimeFormatter.ofPattern("yyyy/MM/dd HH:mm");
         LocalDateTime endDay = LocalDateTime.parse(strED, df);
-        Product p = new Product(startingPrice , type , stepPrice, highestPaidPrice , userID , sell ,countAuction,userSellID,name , tinyDes, fullDes, endDay , startingPrice);
+        Product p = new Product(startingPrice , type , stepPrice, highestPaidPrice , userID , sell ,countAuction,userSellID,name , tinyDes, fullDes, endDay , startingPrice , 0);
         ProductModel.add(p);
         Part partMain = request.getPart("ImageMain");
         Part partSub1 = request.getPart("ImageSub1");
@@ -125,21 +147,27 @@ public class AdminProductServlet extends HttpServlet {
         int type = Integer.parseInt(request.getParameter("CatID"));
         int startingPrice = Integer.parseInt(request.getParameter("StartingPrice"));
         int stepPrice = Integer.parseInt(request.getParameter("StepPrice"));
-        int highestPaidPrice = Integer.parseInt(request.getParameter("HighestPaidPrice"));
         int id = Integer.parseInt(request.getParameter("ProID"));
+        Product p = ProductModel.findById(id);
+        assert p != null;
+        int highestPaidPrice = p.getHighestPaidPrice();
         int top;
-        if(highestPaidPrice == 0 )
-            top = startingPrice;
-        else
-            top = startingPrice;
+        top = startingPrice;
         String name = request.getParameter("ProName");
         String tinyDes = request.getParameter("TinyDes");
         String fullDes = request.getParameter("FullDes");
         String strED = request.getParameter("EndDay");
-        DateTimeFormatter df = DateTimeFormatter.ofPattern("dd/MM/yyyy HH:mm:ss");
-        LocalDateTime endDay = LocalDateTime.parse(strED, df);
-        Product p = new Product(id,startingPrice , type , stepPrice, highestPaidPrice , name , tinyDes, fullDes, endDay , top);
-        ProductModel.update(p);
+        if(Objects.equals(strED, "____/__/__ __:__")){
+            LocalDateTime endDay = p.getEndDay();
+            Product P = new Product(id,startingPrice , type , stepPrice, highestPaidPrice , name , tinyDes, fullDes, endDay , top);
+            ProductModel.update(P);
+        }else {
+            DateTimeFormatter df = DateTimeFormatter.ofPattern("yyyy/MM/dd HH:mm");
+            LocalDateTime endDay = LocalDateTime.parse(strED, df);
+            Product P = new Product(id,startingPrice , type , stepPrice, highestPaidPrice , name , tinyDes, fullDes, endDay , top);
+            ProductModel.update(P);
+        }
+
         ServletUtils.redirect("/Admin/Product", request, response);
     }
 

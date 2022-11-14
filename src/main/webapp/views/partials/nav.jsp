@@ -1,12 +1,26 @@
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
+<%@ taglib prefix="t" tagdir="/WEB-INF/tags" %>
+
 <script>
     function SearchFunction(){
         let txtSr = document.getElementById("txtSr").value;
-        if(txtSr != "")
+        if(txtSr !== "")
         window.location.href="${pageContext.request.contextPath}/Product/ProSearch?txtSr="+txtSr;
     }
+
+
+
 </script>
-<nav class="navbar navbar-expand-lg navbar-light bg-light shadow">
+<style>
+    .topbar-123{
+        position: sticky;
+        top: 0;
+        z-index: 100;
+    }
+</style>
+
+<nav class="navbar navbar-expand-lg navbar-light bg-light shadow topbar-123">
+
     <a class="navbar-brand" href="${pageContext.request.contextPath}/Home/Index">
         <i class="fa fa-home fa-2x" aria-hidden="true"></i>
     </a>
@@ -51,9 +65,20 @@
             <c:when test="${auth}">
                 <c:if test="${authUser.permission != 0}">
                     Money:${authUser.money} - MoneyAu:${authUser.moneyAu}
-
+    
                 </c:if>
                 <form id="frmLogout" method="post" action="${pageContext.request.contextPath}/Account/Logout"></form>
+
+                <img src="${pageContext.request.contextPath}/public/imgs/avatar/user.png" alt="Avatar" class="avatar">
+
+                <style>
+                    .avatar {
+                        vertical-align: middle;
+                        width: 50px;
+                        height: 50px;
+                        border-radius: 50%;
+                    }
+                </style>
                 <li class="nav-item dropdown">
                     <a class="nav-link dropdown-toggle" href="#" id="navbarDropdownR" role="button"
                        data-toggle="dropdown"

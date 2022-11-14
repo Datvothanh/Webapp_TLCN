@@ -3,21 +3,16 @@
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
 <jsp:useBean id="groupCategories" scope="request" type="java.util.List<com.example.webapp_tlcn.beans.GroupCategory>"/>
 
-<t:main>
+<t:admin>
     <jsp:body>
         <div class="card">
             <h4 class="card-header d-flex justify-content-between">
-                Group Categories
+                Danh sách nhóm sản phẩm
                 <div>
-                    <a class="btn btn-outline-success" href="${pageContext.request.contextPath}/Account/Profile"
-                       role="button">
-                        <i class="bi bi-backspace-fill" aria-hidden="true"></i>
-                        Trở về
-                    </a>
                     <a class="btn btn-outline-success" href="${pageContext.request.contextPath}/Admin/GroupCategory/Add"
                        role="button">
                         <i class="fa fa-plus" aria-hidden="true"></i>
-                        Add Group Category
+                        Thêm nhóm sản phẩm
                     </a>
                 </div>
             </h4>
@@ -33,7 +28,7 @@
                             <thead>
                             <tr>
                                 <th scope="col">#</th>
-                                <th scope="col">Group Category</th>
+                                <th scope="col">Nhóm sản phẩm</th>
                                 <th scope="col">&nbsp;</th>
                             </tr>
                             </thead>
@@ -57,4 +52,4 @@
             </c:choose>
         </div>
     </jsp:body>
-</t:main>
+</t:admin>

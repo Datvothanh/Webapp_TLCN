@@ -2,7 +2,9 @@
 <%@ taglib prefix="t" tagdir="/WEB-INF/tags" %>
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
 <jsp:useBean id="proEnd" scope="request" type="com.example.webapp_tlcn.beans.Product"/>
-<t:main>
+<jsp:useBean id="categories" scope="request" type="java.util.List<com.example.webapp_tlcn.beans.Category>"/>
+
+<t:admin>
      <jsp:attribute name="css">
         <link rel="stylesheet"
               href="https://cdnjs.cloudflare.com/ajax/libs/jquery-datetimepicker/2.5.20/jquery.datetimepicker.min.css"
@@ -43,7 +45,7 @@
                         <input type="text" class="form-control" id="UserSellID" name="UserSellID"
                                value="${authUser.id}">
                     </div>
-                    <div class="form-group">
+                    <div class="form-group" hidden>
                         <label for="ProID">ProID</label>
                         <input type="text" class="form-control" id="ProID" name="ProID" value="${proEnd.proID + 1}">
                     </div>
@@ -52,20 +54,20 @@
                         <input type="text" class="form-control" id="txtProName" name="ProName" autofocus>
                     </div>
                     <div class="custom-file mb-4">
-                        <label for="ImageMain" class="custom-file-label">Ảnh chính</label>
-                        <input type="file" class="custom-file-input" id="ImageMain" name="ImageMain">
+                        <label for="ImageMain" class="custom-label">Ảnh chính</label>
+                        <input type="file" class="form-control" id="ImageMain" name="ImageMain">
                     </div>
                     <div class="custom-file mb-4">
-                        <label for="ImageSub1" class="custom-file-label">Ảnh phụ 1</label>
-                        <input type="file" class="custom-file-input" id="ImageSub1" name="ImageSub1">
+                        <label for="ImageSub1" class="custom-label">Ảnh phụ 1</label>
+                        <input type="file" class="form-control" id="ImageSub1" name="ImageSub1">
                     </div>
                     <div class="custom-file mb-4">
-                        <label for="ImageSub2" class="custom-file-label">Ảnh phụ 2</label>
-                        <input type="file" class="custom-file-input" id="ImageSub2" name="ImageSub2">
+                        <label for="ImageSub2" class="custom-label">Ảnh phụ 2</label>
+                        <input type="file" class="form-control" id="ImageSub2" name="ImageSub2">
                     </div>
                     <div class="custom-file mb-4">
-                        <label for="ImageSub3" class="custom-file-label">Ảnh phụ 3</label>
-                        <input type="file" class="custom-file-input" id="ImageSub3" name="ImageSub3">
+                        <label for="ImageSub3" class="custom-label">Ảnh phụ 3</label>
+                        <input type="file" class="form-control" id="ImageSub3" name="ImageSub3">
                     </div>
                     <div class="form-group">
                         <label for="numStartingPrice">Giá khởi điểm</label>
@@ -76,9 +78,14 @@
                         <input type="number" class="form-control" id="numStepPrice" name="StepPrice">
                     </div>
                     <div class="form-group">
-                        <label for="numCatID">Loại sản phẩm (1:.. , 2:.. , 3:..)</label>
-                        <input type="number" class="form-control" id="numCatID" name="CatID">
+                        <label>Loại sản phẩm</label>
+                        <select class="form-select" aria-label="Default select example" name="CatID">
+                                <c:forEach items="${categories}" var="c">
+                                    <option value="${c.catID}">${c.catName}</option>
+                                </c:forEach>
+                        </select>
                     </div>
+
                     <div class="form-group">
                         <label for="txtTinyDes">Mô tả ngắn</label>
                         <input type="text" class="form-control" id="txtTinyDes" name="TinyDes">
@@ -108,4 +115,4 @@
             </div>
         </form>
     </jsp:body>
-</t:main>
+</t:admin>

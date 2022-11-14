@@ -3,7 +3,7 @@ package com.example.webapp_tlcn.beans;
 import java.time.LocalDateTime;
 
 public class Product {
-    private int ProID, StartingPrice, CatID, StepPrice, HighestPaidPrice, UserID ,Sell , CountAuction ,UserSellID, Top;
+    private int ProID, StartingPrice, CatID, StepPrice, HighestPaidPrice, UserID ,Sell , CountAuction ,UserSellID, Top , Ship;
     private String ProName, TinyDes, FullDes;
     private LocalDateTime EndDay;
 
@@ -11,9 +11,11 @@ public class Product {
 
     }
 
-    public Product(int proID, int countAuction) {
+
+
+    public Product(int proID, int ship) {
         ProID = proID;
-        CountAuction = countAuction;
+        Ship = ship;
     }
 
     public Product(int proID, int highestPaidPrice, int userID , int countAuction , int top) {
@@ -37,7 +39,7 @@ public class Product {
         Top = top;
     }
 
-    public Product(int startingPrice, int catID, int stepPrice, int highestPaidPrice,  int userID, int sell,int countAuction ,int userSellID, String proName, String tinyDes, String fullDes, LocalDateTime endDay, int top) {
+    public Product(int startingPrice, int catID, int stepPrice, int highestPaidPrice,  int userID, int sell,int countAuction ,int userSellID, String proName, String tinyDes, String fullDes, LocalDateTime endDay, int top, int ship) {
         ProID = -1;
         StartingPrice = startingPrice;
         CatID = catID;
@@ -52,6 +54,16 @@ public class Product {
         FullDes = fullDes;
         EndDay = endDay;
         Top = top;
+        Ship = ship;
+    }
+
+
+    public int getShip() {
+        return Ship;
+    }
+
+    public void setShip(int ship) {
+        Ship = ship;
     }
 
     public int getUserSellID() {

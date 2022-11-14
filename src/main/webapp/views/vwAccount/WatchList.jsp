@@ -59,9 +59,29 @@
                                              alt="${p.proName}" title="${p.proName}" class="card-img-top">
                                         <div class="card-body">
                                             <h6 class="card-title">${p.proName}</h6>
-                                            <h5 class="card-title text-danger">
-                                                <fmt:formatNumber value="${p.startingPrice}" type="number"/>
-                                            </h5>
+                                            <c:choose>
+                                                <c:when test="${p.highestPaidPrice == 0}">
+                                                    <h5 class="card-title text-danger">
+                                                        Giá khởi điểm:
+                                                        <span class="text-danger font-weight-bold"><fmt:formatNumber
+                                                                value="${p.startingPrice}" type="number"/></span>
+                                                    </h5>
+                                                </c:when>
+                                                <c:otherwise>
+                                                    <h5 class="card-title text-danger">
+                                                        Giá trả cao nhất:
+                                                        <span class="text-danger font-weight-bold"><fmt:formatNumber
+                                                                value="${p.highestPaidPrice}" type="number"/></span>
+                                                    </h5>
+                                                    <h6 class="card-title text-danger">
+                                                        <c:forEach items="${user}" var="u">
+                                                            <c:if test="${u.id == p.userID}">
+                                                                Người đặt giá: ${u.name}
+                                                            </c:if>
+                                                        </c:forEach>
+                                                    </h6>
+                                                </c:otherwise>
+                                            </c:choose>
                                             <p class="card-text">${p.tinyDes}</p>
                                         </div>
                                         <div class="card-footer text-muted">

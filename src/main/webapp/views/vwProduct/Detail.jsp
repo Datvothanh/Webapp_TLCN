@@ -143,6 +143,11 @@
                             <c:forEach items="${user}" var="u">
                                 <c:if test="${u.id == product.userSellID}">
                                     Người bán sản phẩm: ${u.name}
+                                    <a class="btn btn-sm btn-outline-primary"
+                                       href="${pageContext.request.contextPath}/Account/FeedBackSeller?id=${u.id}"
+                                       role="button">
+                                        <i class="fa fa-eye" aria-hidden="true"></i>
+                                    </a>
                                 </c:if>
                             </c:forEach>
                         </h6>

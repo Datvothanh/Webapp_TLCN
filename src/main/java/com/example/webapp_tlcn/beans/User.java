@@ -9,14 +9,14 @@ public class User {
     //3:Người mua
     //4:Người mua can xac nhan
     private int id , permission , code , money , moneyAu;
-    private String username , password , name , email;
+    private String username , password , name , email , address, phone;
     private LocalDate dob;
 
     public User() {
     }
 
 
-    public User(int id, int permission, int code, String username, String password, String name, String email, LocalDate dob, int money, int moneyAu) {
+    public User(int id, int permission, int code, String username, String password, String name, String email, LocalDate dob, int money, int moneyAu , String address, String phone) {
         this.id = id;
         this.permission = permission;
         this.code = code;
@@ -27,9 +27,11 @@ public class User {
         this.dob = dob;
         this.money = money;
         this.moneyAu = moneyAu;
+        this.address = address;
+        this.phone = phone;
     }
 
-    public User(int permission, int code ,String username, String password, String name, String email, LocalDate dob, int money , int moneyAu) {
+    public User(int permission, int code ,String username, String password, String name, String email, LocalDate dob, int money , int moneyAu , String address, String phone) {
         this.id = -1;
         this.permission = permission;
         this.code = code;
@@ -40,6 +42,8 @@ public class User {
         this.dob = dob;
         this.money= money;
         this.moneyAu = moneyAu;
+        this.address = address;
+        this.phone = phone;
     }
 
     public User(int id, int money, int moneyAu) {
@@ -51,6 +55,22 @@ public class User {
     public User(int id, int permission) {
         this.id = id;
         this.permission = permission;
+    }
+
+    public String getPhone() {
+        return phone;
+    }
+
+    public void setPhone(String phone) {
+        this.phone = phone;
+    }
+
+    public String getAddress() {
+        return address;
+    }
+
+    public void setAddress(String address) {
+        this.address = address;
     }
 
     public int getId() {

@@ -24,13 +24,15 @@ public class AuthCookieFilter implements Filter {
     public void doFilter(ServletRequest req, ServletResponse res, FilterChain chain) throws ServletException, IOException {
         HttpServletRequest request = (HttpServletRequest) req;
         HttpSession session = request.getSession();
-        Cookie arr[] = request.getCookies();
-        for (Cookie o :arr){
-            if(o.getName().equals("_userid")){
-                int id = Integer.parseInt(o.getValue());
-                User user = UserModel.findByUserId(id);
-                session.setAttribute("auth", true);
-                session.setAttribute("authUser", user);
+        Cookie[] arr = request.getCookies();
+        if(arr != null){
+            for (Cookie o :arr){
+                if(o.getName().equals("_userid")){
+                    int id = Integer.parseInt(o.getValue());
+                    User user = UserModel.findByUserId(id);
+                    session.setAttribute("auth", true);
+                    session.setAttribute("authUser", user);
+                }
             }
         }
         chain.doFilter(req, res);

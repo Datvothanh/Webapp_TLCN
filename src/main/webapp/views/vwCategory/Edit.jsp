@@ -2,7 +2,7 @@
 <%@ taglib prefix="t" tagdir="/WEB-INF/tags" %>
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
 <jsp:useBean id="category" scope="request" type="com.example.webapp_tlcn.beans.Category"/>
-<t:main>
+<t:admin>
     <jsp:attribute name="js">
         <script>
             $('#frmDelete').on('submit', function (e) {
@@ -76,4 +76,4 @@
         </div>
 
     </jsp:body>
-</t:main>
+</t:admin>

@@ -2,7 +2,7 @@
 <%@ taglib prefix="t" tagdir="/WEB-INF/tags" %>
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
 <jsp:useBean id="userList" scope="request" type="java.util.List<com.example.webapp_tlcn.beans.User>"/>
-<t:main>
+<t:admin>
     <jsp:body>
         <div class="card">
             <h4 class="card-header d-flex justify-content-between">
@@ -25,9 +25,9 @@
                             <thead>
                             <tr>
                                 <th scope="col">Id</th>
-                                <th scope="col">Name</th>
+                                <th scope="col">Tên</th>
                                 <th scope="col">Email</th>
-                                <th scope="col">Permission</th>
+                                <th scope="col">Phân quyền</th>
                                 <th scope="col">&nbsp;</th>
                                 <th scope="col">&nbsp;</th>
                             </tr>
@@ -105,4 +105,4 @@
             </c:choose>
         </div>
     </jsp:body>
-</t:main>
+</t:admin>

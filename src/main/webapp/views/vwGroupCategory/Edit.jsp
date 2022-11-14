@@ -2,20 +2,25 @@
 <%@ taglib prefix="t" tagdir="/WEB-INF/tags" %>
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
 <jsp:useBean id="groupCategory" scope="request" type="com.example.webapp_tlcn.beans.GroupCategory"/>
-<t:main>
+<t:admin
+>
     <jsp:attribute name="js">
         <script>
             $('#frmDelete').on('submit', function (e) {
                 e.preventDefault();
                 let GrCatID = Number($('#GroupCatID').val());
-                $.getJSON('${pageContext.request.contextPath}/Admin/GroupCategory/IsAvailable?GrCatID=' + GrCatID, function (data) {//Kiểm tra UserName có tồn tại không
+                $.getJSON('${pageContext.request.contextPath}/Admin/GroupCategory/IsAvailable?GrCatID' + 15, function (data) {//Kiểm tra UserName có tồn tại không
                     if (data === true) {
+                        alert('Group Category còn sản phẩm.');
                         $('#frmDelete').off('submit').submit();
                     } else {
                         alert('Group Category còn sản phẩm.');
                     }
+                    alert('Group Category còn sản phẩm.');2
                 });
+                alert('Group Category còn sản phẩm.');
             });
+
             $('#frmSave').on('submit', function (e) {
                 e.preventDefault();
                 const GroupCatName = $('#txtGroupCatName').val();
@@ -71,4 +76,4 @@
             </div>
         </div>
     </jsp:body>
-</t:main>
+</t:admin>

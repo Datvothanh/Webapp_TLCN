@@ -18,7 +18,7 @@ public class ProductModel {
 
     //Admin
     public static void add(Product p) {
-        String Sql = "INSERT INTO products (ProName, StartingPrice, CatID, TinyDes, FullDes, StepPrice, HighestPaidPrice, EndDay,UserID,Sell,CountAuction,UserSellID,Top) VALUES (:ProName,:StartingPrice,:CatID,:TinyDes,:FullDes,:StepPrice,:HighestPaidPrice,:EndDay,:UserID,:Sell,:CountAuction,:UserSellID,:Top) ";
+        String Sql = "INSERT INTO products (ProName, StartingPrice, CatID, TinyDes, FullDes, StepPrice, HighestPaidPrice, EndDay,UserID,Sell,CountAuction,UserSellID,Top,Ship) VALUES (:ProName,:StartingPrice,:CatID,:TinyDes,:FullDes,:StepPrice,:HighestPaidPrice,:EndDay,:UserID,:Sell,:CountAuction,:UserSellID,:Top,:Ship) ";
         try (Connection con = DbUtils.getConnection()) {
             con.createQuery(Sql)
                     .addParameter("ProName", p.getProName())
@@ -34,6 +34,7 @@ public class ProductModel {
                     .addParameter("CountAuction", p.getCountAuction())
                     .addParameter("UserSellID", p.getUserSellID())
                     .addParameter("Top", p.getTop())
+                    .addParameter("Ship", p.getShip())
                     .executeUpdate();
         }
     }
@@ -79,6 +80,16 @@ public class ProductModel {
         }
     }
 
+    public static void updateShip(Product p) {
+        String Sql = "UPDATE products SET  Ship =:Ship WHERE ProID = :ProID";
+        try (Connection con = DbUtils.getConnection()) {
+            con.createQuery(Sql)
+                    .addParameter("ProID", p.getProID())
+                    .addParameter("Ship", p.getShip())
+                    .executeUpdate();
+        }
+    }
+
     public static void updateHighestPaidPrice(Product p) {
         String Sql = "UPDATE products SET  HighestPaidPrice = :HighestPaidPrice , UserID = :UserID , CountAuction =:CountAuction , Top =:Top WHERE ProID = :ProID";
         try (Connection con = DbUtils.getConnection()) {
@@ -92,15 +103,15 @@ public class ProductModel {
         }
     }
 
-    public static void updateCountAuction(Product p) {
-        String Sql = "UPDATE products SET  CountAuction =:CountAuction WHERE ProID = :ProID";
-        try (Connection con = DbUtils.getConnection()) {
-            con.createQuery(Sql)
-                    .addParameter("CountAuction",p.getCountAuction())
-                    .addParameter("ProID", p.getProID())
-                    .executeUpdate();
-        }
-    }
+//    public static void updateCountAuction(Product p) {
+//        String Sql = "UPDATE products SET  CountAuction =:CountAuction WHERE ProID = :ProID";
+//        try (Connection con = DbUtils.getConnection()) {
+//            con.createQuery(Sql)
+//                    .addParameter("CountAuction",p.getCountAuction())
+//                    .addParameter("ProID", p.getProID())
+//                    .executeUpdate();
+//        }
+//    }
 
     public static void delete(int id) {
         String Sql = "DELETE from products where ProID = :ProID";

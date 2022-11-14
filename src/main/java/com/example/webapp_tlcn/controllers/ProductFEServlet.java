@@ -120,12 +120,13 @@ public class ProductFEServlet extends HttpServlet {
     }
 
 
-    private void Auction(HttpServletRequest request, HttpServletResponse response) throws IOException, IOException {
+    private void Auction(HttpServletRequest request, HttpServletResponse response) throws  IOException {
         int idUser = Integer.parseInt(request.getParameter("idUser"));
         int idPro = Integer.parseInt(request.getParameter("idPro"));
         int price = Integer.parseInt(request.getParameter("price"));
         int countAuction = Integer.parseInt(request.getParameter("countAuction"));
         User user = UserModel.findByUserId(idUser);
+        assert user != null;
         int money = user.getMoney();
         int moneyAu = user.getMoneyAu();
         int stepAu ;
@@ -144,6 +145,7 @@ public class ProductFEServlet extends HttpServlet {
         } else {
             int idAu = AuctionModel.findUserIDProID(idUser, idPro);
             Auction a = AuctionModel.findById(idAu);
+            assert a != null;
             int priced = a.getPrice();
             Auction auction = new Auction(idAu, idUser, idPro, price , 0);
             AuctionModel.update(auction);
@@ -169,7 +171,7 @@ public class ProductFEServlet extends HttpServlet {
         ServletUtils.redirect(url, request, response);
     }
 
-    private void favourite(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
+    private void favourite(HttpServletRequest request, HttpServletResponse response) throws IOException {
         int idUser = Integer.parseInt(request.getParameter("idUser"));
         int idPro = Integer.parseInt(request.getParameter("idPro"));
         int favourite = Integer.parseInt(request.getParameter("favourite"));

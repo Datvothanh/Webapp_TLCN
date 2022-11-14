@@ -3,6 +3,7 @@
          xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
          xsi:schemaLocation="http://xmlns.jcp.org/xml/ns/javaee http://xmlns.jcp.org/xml/ns/javaee/web-app_4_0.xsd"
          version="4.0">
+
     <servlet-mapping>
         <servlet-name>default</servlet-name>
         <url-pattern>/public/*</url-pattern>
@@ -36,12 +37,15 @@
     <filter-mapping>
         <filter-name>AuthFilter</filter-name>
         <url-pattern>/Account/Profile</url-pattern>
+        <url-pattern>/Account/UpdatePassword</url-pattern>
+        <url-pattern>/Account/Update</url-pattern>
+        <url-pattern>/Account/WatchList</url-pattern>
+        <url-pattern>/Account/SuccessList</url-pattern>
+        <url-pattern>/Account/AuctionList</url-pattern>
+        <url-pattern>/Account/Recharge</url-pattern>
+        <url-pattern>/Account/EndingList</url-pattern>
     </filter-mapping>
 
-    <filter-mapping>
-        <filter-name>AuthFilter</filter-name>
-        <url-pattern>/Account/WatchList</url-pattern>
-    </filter-mapping>
 
     <filter-mapping>
         <filter-name>OtpFilter</filter-name>
@@ -51,21 +55,9 @@
     <filter-mapping>
         <filter-name>AuthAdminFilter</filter-name>
         <url-pattern>/Admin/Permission/*</url-pattern>
-    </filter-mapping>
-
-    <filter-mapping>
-        <filter-name>AuthAdminFilter</filter-name>
         <url-pattern>/Admin/GroupCategory/*</url-pattern>
-    </filter-mapping>
-
-    <filter-mapping>
-        <filter-name>AuthAdminFilter</filter-name>
         <url-pattern>/Admin/Category/*</url-pattern>
-    </filter-mapping>
-
-    <filter-mapping>
-        <filter-name>AuthAdminFilter</filter-name>
-        <url-pattern>/Admin/Product/Index</url-pattern>
+        <url-pattern>/Admin/Product/*</url-pattern>
     </filter-mapping>
 
     <filter-mapping>

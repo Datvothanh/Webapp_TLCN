@@ -12,11 +12,6 @@
         <div class="card">
             <h4 class="card-header d-flex justify-content-between">
                 ${category.catName}
-                <a class="btn btn-outline-success" href="${pageContext.request.contextPath}/Home/Index"
-                   role="button">
-                    <i class="bi bi-backspace-fill" aria-hidden="true"></i>
-                    Trở về
-                </a>
             </h4>
             <c:choose>
                 <c:when test="${products.size() == 0}">
@@ -29,51 +24,51 @@
                         <div class="row">
                             <c:forEach items="${products}" var="p">
                                 <div class="col-sm-4 mb-3">
-                                    <div class="card h-100">
+                                    <div class="card h-100" >
                                         <form id="frmFavourite${p.proID}" method="post"
-                                              action="${pageContext.request.contextPath}/Product/Favourite">
+                                              action="${pageContext.request.contextPath}/Product/Favourite" hidden>
                                             <label>
-                                                <input value="${authUser.id}" name="idUser" hidden>
+                                                <input value="${authUser.id}" name="idUser" >
                                             </label>
                                             <label>
-                                                <input value="${p.proID}" name="idPro" hidden>
+                                                <input value="${p.proID}" name="idPro" >
                                             </label>
                                             <label>
-                                                <input value="1" name="favourite" hidden>
+                                                <input value="1" name="favourite">
                                             </label>
                                         </form>
                                         <c:forEach items="${favourite}" var="f">
                                             <c:if test="${f.userID == authUser.id && f.proID == p.proID}">
                                                 <form id="frmFavourite-Add${p.proID}" method="post"
-                                                      action="${pageContext.request.contextPath}/Product/FavouriteEdit">
+                                                      action="${pageContext.request.contextPath}/Product/FavouriteEdit" hidden>
                                                     <label>
                                                         <input value="${authUser.id}" name="idUser"
-                                                               hidden>
+                                                               >
                                                     </label>
                                                     <label>
-                                                        <input value="${p.proID}" name="idPro" hidden>
+                                                        <input value="${p.proID}" name="idPro" >
                                                     </label>
                                                     <label>
-                                                        <input value="1" name="favourite" hidden>
+                                                        <input value="1" name="favourite" >
                                                     </label>
                                                     <label>
-                                                        <input value="${f.faID}" name="idFa" hidden>
+                                                        <input value="${f.faID}" name="idFa" >
                                                     </label>
                                                 </form>
                                                 <form id="frmFavourite-Delete${p.proID}" method="post"
-                                                      action="${pageContext.request.contextPath}/Product/FavouriteEdit">
+                                                      action="${pageContext.request.contextPath}/Product/FavouriteEdit" hidden>
                                                     <label>
                                                         <input value="${authUser.id}" name="idUser"
-                                                               hidden>
+                                                               >
                                                     </label>
                                                     <label>
-                                                        <input value="${p.proID}" name="idPro" hidden>
+                                                        <input value="${p.proID}" name="idPro">
                                                     </label>
                                                     <label>
-                                                        <input value="0" name="favourite" hidden>
+                                                        <input value="0" name="favourite" >
                                                     </label>
                                                     <label>
-                                                        <input value="${f.faID}" name="idFa" hidden>
+                                                        <input value="${f.faID}" name="idFa">
                                                     </label>
                                                 </form>
                                             </c:if>
