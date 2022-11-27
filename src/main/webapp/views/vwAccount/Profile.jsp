@@ -3,11 +3,12 @@
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
 <%@ taglib prefix="fmt" uri="http://java.sun.com/jsp/jstl/fmt" %>
 <jsp:useBean id="userList" scope="request" type="java.util.List<com.example.webapp_tlcn.beans.User>"/>
+<jsp:useBean id="bankList" scope="request" type="java.util.List<com.example.webapp_tlcn.beans.Bank>"/>
 <t:main>
     <jsp:body>
+        <c:set var="test" value="0"/>
         <c:forEach items="${userList}" var="u">
             <c:if test="${u.id == authUser.id}">
-
                 <c:if test="${u.permission == 1}">
                     <div class="card">
                         <h4 class="card-header">
@@ -57,7 +58,7 @@
                                                             <p class="text-muted mb-0">${u.phone}</p>
                                                         </div>
                                                     </div>
-                                                    <hr>,
+                                                    <hr>
                                                     <div class="row">
                                                         <div class="col-sm-3">
                                                             <p class="mb-0">Ngày tháng năm sinh</p>
@@ -92,10 +93,24 @@
                                        class="list-group-item list-group-item-action"><i class="fa fa-caret-right"
                                                                                          aria-hidden="true"></i>
                                         Hướng dẫn nạp tiền vào tài khoản</a>
-                                    <a href="${pageContext.request.contextPath}/Account/Update"
-                                       class="list-group-item list-group-item-action"><i class="fa fa-caret-right"
-                                                                                         aria-hidden="true"></i>
-                                        Cập nhật thông tin cá nhân</a>
+                                    <c:forEach items="${bankList}" var="b">
+                                        <c:if test="${b.idUser == u.id}">
+                                            <a href="${pageContext.request.contextPath}/Account/Update"
+                                               class="list-group-item list-group-item-action"><i class="fa fa-caret-right"
+                                                                                                 aria-hidden="true"></i>
+                                                Cập nhật thông tin cá nhân</a>
+                                            <c:set var="test" value="1"/>
+                                        </c:if>
+                                        <c:if test="${test == 0}">
+                                            <a href="${pageContext.request.contextPath}/Account/Update"
+                                               class="list-group-item list-group-item-action"><i class="fa fa-caret-right"
+                                                                                                 aria-hidden="true"></i>
+                                                Cập nhật thông tin cá nhân <p>Cập nhật tài khoản nâng hàng</p></a>
+                                        </c:if>
+                                    </c:forEach>
+
+
+
                                     <a href="${pageContext.request.contextPath}/Account/UpdatePassword"
                                        class="list-group-item list-group-item-action"><i class="fa fa-caret-right"
                                                                                          aria-hidden="true"></i>

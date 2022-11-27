@@ -35,9 +35,13 @@ public class AdminCategoryServlet extends HttpServlet {
                 ServletUtils.forward("/views/vwCategory/Index.jsp", request, response);
                 break;
             case "/Add":
+                List<GroupCategory> List = GroupCategoryModel.findAll();
+                request.setAttribute("groupCategories", List);
                 ServletUtils.forward("/views/vwCategory/Add.jsp", request, response);
                 break;
             case "/Edit":
+                List<GroupCategory> List1 = GroupCategoryModel.findAll();
+                request.setAttribute("groupCategories", List1);
                 int id = Integer.parseInt(request.getParameter("id"));
                 Category c = CategoryModel.findById(id);
                 if (c != null) {

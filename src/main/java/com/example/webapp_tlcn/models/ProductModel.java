@@ -40,7 +40,7 @@ public class ProductModel {
     }
 
     public static List<Product> findByTextSearch (String txtSr , int zero) {
-        final String query = "SELECT * FROM products WHERE MATCH(ProName,TinyDes) AGAINST(:txtSr) and Sell =:zero";
+        final String query = "SELECT * FROM products WHERE ProName LIKE :txtSr and Sell =:zero";
         try (Connection con = DbUtils.getConnection()) {
             return con.createQuery(query)
                     .addParameter("txtSr",txtSr)

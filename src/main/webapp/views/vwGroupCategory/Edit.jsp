@@ -9,16 +9,14 @@
             $('#frmDelete').on('submit', function (e) {
                 e.preventDefault();
                 let GrCatID = Number($('#GroupCatID').val());
-                $.getJSON('${pageContext.request.contextPath}/Admin/GroupCategory/IsAvailable?GrCatID' + 15, function (data) {//Kiểm tra UserName có tồn tại không
+                $.getJSON('${pageContext.request.contextPath}/Admin/GroupCategory/IsAvailable?GrCatID=' + GrCatID, function (data) {//Kiểm tra UserName có tồn tại không
                     if (data === true) {
-                        alert('Group Category còn sản phẩm.');
                         $('#frmDelete').off('submit').submit();
                     } else {
                         alert('Group Category còn sản phẩm.');
                     }
-                    alert('Group Category còn sản phẩm.');2
                 });
-                alert('Group Category còn sản phẩm.');
+
             });
 
             $('#frmSave').on('submit', function (e) {

@@ -31,11 +31,6 @@ import javax.servlet.annotation.MultipartConfig;
 
 import static com.example.webapp_tlcn.tools.mask.maskString;
 
-@MultipartConfig(
-        fileSizeThreshold = 2 * 1024 * 1024,
-        maxFileSize = 50 * 1024 * 1024,
-        maxRequestSize = 50 * 1024 * 1024
-)
 @WebServlet(name = "AccountServlet", value = "/Account/*")
 public class AccountServlet extends HttpServlet {
     @Override
@@ -69,9 +64,10 @@ public class AccountServlet extends HttpServlet {
                     ServletUtils.forward("/views/vwAccount/Login.jsp", request, response);
                 break;
             case "/Profile":
-
+                List<Bank> bankList = BankModel.findAll();
                 List<User> userList = UserModel.findAll();
                 request.setAttribute("userList" , userList);
+                request.setAttribute("bankList" , bankList);
                 ServletUtils.forward("/views/vwAccount/Profile.jsp", request, response);
                 break;
             case "/WatchList":

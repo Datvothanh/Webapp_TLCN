@@ -4,11 +4,11 @@
 <script>
     function SearchFunction(){
         let txtSr = document.getElementById("txtSr").value;
-        if(txtSr !== "")
-        window.location.href="${pageContext.request.contextPath}/Product/ProSearch?txtSr="+txtSr;
+        if (txtSr !== "") {
+            window.location.href = "${pageContext.request.contextPath}/Product/ProSearch?txtSr=" + txtSr ;
+        }
+
     }
-
-
 
 </script>
 <style>
@@ -54,7 +54,7 @@
             </li>
         </ul>
         <form class="form-inline my-2 my-lg-0">
-            <input class="form-control mr-sm-2" type="text" placeholder="Search" id="txtSr" name="txtSr" aria-label="Search">
+            <input class="form-control mr-sm-2" type="text" placeholder="Tìm kiếm" id="txtSr" name="txtSr" aria-label="Search">
             <button onclick="SearchFunction()" class="btn btn-outline-success my-2 my-sm-0" type="button"><i
                     class="fa fa-search" aria-hidden="true"></i>&nbsp;Search</button>
         </form>

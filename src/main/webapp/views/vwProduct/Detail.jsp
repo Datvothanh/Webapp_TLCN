@@ -27,15 +27,18 @@
                         if (highest === 0) {
                             if (price < (start + step)) {
                                 alert('Số tiền đấu giá ít nhất phải bằng: ' + (start + step));
-                            } else {
+                            } else if (authUserMoney < (price - presentPrice) || authUserMoney < price ) {
+                                alert('Tài khoản bạn không đủ tiền');
+                            }else {
                                 $('#frmAuction${product.proID}').off('submit').submit();
                             }
                         } else {
                             if (price < (highest + step)) {
                                 alert('Số tiền đấu giá ít nhất phải bằng: ' + (highest + step));
-                            } else if (authUserMoney< (price - presentPrice) || authUserMoney < price ) {
+                            } else if (authUserMoney < (price - presentPrice) || authUserMoney < price ) {
                                 alert('Tài khoản bạn không đủ tiền');
                             } else {
+
                                 $('#frmAuction${product.proID}').off('submit').submit();
                             }
                         }
@@ -95,6 +98,7 @@
                 </form>
             </c:if>
         </c:forEach>
+        <jsp:include page="../../views/partials/ad.jsp"/>
         <div class="card">
             <input value="${authUser.money}" id="authUserMoney" hidden>
             <h4 class="card-header d-flex justify-content-between">
@@ -264,49 +268,49 @@
                                     <div class="col-sm-4 mb-3">
                                         <div class="card h-100">
                                             <form id="frmFavourite${p.proID}" method="post"
-                                                  action="${pageContext.request.contextPath}/Product/Favourite">
+                                                  action="${pageContext.request.contextPath}/Product/Favourite" hidden>
                                                 <label>
-                                                    <input value="${authUser.id}" name="idUser" hidden>
+                                                    <input value="${authUser.id}" name="idUser" >
                                                 </label>
                                                 <label>
-                                                    <input value="${p.proID}" name="idPro" hidden>
+                                                    <input value="${p.proID}" name="idPro" >
                                                 </label>
                                                 <label>
-                                                    <input value="1" name="favourite" hidden>
+                                                    <input value="1" name="favourite">
                                                 </label>
                                             </form>
                                             <c:forEach items="${favourite}" var="f">
                                                 <c:if test="${f.userID == authUser.id && f.proID == p.proID}">
                                                     <form id="frmFavourite-Add${p.proID}" method="post"
-                                                          action="${pageContext.request.contextPath}/Product/FavouriteEdit">
+                                                          action="${pageContext.request.contextPath}/Product/FavouriteEdit" hidden>
                                                         <label>
                                                             <input value="${authUser.id}" name="idUser"
                                                                    hidden>
                                                         </label>
                                                         <label>
-                                                            <input value="${p.proID}" name="idPro" hidden>
+                                                            <input value="${p.proID}" name="idPro">
                                                         </label>
                                                         <label>
-                                                            <input value="1" name="favourite" hidden>
+                                                            <input value="1" name="favourite" >
                                                         </label>
                                                         <label>
-                                                            <input value="${f.faID}" name="idFa" hidden>
+                                                            <input value="${f.faID}" name="idFa" >
                                                         </label>
                                                     </form>
                                                     <form id="frmFavourite-Delete${p.proID}" method="post"
-                                                          action="${pageContext.request.contextPath}/Product/FavouriteEdit">
+                                                          action="${pageContext.request.contextPath}/Product/FavouriteEdit" hidden>
                                                         <label>
                                                             <input value="${authUser.id}" name="idUser"
-                                                                   hidden>
+                                                                   >
                                                         </label>
                                                         <label>
-                                                            <input value="${p.proID}" name="idPro" hidden>
+                                                            <input value="${p.proID}" name="idPro">
                                                         </label>
                                                         <label>
-                                                            <input value="0" name="favourite" hidden>
+                                                            <input value="0" name="favourite" >
                                                         </label>
                                                         <label>
-                                                            <input value="${f.faID}" name="idFa" hidden>
+                                                            <input value="${f.faID}" name="idFa">
                                                         </label>
                                                     </form>
                                                 </c:if>

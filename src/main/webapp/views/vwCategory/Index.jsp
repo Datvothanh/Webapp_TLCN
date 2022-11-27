@@ -29,7 +29,7 @@
                             <tr>
                                 <th scope="col">#</th>
                                 <th scope="col">Loại sản phẩm</th>
-                                <th scope="col">Nhóm sản phẩm thuộc vào</th>
+                                <th scope="col">Nhóm loại sản phẩm thuộc vào</th>
                                 <th scope="col">&nbsp;</th>
                             </tr>
                             </thead>

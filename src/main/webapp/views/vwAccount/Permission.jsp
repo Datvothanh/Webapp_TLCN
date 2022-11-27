@@ -7,11 +7,6 @@
         <div class="card">
             <h4 class="card-header d-flex justify-content-between">
                 Danh sách tài khoản
-                <a class="btn btn-outline-success" href="${pageContext.request.contextPath}/Account/Profile"
-                   role="button">
-                    <i class="bi bi-backspace-fill" aria-hidden="true"></i>
-                    Trở về
-                </a>
             </h4>
             <c:choose>
                 <c:when test="${userList.size() == 0}">

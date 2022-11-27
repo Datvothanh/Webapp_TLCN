@@ -9,6 +9,7 @@
 <jsp:useBean id="auction" scope="request" type="java.util.List<com.example.webapp_tlcn.beans.Auction>"/>
 <t:main>
     <jsp:body>
+        <jsp:include page="../../views/partials/ad.jsp"/>
         <div class="card">
             <h4 class="card-header d-flex justify-content-between">
                 ${category.catName}

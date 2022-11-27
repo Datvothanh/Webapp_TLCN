@@ -60,7 +60,9 @@ public class ProductFEServlet extends HttpServlet {
                 request.setAttribute("favourite", listFavouritePS);
                 request.setAttribute("auction", AuctionPS);
                 String txtSr = request.getParameter("txtSr");
-                List<Product> SrPro = ProductModel.findByTextSearch(txtSr , 0);
+                String txtSR = "%" + txtSr + "%";
+                System.out.print(txtSr);
+                List<Product> SrPro = ProductModel.findByTextSearch(txtSR , 0);
                 request.setAttribute("txtSr", txtSr);
                 request.setAttribute("products", SrPro);
                 ServletUtils.forward("/views/vwProduct/ProSearch.jsp", request, response);

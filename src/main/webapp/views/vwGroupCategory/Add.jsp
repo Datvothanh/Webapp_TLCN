@@ -7,11 +7,11 @@
         <form action="" method="post">
             <div class="card">
                 <h4 class="card-header">
-                    New GroupCategory
+                    Nhóm loại sản phẩm mới
                 </h4>
                 <div class="card-body">
                     <div class="form-group">
-                        <label for="txtGroupCatName">Name Group Category</label>
+                        <label for="txtGroupCatName">Tên nhóm loại sản phẩm</label>
                         <input type="text" class="form-control" id="txtGroupCatName" name="GroupCatName" autofocus>
                     </div>
                 </div>

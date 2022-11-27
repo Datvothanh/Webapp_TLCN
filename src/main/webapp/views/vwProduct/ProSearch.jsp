@@ -8,14 +8,10 @@
 <jsp:useBean id="auction" scope="request" type="java.util.List<com.example.webapp_tlcn.beans.Auction>"/>
 <t:main>
     <jsp:body>
+        <jsp:include page="../../views/partials/ad.jsp"/>
         <div class="card">
             <h4 class="card-header d-flex justify-content-between">
                   Tìm kiếm:"${txtSr}"
-                <a class="btn btn-outline-success" href="${pageContext.request.contextPath}/Home/Index"
-                   role="button">
-                    <i class="bi bi-backspace-fill" aria-hidden="true"></i>
-                    Trở về
-                </a>
             </h4>
             <c:choose>
                 <c:when test="${products.size() == 0}">

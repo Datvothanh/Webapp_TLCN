@@ -57,23 +57,11 @@
         <url-pattern>/Admin/Permission/*</url-pattern>
         <url-pattern>/Admin/GroupCategory/*</url-pattern>
         <url-pattern>/Admin/Category/*</url-pattern>
-        <url-pattern>/Admin/Product/*</url-pattern>
     </filter-mapping>
 
-    <filter-mapping>
-        <filter-name>AuthAdminFilter</filter-name>
-        <url-pattern>/Admin/Product</url-pattern>
-    </filter-mapping>
 
-    <filter-mapping>
-        <filter-name>AuthAdminFilter</filter-name>
-        <url-pattern>/Admin/Product/</url-pattern>
-    </filter-mapping>
 
-    <filter-mapping>
-        <filter-name>AuthAdminFilter</filter-name>
-        <url-pattern>/Admin/Product/Edit</url-pattern>
-    </filter-mapping>
+
 
     <filter-mapping>
         <filter-name>AuthAddProductFilter</filter-name>

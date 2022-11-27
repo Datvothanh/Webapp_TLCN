@@ -12,7 +12,7 @@
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.2.1/jquery.min.js">
     <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/boxicons@latest/css/boxicons.min.css">
     <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.5.0/font/bootstrap-icons.css">
-    <style><%@include file="/css/style.css"%></style>
+    <style><%@include file="/css/styleAdmin.css"%></style>
     <jsp:invoke fragment="css"/>
 
 </head>
@@ -23,8 +23,8 @@
 </header>
 <div class="l-navbar" id="nav-bar">
     <nav class="nav">
-        <div> <a href="#" class="nav_logo"> <i class='bx bx-layer nav_logo-icon'></i> <span class="nav_logo-name">Admin</span> </a>
-            <div class="nav_list"> <a href="${pageContext.request.contextPath}/Admin/Product/" class="nav_link active">  <i class="bi bi-box-seam"></i> <span class="nav_name">Sản phẩm</span> </a> <a href="${pageContext.request.contextPath}/Admin/Permission/" class="nav_link"> <i class='bx bx-user nav_icon'></i> <span class="nav_name">Người dùng</span> </a> <a href="${pageContext.request.contextPath}/Admin/Category/" class="nav_link"> <i class='bx bx-message-square-detail nav_icon'></i> <span class="nav_name">Loại sản phẩm</span> </a> <a href="${pageContext.request.contextPath}/Admin/GroupCategory/" class="nav_link"> <i class='bx bx-bookmark nav_icon'></i> <span class="nav_name">Nhóm sản phẩm</span> </a> <a href="${pageContext.request.contextPath}/Admin/Product/End" class="nav_link"> <i class='bx bx-folder nav_icon'></i> <span class="nav_name">Sản phẩm kết thúc</span> </a> <a href="#" class="nav_link"> <i class='bx bx-bar-chart-alt-2 nav_icon'></i> <span class="nav_name">Stats</span> </a> </div>
+        <div> <a href="#" class="nav_logo"> <i class="bi bi-house-fill"></i> <span class="nav_logo-name">Admin</span> </a>
+            <div class="nav_list"> <a href="${pageContext.request.contextPath}/Admin/Product/" class="nav_link active">  <i class="bi bi-box-seam"></i> <span class="nav_name">Sản phẩm</span> </a> <a href="${pageContext.request.contextPath}/Admin/Permission/" class="nav_link"> <i class='bx bx-user nav_icon'></i> <span class="nav_name">Người dùng</span> </a> <a href="${pageContext.request.contextPath}/Admin/Category/" class="nav_link"> <i class="bi bi-three-dots-vertical"></i> <span class="nav_name">Loại sản phẩm</span> </a> <a href="${pageContext.request.contextPath}/Admin/GroupCategory/" class="nav_link"> <i class="bi bi-menu-button-wide"></i> <span class="nav_name">Nhóm sản phẩm</span> </a> <a href="${pageContext.request.contextPath}/Admin/Product/End" class="nav_link"> <i class='bx bx-folder nav_icon'></i> <span class="nav_name">Sản phẩm kết thúc</span> </a> <a href="#" class="nav_link"> <i class='bx bx-bar-chart-alt-2 nav_icon'></i> <span class="nav_name">Stats</span> </a> </div>
         </div> <a href="#" class="nav_link"> <i class='bx bx-log-out nav_icon'></i> <span class="nav_name">SignOut</span> </a>
     </nav>
 </div>

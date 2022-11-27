@@ -3,6 +3,7 @@
 <%@ taglib prefix="fmt" uri="http://java.sun.com/jsp/jstl/fmt" %>
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
 <jsp:useBean id="product" scope="request" type="com.example.webapp_tlcn.beans.Product"/>
+<jsp:useBean id="categories" scope="request" type="java.util.List<com.example.webapp_tlcn.beans.Category>"/>
 <t:admin>
      <jsp:attribute name="css">
         <link rel="stylesheet"
@@ -69,8 +70,19 @@
                                value="${product.stepPrice}">
                     </div>
                     <div class="form-group">
-                        <label for="numCatID">Loại sản phẩm (1:.. , 2:.. , 3:..)</label>
-                        <input type="number" class="form-control" id="numCatID" name="CatID" value="${product.catID}">
+                        <label>Loại sản phẩm</label>
+                        <select class="form-select" aria-label="Default select example" name="CatID">
+                            <c:forEach items="${categories}" var="c">
+                                <c:if test="${c.catID == product.catID}">
+                                    <option value="${c.catID}">${c.catName}</option>
+                                </c:if>
+                            </c:forEach>
+                            <c:forEach items="${categories}" var="c">
+                                <c:if test="${c.catID != product.catID}">
+                                    <option value="${c.catID}">${c.catName}</option>
+                                </c:if>
+                            </c:forEach>
+                        </select>
                     </div>
                     <div class="form-group">
                         <label for="txtTinyDes">Mô tả ngắn</label>

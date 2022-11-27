@@ -7,12 +7,12 @@
     <jsp:body>
         <div class="card">
             <h4 class="card-header d-flex justify-content-between">
-                Danh sách nhóm sản phẩm
+                Danh sách nhóm loại sản phẩm
                 <div>
                     <a class="btn btn-outline-success" href="${pageContext.request.contextPath}/Admin/GroupCategory/Add"
                        role="button">
                         <i class="fa fa-plus" aria-hidden="true"></i>
-                        Thêm nhóm sản phẩm
+                        Thêm nhóm loại sản phẩm
                     </a>
                 </div>
             </h4>
@@ -28,7 +28,7 @@
                             <thead>
                             <tr>
                                 <th scope="col">#</th>
-                                <th scope="col">Nhóm sản phẩm</th>
+                                <th scope="col">Nhóm loại sản phẩm</th>
                                 <th scope="col">&nbsp;</th>
                             </tr>
                             </thead>
@@ -41,7 +41,7 @@
                                         <a class="btn btn-outline-primary"
                                            href="${pageContext.request.contextPath}/Admin/GroupCategory/Edit?id=${g.grCatID}"
                                            role="button">
-                                            <i class="fa fa-pencil" aria-hidden="true"></i></a>
+                                            <i class="bi bi-pencil"></i></a>
                                     </td>
                                 </tr>
                             </c:forEach>

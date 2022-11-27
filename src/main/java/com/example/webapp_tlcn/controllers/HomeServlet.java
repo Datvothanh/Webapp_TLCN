@@ -1,14 +1,8 @@
 package com.example.webapp_tlcn.controllers;
 
 
-import com.example.webapp_tlcn.beans.Auction;
-import com.example.webapp_tlcn.beans.Favourite;
-import com.example.webapp_tlcn.beans.Product;
-import com.example.webapp_tlcn.beans.User;
-import com.example.webapp_tlcn.models.AuctionModel;
-import com.example.webapp_tlcn.models.FavouriteModel;
-import com.example.webapp_tlcn.models.ProductModel;
-import com.example.webapp_tlcn.models.UserModel;
+import com.example.webapp_tlcn.beans.*;
+import com.example.webapp_tlcn.models.*;
 import com.example.webapp_tlcn.utils.ServletUtils;
 
 import javax.servlet.*;
@@ -16,6 +10,7 @@ import javax.servlet.http.*;
 import javax.servlet.annotation.*;
 import java.io.IOException;
 import java.util.List;
+import java.util.Objects;
 
 import static com.example.webapp_tlcn.tools.mask.maskString;
 
@@ -61,6 +56,27 @@ public class HomeServlet extends HttpServlet {
 
     @Override
     protected void doPost(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
+        request.setCharacterEncoding("utf-8");
+        response.setCharacterEncoding("UTF-8");
+        String path = request.getPathInfo();
+        switch (path) {
+            case "/Index":
 
+                search(request, response);
+                break;
+//            case "/Delete":
+//                deleteProduct(request, response);
+//                break;
+            default:
+                ServletUtils.forward("/views/404.jsp", request, response);
+                break;
+        }
+    }
+
+    private void search(HttpServletRequest request, HttpServletResponse response) throws IOException {
+        String txtSr =  request.getParameter("txtSr");
+        if (!Objects.equals(txtSr, "")) {
+            ServletUtils.redirect("/Product/ProSearch?txtSr=" + txtSr, request, response);
+        }
     }
 }

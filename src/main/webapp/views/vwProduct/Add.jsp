@@ -1,7 +1,7 @@
 <%@ page contentType="text/html;charset=UTF-8" language="java" %>
 <%@ taglib prefix="t" tagdir="/WEB-INF/tags" %>
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
-<jsp:useBean id="proEnd" scope="request" type="com.example.webapp_tlcn.beans.Product"/>
+<jsp:useBean id="idProEnd" scope="request" type="java.lang.Integer"/>
 <jsp:useBean id="categories" scope="request" type="java.util.List<com.example.webapp_tlcn.beans.Category>"/>
 
 <t:admin>
@@ -45,9 +45,9 @@
                         <input type="text" class="form-control" id="UserSellID" name="UserSellID"
                                value="${authUser.id}">
                     </div>
-                    <div class="form-group" hidden>
+                    <div class="form-group">
                         <label for="ProID">ProID</label>
-                        <input type="text" class="form-control" id="ProID" name="ProID" value="${proEnd.proID + 1}">
+                        <input type="text" class="form-control" id="ProID" name="ProID" value="${idProEnd + 1}">
                     </div>
                     <div class="form-group">
                         <label for="txtProName">Tên sản phẩm</label>

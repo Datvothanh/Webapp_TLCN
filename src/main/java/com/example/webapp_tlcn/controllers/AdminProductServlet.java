@@ -44,11 +44,18 @@ public class AdminProductServlet extends HttpServlet {
             case "/Add":
                 List<Category> listCategory = CategoryModel.findAll();
                 Product ProEnd = ProductModel.ProEnd();
+                int idProEnd;
+                if(ProEnd == null){
+                    idProEnd = 0;
+                }else
+                    idProEnd = ProEnd.getProID();
                 request.setAttribute("categories", listCategory);
-                request.setAttribute("proEnd", ProEnd);
+                request.setAttribute("idProEnd", idProEnd);
                 ServletUtils.forward("/views/vwProduct/Add.jsp", request, response);
                 break;
             case "/Edit":
+                List<Category> listCategory1 = CategoryModel.findAll();
+                request.setAttribute("categories", listCategory1);
                 int id = Integer.parseInt(request.getParameter("id"));
                 Product p = ProductModel.findById(id);
                 if (p != null) {
@@ -130,16 +137,11 @@ public class AdminProductServlet extends HttpServlet {
         String realPath = this.getServletContext().getRealPath(realPathAll);
         if (!Files.exists(Path.of(realPath))) {
             Files.createDirectory(Path.of(realPath));
-            partMain.write(realPath + "/" + "main.jpg");
-            partSub1.write(realPath + "/" + "sub1.jpg");
-            partSub2.write(realPath + "/" + "sub2.jpg");
-            partSub3.write(realPath + "/" + "sub3.jpg");
-        } else {
-            partMain.write(realPath + "/" + "main.jpg");
-            partSub1.write(realPath + "/" + "sub1.jpg");
-            partSub2.write(realPath + "/" + "sub2.jpg");
-            partSub3.write(realPath + "/" + "sub3.jpg");
         }
+        partMain.write(realPath + "/" + "main.jpg");
+        partSub1.write(realPath + "/" + "sub1.jpg");
+        partSub2.write(realPath + "/" + "sub2.jpg");
+        partSub3.write(realPath + "/" + "sub3.jpg");
         ServletUtils.redirect("/Admin/Product", request, response);
     }
 
