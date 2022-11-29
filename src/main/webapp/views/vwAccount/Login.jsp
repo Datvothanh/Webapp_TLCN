@@ -1,90 +1,139 @@
-<%@ page contentType="text/html;charset=UTF-8" language="java" %>
-<%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
-<%--<jsp:useBean id="username" scope="request" type="java.lang.String"/>--%>
-<%--<jsp:useBean id="password" scope="request" type="java.lang.String"/>--%>
 <!DOCTYPE html>
 <html lang="en">
+<%@ page language="java" contentType="text/html; charset=UTF-8" pageEncoding="UTF-8"%>
+<%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
 <head>
-    <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
-    <title>Web App</title>
-    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap@4.6.0/dist/css/bootstrap.min.css"
-          integrity="sha384-B0vP5xmATw1+K9KRQjQERJvTumQW0nPEzvF6L/Z6nronJ3oUOFUFpCjEUQouq2+l" crossorigin="anonymous">
-    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css">
-    <style>
-        body {
-            height: 100vh;
-            background-image: url("https://img.freepik.com/free-photo/abstract-grunge-decorative-relief-navy-blue-stucco-wall-texture-wide-angle-rough-colored-background_1258-28311.jpg?w=2000");
-        }
-    </style>
+  <meta charset="UTF-8">
+  <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
+  <title>Đăng nhập </title>
+  <link href="https://fonts.googleapis.com/css?family=Karla:400,700&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="https://cdn.materialdesignicons.com/4.8.95/css/materialdesignicons.min.css">
+  <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.4.1/css/bootstrap.min.css">
+  <style><%@include file="../../css/login.css"%></style>
 </head>
 <body>
-
-<div class="container-fluid h-100">
-    <div class="row h-100 justify-content-center align-items-center">
-        <div class="col-sm-4">
-            <c:if test="${hasError}">
+  <main class="d-flex align-items-center min-vh-100 py-3 py-md-0">
+    <div class="container">
+      <div class="card login-card">
+        <div class="row no-gutters">
+          <div class="col-md-5">
+            <img src="${pageContext.request.contextPath}/public/imgs/login/login.jpg" alt="login" class="login-card-img">
+          </div>
+          <div class="col-md-7">
+            <div class="card-body">
+              <a class="brand-wrapper" href="${pageContext.request.contextPath}/Home">
+                <img src="${pageContext.request.contextPath}/public/imgs/login/logo.svg" alt="logo" class="logo">
+              </a>
+              <p class="login-card-description">Đăng nhập tài khoản của bạn</p>
+              <c:if test="${hasError}">
                 <div class="alert alert-warning alert-dismissible fade show" role="alert">
-                    <strong>Login failed!</strong>${errorMessage}
-                    <button type="button" class="close" data-dismiss="alert" aria-label="Close">
-                        <span aria-hidden="true">x</span>
-                    </button>
+                  <strong>Login failed!</strong>${errorMessage}
+                  <button type="button" class="close" data-dismiss="alert" aria-label="Close">
+                    <span aria-hidden="true">x</span>
+                  </button>
                 </div>
-            </c:if>
-            <form action="" method="post">
-                <div class="form-group">
-                    <label class="sr-only" for="txtUsername">Username</label>
-                    <div class="input-group">
-                        <input type="text" class="from-control form-control-lg " value="${username}" id="txtUsername" name="username"
-                               placeholder="Username"
-                               autofocus>
-                        <div class="input-group-append">
-                            <span class="input-group-text bg-white">
-                                 <i class="fa fa-user" aria-hidden="true"></i>
-                            </span>
+              </c:if>
+              <form action="" method="post" >
+                  <div class="form-group">
+                    <label for="txtUsername" class="sr-only">Tên đăng nhập</label>
+                    <input type="text" name="username" id="txtUsername" class="form-control" placeholder="Tên đăng nhập">
+                  </div>
+                  <div class="form-group mb-4">
+                    <label for="txtPassword" class="sr-only">Mật khẩu</label>
+                    <input type="password" name="password" id="txtPassword" class="form-control" placeholder="***********">
+                  </div>
+                  <input name="login" id="login" class="btn btn-block login-btn mb-4" type="submit" value="Login" >
+                </form>
+                <a href="#" class="forgot-password-link" data-toggle="modal" data-target="#forgetPassword">Bạn quên mật khẩu? </a>
+              <!-- Modal -->
+              <div class="modal fade" id="forgetPassword" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
+                <div class="modal-dialog">
+                  <div class="modal-content">
+                    <div class="modal-header">
+                      <h5 class="modal-title" id="exampleModalLabel">Quên mật khẩu</h5>
+                      <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                        <span aria-hidden="true">&times;</span>
+                      </button>
+                    </div>
+                    <div class="modal-body">
+                      <p>Hãy nhập Email tài khoản để lấy lại mật khẩu</p>
+                      <form method="post" id="frmSendEmail">
+                        <div class="form-group ">
+                          <label for="inputEmail" class="sr-only">Email</label>
+                          <input type="email" class="form-control" name="email" id="inputEmail" placeholder="Email">
                         </div>
+                        <button type="submit" class="btn btn-primary mb-2">Tiếp theo</button>
+                      </form>
                     </div>
+                  </div>
                 </div>
-
-                <div class="form-group">
-                    <label class="sr-only" for="txtPassword">Password</label>
-                    <div class="input-group">
-                        <input type="password" class="from-control form-control-lg" value="${password}" id="txtPassword" name="password"
-                               placeholder="Password">
-                        <div class="input-group-append">
-                            <span class="input-group-text bg-white">
-                                 <i class="fa fa-key" aria-hidden="true"></i>
-                            </span>
-                        </div>
-                    </div>
-                </div>
-
-                <div class="form-group d-flex">
-                    <div>
-                        <a class="btn btn-outline-info" href="${pageContext.request.contextPath}/Home/Index"
-                           role="button">
-                            <i class="fa fa-home" aria-hidden="true"></i>
-                            Home
-                        </a>
-                    </div>
-                    <div>
-                        <button type="submit" class="btn btn-info btn-block">
-                            <i class="fa fa-sign-in" aria-hidden="true"></i>
-                            Sign In
-                        </button>
-                    </div>
-                </div>
-            </form>
+              </div>
+                <p class="login-card-footer-text">Bạn chưa có tài khoản? <a href="${pageContext.request.contextPath}/Account/Register" class="text-reset">Đăng ký ở đây</a></p>
+            </div>
+          </div>
         </div>
+      </div>
+      <!-- <div class="card login-card">
+        <img src="assets/images/login.jpg" alt="login" class="login-card-img">
+        <div class="card-body">
+          <h2 class="login-card-title">Login</h2>
+          <p class="login-card-description">Sign in to your account to continue.</p>
+          <form action="#!">
+            <div class="form-group">
+              <label for="email" class="sr-only">Email</label>
+              <input type="email" name="email" id="email" class="form-control" placeholder="Email">
+            </div>
+            <div class="form-group">
+              <label for="password" class="sr-only">Password</label>
+              <input type="password" name="password" id="password" class="form-control" placeholder="Password">
+            </div>
+            <div class="form-prompt-wrapper">
+              <div class="custom-control custom-checkbox login-card-check-box">
+                <input type="checkbox" class="custom-control-input" id="customCheck1">
+                <label class="custom-control-label" for="customCheck1">Remember me</label>
+              </div>              
+              <a href="#!" class="text-reset">Forgot password?</a>
+            </div>
+            <input name="login" id="login" class="btn btn-block login-btn mb-4" type="button" value="Login">
+          </form>
+          <p class="login-card-footer-text">Don't have an account? <a href="#!" class="text-reset">Register here</a></p>
+        </div>
+      </div> -->
     </div>
+  </main>
+  <script src="https://code.jquery.com/jquery-3.4.1.min.js"></script>
+  <script src="https://cdn.jsdelivr.net/npm/popper.js@1.16.0/dist/umd/popper.min.js"></script>
+  <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.4.1/js/bootstrap.min.js"></script>
+  <script>
+          $('#frmSendEmail').on('submit', function (e) {
+            e.preventDefault();
+            const email = $('#inputEmail').val();
 
-</div>
+            if(email.length === 0){
+              alert('Email không hợp lệ.')
+              return;
+            }
 
-<script src="https://code.jquery.com/jquery-3.6.0.min.js" crossorigin="anonymous"></script>
-<script src="https://cdn.jsdelivr.net/npm/popper.js@1.16.1/dist/umd/popper.min.js"
-        integrity="sha384-9/reFTGAW83EW2RDu2S0VKaIzap3H66lZH81PoYlFhbGU+6BZp6G7niu735Sk7lN"
-        crossorigin="anonymous"></script>
-<script src="https://cdn.jsdelivr.net/npm/bootstrap@4.6.0/dist/js/bootstrap.min.js"
-        integrity="sha384-+YQ4JLhjyBLPDQt//I+STsc9iw4uQqACwlvpslubQzn4u2UU2UFM80nGisd026JF"
-        crossorigin="anonymous"></script>
+            //Thêm các điều kiện khi đăng ký tài khoản
+
+
+            $.getJSON('${pageContext.request.contextPath}/Account/IsAvailableSendEmail?email=' + email, function (data1) {//Kiểm tra UserName có tồn tại không
+              if (data1 === false) {
+                <%--$.getJSON('${pageContext.request.contextPath}/Account/IsAvailableEmail?email=' + email, function (data) {//Kiểm tra UserName có tồn tại không--%>
+                <%--    if (data === true) {--%>
+                <%--        $('#frmRegister').off('submit').submit();--%>
+                <%--    } else {--%>
+                <%--        alert('Email đã tồn tại.');--%>
+                <%--    }--%>
+                <%--});--%>
+                $('#frmSendEmail').off('submit').submit();
+              } else {
+                alert('Không tồn tại tài khoản đã đăng ký Email này.');
+              }
+            });
+
+
+          });
+        </script>
 </body>
 </html>

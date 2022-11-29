@@ -136,7 +136,7 @@ public class ProductModel {
     //End
 
     public static List<Product> findTop5HighestPrice() {
-        final String query = "SELECT * FROM products order by Top desc limit 5";
+        final String query = "SELECT * FROM products where Sell = 0 order by Top desc limit 5";
         try (Connection con = DbUtils.getConnection()) {
             return con.createQuery(query)
                     .executeAndFetch(Product.class);
@@ -144,7 +144,7 @@ public class ProductModel {
     }
 
     public static List<Product> findTop5HighestCountAuction() {
-        final String query = "SELECT * FROM products order by CountAuction desc limit 5";
+        final String query = "SELECT * FROM products where Sell = 0 order by CountAuction desc limit 5";
         try (Connection con = DbUtils.getConnection()) {
             return con.createQuery(query)
                     .executeAndFetch(Product.class);

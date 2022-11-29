@@ -67,7 +67,6 @@
                                                                 Bạn có thể phản hồi cho người bán
                                                             </a>
                                                         </c:if>
-
                                                 </c:otherwise>
                                             </c:choose>
 

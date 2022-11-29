@@ -5,8 +5,8 @@
 
 
 <div class="container-fluid px-0">
-    <nav class="navbar navbar-expand-md navbar-light bg-white p-0"> <a class="navbar-brand mr-4" href="${pageContext.request.contextPath}/Home/Index"><strong>BBAuction</strong></a> <button class="navbar-toggler mr-3" type="button" data-toggle="collapse" data-target="#navbarNav" aria-controls="navbarNav" aria-expanded="false" aria-label="Toggle navigation"> <span class="navbar-toggler-icon"></span> </button>
-        <div class="collapse navbar-collapse" id="navbarNav">
+    <nav class="navbar navbar-expand-md navbar-light bg-white p-0"> <a class="navbar-brand mr-4" href="${pageContext.request.contextPath}/Home/Index"> <img src="${pageContext.request.contextPath}/public/imgs/login/logo.svg" alt="logo" class="logo"></a> <button class="navbar-toggler mr-3" type="button" data-toggle="collapse" data-target="#navbarNav" aria-controls="navbarNav" aria-expanded="false" aria-label="Toggle navigation"> <span class="navbar-toggler-icon"></span> </button>
+        <div class="collapse navbar-collapse"  id="navbarNav">
             <ul class="navbar-nav">
                 <c:set var="test" value="0"/>
                 <c:set var="stt" value="1"/>
@@ -70,13 +70,13 @@
                 </c:forEach>
             </ul>
         </div>
-        <div style="padding-right: 70px;">
+        <div style="padding-bottom: 21px">
             <form method="post" class="form-inline" style="padding-top: 20px" action="${pageContext.request.contextPath}/Home/Index">
                 <input class="form-control mr-sm-2" type="text" id="txtSr" name="txtSr" placeholder="Tìm kiếm.." aria-label="Search">
-                <button class="btn btn-outline-danger my-2 my-sm-0" type="submit">Search</button>
+                <button class="btn btn-outline-danger my-2 my-sm-0" type="submit"><i class="bi bi-search"></i></button>
             </form>
         </div>
-        <div  class="collapse navbar-collapse" id="navbarNav1">
+        <div  class="collapse navbar-collapse">
             <c:choose>
                 <c:when test="${auth}">
                     <form id="frmLogout" method="post" action="${pageContext.request.contextPath}/Account/Logout"></form>
@@ -95,12 +95,12 @@
                         <a class="nav-link dropdown-toggle" href="#" id="navbarDropdownR" role="button"
                            data-toggle="dropdown"
                            aria-haspopup="true" aria-expanded="false">
-                            Hi, <b>${authUser.name}!</b>
+                            Xin chào, <b>${authUser.name}!</b>
                         </a>
                         <div class="dropdown-menu dropdown-menu-right" style="background-color: #eeeeee" aria-labelledby="navbarDropdown">
                             <a class="dropdown-item" href="${pageContext.request.contextPath}/Account/Profile">
                                 <i class="fa fa-user" aria-hidden="true"></i>
-                                Profile
+                                Hồ sơ cá nhân
                             </a>
                             <div class="dropdown-divider"></div>
                             <a class="dropdown-item" href="#">
@@ -115,7 +115,7 @@
                             <div class="dropdown-divider"></div>
                             <a class="dropdown-item" href="javascript:$('#frmLogout').submit()">
                                 <i class="fa fa-sign-out" aria-hidden="true"></i>
-                                Sign Out
+                                Đăng xuất
                             </a>
                         </div>
                     </li>
@@ -123,10 +123,10 @@
                 <c:otherwise>
                     <ul class="navbar-nav">
                         <li class="nav-item">
-                            <a class="nav-link" href="${pageContext.request.contextPath}/Account/Register">Register</a>
+                            <a class="nav-link" href="${pageContext.request.contextPath}/Account/Register">Đăng ký</a>
                         </li>
                         <li class="nav-item">
-                            <a class="nav-link" href="${pageContext.request.contextPath}/Account/Login">Login</a>
+                            <a class="nav-link" href="${pageContext.request.contextPath}/Account/Login">Đăng nhập</a>
                         </li>
                     </ul>
                 </c:otherwise>

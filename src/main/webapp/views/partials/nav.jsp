@@ -83,27 +83,27 @@
                     <a class="nav-link dropdown-toggle" href="#" id="navbarDropdownR" role="button"
                        data-toggle="dropdown"
                        aria-haspopup="true" aria-expanded="false">
-                        Hi, <b>${authUser.name}!</b>
+                        Xin chào, <b>${authUser.name}!</b>
                     </a>
                     <div class="dropdown-menu dropdown-menu-right" aria-labelledby="navbarDropdown">
                         <a class="dropdown-item" href="${pageContext.request.contextPath}/Account/Profile">
                             <i class="fa fa-user" aria-hidden="true"></i>
-                            Profile
+                            Trang cá nhân
                         </a>
                         <div class="dropdown-divider"></div>
                         <a class="dropdown-item" href="javascript:$('#frmLogout').submit()">
                             <i class="fa fa-sign-out" aria-hidden="true"></i>
-                            Sign Out
+                            Đăng xuất
                         </a>
                     </div>
                 </li>
             </c:when>
             <c:otherwise>
                 <li class="nav-item">
-                    <a class="nav-link" href="${pageContext.request.contextPath}/Account/Register">Register</a>
+                    <a class="nav-link" href="${pageContext.request.contextPath}/Account/Register">Đăng ký</a>
                 </li>
                 <li class="nav-item">
-                    <a class="nav-link" href="${pageContext.request.contextPath}/Account/Login">Login</a>
+                    <a class="nav-link" href="${pageContext.request.contextPath}/Account/Login">Đăng nhập</a>
                 </li>
             </c:otherwise>
         </c:choose>

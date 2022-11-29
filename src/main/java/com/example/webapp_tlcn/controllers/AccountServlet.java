@@ -27,7 +27,6 @@ import javax.servlet.http.HttpServletResponse;
 import javax.servlet.annotation.WebServlet;
 import java.util.Properties;
 import java.util.Random;
-import javax.servlet.annotation.MultipartConfig;
 
 import static com.example.webapp_tlcn.tools.mask.maskString;
 
@@ -41,7 +40,14 @@ public class AccountServlet extends HttpServlet {
         }
         switch (path) {
             case "/Otp":
-                ServletUtils.forward("/views/vwAccount/Otp.jsp" , request , response);
+                String email3 = request.getParameter("email");
+                request.setAttribute("email" , email3);
+                ServletUtils.forward("/views/vwAccount/Otp.jsp", request , response);
+                break;
+            case "/ForgetPassword":
+                String email2 = request.getParameter("email");
+                request.setAttribute("email" , email2);
+                ServletUtils.forward("/views/vwAccount/ForgetPassword.jsp", request, response);
                 break;
             case "/Register":
                 ServletUtils.forward("/views/vwAccount/Register.jsp", request, response);
@@ -78,14 +84,23 @@ public class AccountServlet extends HttpServlet {
                 ServletUtils.forward("/views/vwAccount/WatchList.jsp", request, response);
                 break;
             case "/Update":
+                List<ListBank> listBanks = ListBankModel.findAll();
+                List<Bank> BankList = BankModel.findAll();
                 List<User> UserList = UserModel.findAll();
                 request.setAttribute("userList" , UserList);
+                request.setAttribute("BankList" , BankList);
+                request.setAttribute("listBanks" , listBanks);
                 ServletUtils.forward("/views/vwAccount/Update.jsp", request, response);
                 break;
             case "/UpdatePassword":
                 List<User> UserLisT = UserModel.findAll();
                 request.setAttribute("userList" , UserLisT);
                 ServletUtils.forward("/views/vwAccount/UpdatePassword.jsp", request, response);
+                break;
+            case "/UpdateBank":
+                List<User> UserLisT1 = UserModel.findAll();
+                request.setAttribute("userList" , UserLisT1);
+                ServletUtils.forward("/views/vwAccount/UpdateBank.jsp", request, response);
                 break;
             case "/AuctionList":
                 List<Product> ListAll = ProductModel.findAll(0);
@@ -178,6 +193,16 @@ public class AccountServlet extends HttpServlet {
                 out2.print(isAvailablePassword);
                 out2.flush();
                 break;
+            case "/IsAvailableSendEmail":
+                String email1 = request.getParameter("email");
+                User u = UserModel.findByEmail(email1);
+                boolean isAvailableSendEmail = (u == null);
+                PrintWriter out3 = response.getWriter();
+                response.setContentType("application/json");
+                response.setCharacterEncoding("utf-8");
+                out3.print(isAvailableSendEmail);
+                out3.flush();
+                break;
             default:
                 ServletUtils.forward("/views/404.jsp", request, response);
                 break;
@@ -193,6 +218,9 @@ public class AccountServlet extends HttpServlet {
             case "/Delete":
                 deleteUser(request,response);
                 break;
+            case "/ForgetPassword":
+                forgetPassword(request,response);
+                break;
             case "/UpdatePermission":
                 updatePermission(request,response);
                 break;
@@ -201,6 +229,9 @@ public class AccountServlet extends HttpServlet {
                 break;
             case "/UpdatePassword":
                 updatePassword(request,response);
+                break;
+            case "/UpdateBank":
+                updateBank(request,response);
                 break;
             case "/Register":
                 registerUser(request, response);
@@ -226,6 +257,19 @@ public class AccountServlet extends HttpServlet {
         }
 
     }
+
+    private void forgetPassword(HttpServletRequest request, HttpServletResponse response) throws IOException {
+        String email = request.getParameter("Email");
+        String rawpwd = request.getParameter("NewPassword");
+        String bcryptHashString = BCrypt.withDefaults().hashToString(12, rawpwd.toCharArray());
+        User u = UserModel.findByEmail(email);
+        assert u != null;
+        User User = new User(u.getId() , u.getPermission() , u.getCode() , u.getUsername() , bcryptHashString , u.getName() , u.getEmail() , u.getDob() , u.getMoney() , u.getMoneyAu() , u.getAddress() , u.getPhone() );
+        UserModel.update(User);
+        String url = "/Account/Login";
+        ServletUtils.redirect(url, request, response);
+    }
+
 
     private void feedBack(HttpServletRequest request, HttpServletResponse response) throws IOException {
         int happy =  Integer.parseInt(request.getParameter("happy"));
@@ -273,8 +317,21 @@ public class AccountServlet extends HttpServlet {
         ServletUtils.redirect(url, request, response);
     }
 
+    private void updateBank(HttpServletRequest request, HttpServletResponse response) throws IOException {
+        String inputBank = request.getParameter("inputBank");
+        String idBank = request.getParameter("idBank");
+        int userID =  Integer.parseInt(request.getParameter("id"));
+        Bank b = new Bank(userID , inputBank , idBank);
+        BankModel.add(b);
+        String url = request.getHeader("referer");
+        ServletUtils.redirect(url, request, response);
+    }
+
     private void updateUser(HttpServletRequest request, HttpServletResponse response) throws IOException {
         int userID =  Integer.parseInt(request.getParameter("id"));
+        int idB =  Integer.parseInt(request.getParameter("idB"));
+        String inputBank = request.getParameter("inputBank");
+        String idBank = request.getParameter("idBank");
         String name = request.getParameter("name");
         String email = request.getParameter("email");
         String phone = request.getParameter("phone");
@@ -286,6 +343,10 @@ public class AccountServlet extends HttpServlet {
         if(user != null){
             User u = new User(userID , user.getPermission() , user.getCode() , user.getUsername() , user.getPassword() , name , email , dob , user.getMoney() , user.getMoneyAu() , address , phone );
             UserModel.update(u);
+        }
+        if( inputBank != null && idBank != null){
+            Bank b = new Bank(idB ,userID , inputBank , idBank);
+            BankModel.update(b);
         }
         String url = request.getHeader("referer");
         ServletUtils.redirect(url, request, response);
@@ -310,7 +371,13 @@ public class AccountServlet extends HttpServlet {
 
     private void otpUser(HttpServletRequest request, HttpServletResponse response) throws IOException, ServletException {
 //        int Code = Integer.parseInt(request.getParameter("code"));
-        String codeString = request.getParameter("code");
+        String codeInt1 = request.getParameter("1");
+        String codeInt2 = request.getParameter("2");
+        String codeInt3 = request.getParameter("3");
+        String codeInt4 = request.getParameter("4");
+        String codeInt5 = request.getParameter("5");
+        String codeInt6 = request.getParameter("6");
+        String codeString = codeInt1.concat(codeInt2).concat(codeInt3).concat(codeInt4).concat(codeInt5).concat(codeInt6);
         int codeInt =  Integer.parseInt(codeString);
         User user = UserModel.findByCode(codeInt);
         if(user == null){
@@ -411,56 +478,92 @@ public class AccountServlet extends HttpServlet {
             UserModel.add(user);
             HttpSession session = request.getSession(); //Dùng chung cho mọi request
             session.setAttribute("otp", true); //Bật quyền vào trang OTP
-            ServletUtils.redirect("/Account/Otp", request, response);
+            ServletUtils.redirect("/Account/Otp?email="+ email, request, response);
         }
     }
 
     private void loginUser(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
-        String username = request.getParameter("username");
-        String password = request.getParameter("password");
+        String email = request.getParameter("email");
+        if(email == null){
+            String username = request.getParameter("username");
+            String password = request.getParameter("password");
 
-        User user = UserModel.findByUsername(username);
+            User user = UserModel.findByUsername(username);
 
-        if (user != null ) {
-            if(user.getPermission() != 4){
-                int id = user.getId();
-                String ID = String.valueOf(id);
-                BCrypt.Result result = BCrypt.verifyer().verify(password.toCharArray(), user.getPassword());
-                if (result.verified) {
-                    HttpSession session = request.getSession(); //Dùng chung cho mọi request
-                    session.setAttribute("auth", true);
-                    session.setAttribute("authUser", user);
+            if (user != null ) {
+                if(user.getPermission() != 4){
+                    int id = user.getId();
+                    String ID = String.valueOf(id);
+                    BCrypt.Result result = BCrypt.verifyer().verify(password.toCharArray(), user.getPassword());
+                    if (result.verified) {
+                        HttpSession session = request.getSession(); //Dùng chung cho mọi request
+                        session.setAttribute("auth", true);
+                        session.setAttribute("authUser", user);
 
 //                Lưu account lên trân cookie
 
-                    Cookie userID = new Cookie("_userid" , ID );
-                    userID.setMaxAge(60*60*24*365);
-                    userID.setPath("/");
-                    response.addCookie(userID);
-                    String url;
-                    if(user.getPermission() == 0){
-                        url = "/Admin";
-                    }else {
-                        url = "/Home";
-                    }
-                    ServletUtils.redirect(url, request, response);
+                        Cookie userID = new Cookie("_userid" , ID );
+                        userID.setMaxAge(60*60*24*365);
+                        userID.setPath("/");
+                        response.addCookie(userID);
+                        String url;
+                        if(user.getPermission() == 0){
+                            url = "/Admin";
+                        }else {
+                            url = "/Home";
+                        }
+                        ServletUtils.redirect(url, request, response);
 
-                } else {
+                    } else {
+                        request.setAttribute("hasError", true); //Thông báo lỗi
+                        request.setAttribute("errorMessage", "Invalid login."); // Thông báo lỗi
+                        ServletUtils.forward("/views/vwAccount/Login.jsp", request, response);
+                    }
+                }
+                else {
                     request.setAttribute("hasError", true); //Thông báo lỗi
                     request.setAttribute("errorMessage", "Invalid login."); // Thông báo lỗi
                     ServletUtils.forward("/views/vwAccount/Login.jsp", request, response);
                 }
-            }
-            else {
+            } else {
                 request.setAttribute("hasError", true); //Thông báo lỗi
                 request.setAttribute("errorMessage", "Invalid login."); // Thông báo lỗi
                 ServletUtils.forward("/views/vwAccount/Login.jsp", request, response);
             }
-        } else {
-            request.setAttribute("hasError", true); //Thông báo lỗi
-            request.setAttribute("errorMessage", "Invalid login."); // Thông báo lỗi
-            ServletUtils.forward("/views/vwAccount/Login.jsp", request, response);
+        }else {
+                //Note: tạo riêng một class java gửi Email rồi gọi nó ra.
+                final String usernameEmail = "19110186@student.hcmute.edu.vn";
+                final String passwordEmail = "Tao?may2cau";
+                String emailSubject = "Forget Password";
+                String emailContent = "http://localhost:8080/Webapp_TLCN/Account/ForgetPassword?email="+ usernameEmail;
+
+                Properties prop = new Properties();
+                prop.put("mail.smtp.host" , "smtp.gmail.com");
+                prop.put("mail.smtp.port" , "587");
+                prop.put("mail.smtp.auth" , "true");
+                prop.put("mail.smtp.starttls.enable" , "true");
+                Authenticator auth = new Authenticator() {
+                    protected PasswordAuthentication getPasswordAuthentication() {
+                        return new PasswordAuthentication(usernameEmail, passwordEmail);
+                    }
+                };
+                Session sessionEmail = Session.getInstance(prop, auth);
+                //Đăng nhập được email
+                try {
+                    MimeMessage message = new MimeMessage(sessionEmail);
+                    message.setFrom(new InternetAddress(usernameEmail));
+                    message.setRecipients(
+                            Message.RecipientType.TO, InternetAddress.parse(email)
+                    );
+                    message.setSubject(emailSubject);
+                    message.setText(emailContent);
+                    Transport.send(message);
+                }catch (Exception e){
+
+                }
+                ServletUtils.redirect("/Account/Login", request, response);
         }
+
     }
 
     private void logoutUser(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {

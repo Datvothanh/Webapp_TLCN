@@ -93,10 +93,8 @@
                                                 </div>
 
                                                 <c:if test="${auth}">
-                                                    <c:choose>
-                                                        <c:when test="${p.userSellID != authUser.id}">
-                                                            <c:set var="Test" scope="session" value="${1}"/>
-                                                            <c:forEach items="${favourite}" var="f">
+                                                    <c:set var="Test" scope="session" value="${1}"/>
+                                                    <c:forEach items="${favourite}" var="f">
                                                                 <c:if test="${f.userID == authUser.id && f.proID == p.proID && f.favourite == 0}">
                                                                     <a class="card-action"
                                                                        href="javascript:$('#frmFavourite-Add${p.proID}').submit()">
@@ -112,20 +110,12 @@
                                                                     </a>
                                                                 </c:if>
                                                             </c:forEach>
-                                                            <c:if test="${Test == 1 }">
+                                                    <c:if test="${Test == 1 }">
                                                                 <a class="card-action"
                                                                    href="javascript:$('#frmFavourite${p.proID}').submit()">
                                                                     <i class="fa fa-heart"></i>
                                                                 </a>
                                                             </c:if>
-                                                        </c:when>
-                                                        <c:otherwise>
-                                                            <div class="btn btn-sm bg-warning">
-                                                                <i class="bi bi-box-seam" aria-hidden="true"></i>
-                                                                Sản phẩm đang bán
-                                                            </div>
-                                                        </c:otherwise>
-                                                    </c:choose>
                                                 </c:if>
                                                 <c:if test="${!auth}">
                                                     <a class="card-action"
@@ -211,7 +201,7 @@
                             <div class="container" style="margin-top:50px; margin-bottom: 50px">
                                 <div class="row">
                                     <c:forEach items="${listTop5HighestPrice}" var="p">
-                                        <a href="#">
+                                        <a href="${pageContext.request.contextPath}/Product/Detail?id=${p.proID}">
                                         <div class="col-md-3">
                                             <div class="card-sl">
                                                 <form id="frmFavourite${p.proID}" method="post"
@@ -268,10 +258,8 @@
                                                 </div>
 
                                                 <c:if test="${auth}">
-                                                    <c:choose>
-                                                        <c:when test="${p.userSellID != authUser.id}">
-                                                            <c:set var="Test" scope="session" value="${1}"/>
-                                                            <c:forEach items="${favourite}" var="f">
+                                                    <c:set var="Test" scope="session" value="${1}"/>
+                                                    <c:forEach items="${favourite}" var="f">
                                                                 <c:if test="${f.userID == authUser.id && f.proID == p.proID && f.favourite == 0}">
                                                                     <a class="card-action"
                                                                        href="javascript:$('#frmFavourite-Add${p.proID}').submit()">
@@ -287,20 +275,12 @@
                                                                     </a>
                                                                 </c:if>
                                                             </c:forEach>
-                                                            <c:if test="${Test == 1 }">
+                                                    <c:if test="${Test == 1 }">
                                                                 <a class="card-action"
                                                                    href="javascript:$('#frmFavourite${p.proID}').submit()">
                                                                     <i class="fa fa-heart"></i>
                                                                 </a>
                                                             </c:if>
-                                                        </c:when>
-                                                        <c:otherwise>
-                                                            <div class="btn btn-sm bg-warning">
-                                                                <i class="bi bi-box-seam" aria-hidden="true"></i>
-                                                                Sản phẩm đang bán
-                                                            </div>
-                                                        </c:otherwise>
-                                                    </c:choose>
                                                 </c:if>
                                                 <c:if test="${!auth}">
                                                     <a class="card-action"

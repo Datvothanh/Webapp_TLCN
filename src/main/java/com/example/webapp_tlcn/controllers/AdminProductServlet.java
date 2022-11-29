@@ -53,6 +53,18 @@ public class AdminProductServlet extends HttpServlet {
                 request.setAttribute("idProEnd", idProEnd);
                 ServletUtils.forward("/views/vwProduct/Add.jsp", request, response);
                 break;
+            case "/AddOfSeller":
+                List<Category> listCategory0 = CategoryModel.findAll();
+                Product ProEnd1 = ProductModel.ProEnd();
+                int idProEnd1;
+                if(ProEnd1 == null){
+                    idProEnd1 = 0;
+                }else
+                    idProEnd1 = ProEnd1.getProID();
+                request.setAttribute("categories", listCategory0);
+                request.setAttribute("idProEnd", idProEnd1);
+                ServletUtils.forward("/views/vwProduct/AddOfSeller.jsp", request, response);
+                break;
             case "/Edit":
                 List<Category> listCategory1 = CategoryModel.findAll();
                 request.setAttribute("categories", listCategory1);
@@ -86,6 +98,9 @@ public class AdminProductServlet extends HttpServlet {
             case "/Add":
                 addProduct(request, response);
                 break;
+            case "/AddOfSeller":
+                addProductOfSeller(request, response);
+                break;
             case "/Delete":
                 deleteProduct(request, response);
                 break;
@@ -99,6 +114,41 @@ public class AdminProductServlet extends HttpServlet {
                 ServletUtils.forward("/views/404.jsp", request, response);
                 break;
         }
+    }
+
+    private void addProductOfSeller(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException{
+        String name = request.getParameter("ProName");
+        String proID = request.getParameter("ProID");
+        int userSellID = Integer.parseInt(request.getParameter("UserSellID"));
+        int startingPrice = Integer.parseInt(request.getParameter("StartingPrice"));
+        int stepPrice = Integer.parseInt(request.getParameter("StepPrice"));
+        int type = Integer.parseInt(request.getParameter("CatID"));
+        int highestPaidPrice = 0;
+        int sell = 0;
+        int userID = -1;
+        int countAuction = 0;
+        String tinyDes = request.getParameter("TinyDes");
+        String fullDes = request.getParameter("FullDes");
+        String strED = request.getParameter("EndDay");
+        DateTimeFormatter df = DateTimeFormatter.ofPattern("yyyy/MM/dd HH:mm");
+        LocalDateTime endDay = LocalDateTime.parse(strED, df);
+        Product p = new Product(startingPrice , type , stepPrice, highestPaidPrice , userID , sell ,countAuction,userSellID,name , tinyDes, fullDes, endDay , startingPrice , 0);
+        ProductModel.add(p);
+        Part partMain = request.getPart("ImageMain");
+        Part partSub1 = request.getPart("ImageSub1");
+        Part partSub2 = request.getPart("ImageSub2");
+        Part partSub3 = request.getPart("ImageSub3");
+        String realpath = "/public/imgs/sp/";
+        String realPathAll = realpath.concat(proID);
+        String realPath = this.getServletContext().getRealPath(realPathAll);
+        if (!Files.exists(Path.of(realPath))) {
+            Files.createDirectory(Path.of(realPath));
+        }
+        partMain.write(realPath + "/" + "main.jpg");
+        partSub1.write(realPath + "/" + "sub1.jpg");
+        partSub2.write(realPath + "/" + "sub2.jpg");
+        partSub3.write(realPath + "/" + "sub3.jpg");
+        ServletUtils.redirect("/Admin/Product", request, response);
     }
 
     private void updateShip(HttpServletRequest request, HttpServletResponse response) throws IOException {

@@ -3,6 +3,8 @@
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
 <%@ taglib prefix="fmt" uri="http://java.sun.com/jsp/jstl/fmt" %>
 <jsp:useBean id="userList" scope="request" type="java.util.List<com.example.webapp_tlcn.beans.User>"/>
+<jsp:useBean id="BankList" scope="request" type="java.util.List<com.example.webapp_tlcn.beans.Bank>"/>
+<jsp:useBean id="listBanks" scope="request" type="java.util.List<com.example.webapp_tlcn.beans.ListBank>"/>
 <t:main>
     <jsp:attribute name="css">
         <link rel="stylesheet"
@@ -30,6 +32,16 @@
                 const dob = $('#txtDOB').val();
                 const name = $('#txtName').val();
                 const phone = $('#txtPhone').val();
+                const inputBank = $('#inputBank').val();
+                const idBank = $('#idBank').val();
+                if (inputBank.length === 0) {
+                    alert('Ngân hàng không hợp lệ.')
+                    return;
+                }
+                if (idBank.length === 0) {
+                    alert('Tài khoản ngân hàng không hợp lệ.')
+                    return;
+                }
                 if (name.length === 0) {
                     alert('Tên không hợp lệ.')
                     return;
@@ -161,6 +173,41 @@
                                                         <input type="text" class="form-control" id="txtAddress" name="address" value="${u.address}">
                                                     </div>
                                                 </div>
+                                                    <hr>
+                                                    <c:forEach items="${BankList}" var="b">
+                                                        <c:if test="${b.idUser == u.id}">
+                                                            <c:set var="Bank" value="${b.bank}"/>
+                                                            <c:set var="idBank" value="${b.idBank}"/>
+                                                            <c:set var="idB" value="${b.id}"/>
+                                                        </c:if>
+                                                    </c:forEach>
+                                                    <div class="row">
+                                                        <div class="col-sm-3">
+                                                            <label for="inputBank">Ngân hàng</label>
+                                                        </div>
+                                                        <div class="col-sm-9">
+                                                            <select id="inputBank" class="form-control" name="inputBank">
+                                                                <option selected>${Bank}</option>
+                                                                <c:forEach items="${listBanks}" var="l">
+                                                                    <c:if test="${Bank != l.name}">
+                                                                        <option>${l.name}</option>
+                                                                    </c:if>
+                                                                </c:forEach>
+                                                            </select>
+                                                        </div>
+                                                    </div>
+                                                    <hr>
+                                                    <div class="row">
+                                                        <div class="col-sm-3">
+                                                            <label  for="idBank">Số tài khoản</label>
+                                                        </div>
+                                                        <div class="col-sm-9">
+                                                            <input type="text" class="form-control" id="idBank" name="idBank" value="${idBank}">
+                                                        </div>
+                                                        <div class="col-sm-9">
+                                                            <input type="number" class="form-control" id="idB" name="idB" value="${idB}" hidden>
+                                                        </div>
+                                                    </div>
                                                     <br>
                                                     <button type="submit" class="btn btn-primary">
                                                         <i class="fa fa-check" aria-hidden="true"></i>

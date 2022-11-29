@@ -76,6 +76,29 @@
                                                             <p class="text-muted mb-0">${u.address}</p>
                                                         </div>
                                                     </div>
+                                                    <hr>
+                                                    <c:forEach items="${bankList}" var="b">
+                                                        <c:if test="${b.idUser == u.id}">
+                                                            <div class="row">
+                                                                <div class="col-sm-3">
+                                                                    <p class="mb-0">Ngân hàng</p>
+                                                                </div>
+                                                                <div class="col-sm-9">
+                                                                    <p class="text-muted mb-0">${b.bank}</p>
+                                                                </div>
+                                                            </div>
+                                                            <hr>
+                                                            <div class="row">
+                                                                <div class="col-sm-3">
+                                                                    <p class="mb-0">Số tài khoản</p>
+                                                                </div>
+                                                                <div class="col-sm-9">
+                                                                    <p class="text-muted mb-0">${b.idBank}</p>
+                                                                </div>
+                                                            </div>
+                                                            <c:set var="test" value="1"/>
+                                                        </c:if>
+                                                    </c:forEach>
                                                 </div>
                                             </div>
 
@@ -93,32 +116,61 @@
                                        class="list-group-item list-group-item-action"><i class="fa fa-caret-right"
                                                                                          aria-hidden="true"></i>
                                         Hướng dẫn nạp tiền vào tài khoản</a>
-                                    <c:forEach items="${bankList}" var="b">
-                                        <c:if test="${b.idUser == u.id}">
-                                            <a href="${pageContext.request.contextPath}/Account/Update"
-                                               class="list-group-item list-group-item-action"><i class="fa fa-caret-right"
-                                                                                                 aria-hidden="true"></i>
-                                                Cập nhật thông tin cá nhân</a>
-                                            <c:set var="test" value="1"/>
-                                        </c:if>
-                                        <c:if test="${test == 0}">
-                                            <a href="${pageContext.request.contextPath}/Account/Update"
-                                               class="list-group-item list-group-item-action"><i class="fa fa-caret-right"
-                                                                                                 aria-hidden="true"></i>
-                                                Cập nhật thông tin cá nhân <p>Cập nhật tài khoản nâng hàng</p></a>
-                                        </c:if>
-                                    </c:forEach>
 
+                                    <a href="${pageContext.request.contextPath}/Account/Update"
+                                       class="list-group-item list-group-item-action"><i class="fa fa-caret-right"
+                                                                                         aria-hidden="true"></i>
+                                        Cập nhật thông tin cá nhân</a>
 
+                                    <c:if test="${test == 0}">
+                                        <a href="${pageContext.request.contextPath}/Account/UpdateBank"
+                                           class="list-group-item list-group-item-action"><i class="fa fa-caret-right"
+                                                                                             aria-hidden="true"></i>
+                                            Thêm thông tin ngân hàng</a>
+                                    </c:if>
 
                                     <a href="${pageContext.request.contextPath}/Account/UpdatePassword"
                                        class="list-group-item list-group-item-action"><i class="fa fa-caret-right"
                                                                                          aria-hidden="true"></i>
                                         Thay đổi mật khẩu</a>
-                                    <a href="${pageContext.request.contextPath}/Admin/Product/Add"
-                                       class="list-group-item list-group-item-action"><i class="fa fa-caret-right"
-                                                                                         aria-hidden="true"></i>
-                                        Tạo sản phẩm muốn bán </a>
+
+
+                                    <c:choose>
+                                        <c:when test="${test == 1}">
+                                            <a href="${pageContext.request.contextPath}/Admin/Product/AddOfSeller"
+                                               class="list-group-item list-group-item-action"><i class="fa fa-caret-right"
+                                                                                                 aria-hidden="true"></i>
+                                                Tạo sản phẩm muốn bán </a>
+                                            <c:set var="test" value="1"/>
+                                        </c:when>
+                                        <c:otherwise>
+                                            <a class="list-group-item list-group-item-action" data-toggle="modal" data-target="#exampleModal">
+                                                <i class="fa fa-caret-right" aria-hidden="true"></i>
+                                                Tạo sản phẩm muốn bán </a>
+
+                                            <!-- Modal -->
+                                            <div class="modal fade" id="exampleModal" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
+                                                <div class="modal-dialog">
+                                                    <div class="modal-content">
+                                                        <div class="modal-header">
+                                                            <h5 class="modal-title" id="exampleModalLabel">Thông báo</h5>
+                                                            <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                                                                <span aria-hidden="true">&times;</span>
+                                                            </button>
+                                                        </div>
+                                                        <div class="modal-body">
+                                                            Cập nhật thêm thông tin ngân hàng!
+                                                        </div>
+                                                        <div class="modal-footer">
+                                                            <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
+                                                        </div>
+                                                    </div>
+                                                </div>
+                                            </div>
+                                            <c:set var="test" value="1"/>
+                                        </c:otherwise>
+                                    </c:choose>
+
                                     <a href="${pageContext.request.contextPath}/Account/SellingList"
                                        class="list-group-item list-group-item-action"><i class="fa fa-caret-right"
                                                                                          aria-hidden="true"></i>

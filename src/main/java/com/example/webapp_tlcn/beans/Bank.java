@@ -9,6 +9,13 @@ public class Bank {
 
     }
 
+    public Bank(int idUser, String bank, String idBank) {
+        this.id = -1;
+        this.idUser = idUser;
+        this.bank = bank;
+        this.idBank = idBank;
+    }
+
     public Bank(int id, int idUser, String bank, String idBank) {
         this.id = id;
         this.idUser = idUser;
