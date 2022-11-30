@@ -8,11 +8,6 @@
         <div class="card">
             <h4 class="card-header d-flex justify-content-between">
                 Hướng dẫn nạp tiền
-                <a class="btn btn-outline-success" href="${pageContext.request.contextPath}/Account/Profile"
-                   role="button">
-                    <i class="bi bi-backspace-fill" aria-hidden="true"></i>
-                    Trở về
-                </a>
             </h4>
             <div class="card-body">
                 <img src="${pageContext.request.contextPath}/public/imgs/recharge/Recharge.png"

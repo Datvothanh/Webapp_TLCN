@@ -56,11 +56,6 @@
                 <div class="card">
                     <h4 class="card-header d-flex justify-content-between">
                         Cập nhật thông tin cá nhân
-                        <a class="btn btn-outline-success" href="${pageContext.request.contextPath}/Account/Profile"
-                           role="button">
-                            <i class="bi bi-backspace-fill" aria-hidden="true"></i>
-                            Trở về
-                        </a>
                     </h4>
                     <div class="card-body">
                         <section style="background-color: #eee;">
@@ -69,7 +64,7 @@
                                     <div class="col-lg-4">
                                         <div class="card mb-4">
                                             <div class="card-body text-center">
-                                                <img src="${pageContext.request.contextPath}/public/imgs/avatar/${u.id}/main.jpg" alt="avatar"
+                                                <img src="${pageContext.request.contextPath}/public/imgs/avatar/user.png" alt="avatar"
                                                      class="rounded-circle img-fluid" style="width: 150px;">
                                                 <h5 class="my-3">${u.name}</h5>
                                             <c:choose>

@@ -87,6 +87,13 @@
         crossorigin="anonymous" referrerpolicy="no-referrer"></script>
 <script src='https://www.google.com/recaptcha/api.js?hl=vi'></script>
 <script>
+    const validateEmail = (email) => {
+        return String(email)
+            .toLowerCase()
+            .match(
+                /^(([^<>()[\]\\.,;:\s@"]+(\.[^<>()[\]\\.,;:\s@"]+)*)|(".+"))@((\[[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\])|(([a-zA-Z\-0-9]+\.)+[a-zA-Z]{2,}))$/
+            );
+    };
     $('#frmRegister').on('submit', function (e) {
         e.preventDefault();
         const username = $('#txtUsername').val(); //Gán vào biến username
@@ -125,7 +132,7 @@
             alert('Số điện thoại không hợp lệ.')
             return;
         }
-        if (email.length === 0) {
+        if (!validateEmail(email)) {
             alert('Email không hợp lệ.')
             return;
         }
@@ -133,9 +140,6 @@
             alert('Ngày tháng năm sinh không hợp lệ.')
             return;
         }
-
-        //Thêm các điều kiện khi đăng ký tài khoản
-
 
         $.getJSON('${pageContext.request.contextPath}/Account/IsAvailableUserName?user=' + username, function (data1) {//Kiểm tra UserName có tồn tại không
             if (data1 === true) {

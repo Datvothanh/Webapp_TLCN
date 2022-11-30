@@ -84,6 +84,9 @@
                                                     </c:if>
                                                 </c:forEach>
                                                 <div class="card-image">
+                                                    <c:if test="${p.userSellID == authUser.id}">
+                                                        <span class="card-notify-badge">Sản phẩm của bạn</span>
+                                                    </c:if>
                                                     <img src="${pageContext.request.contextPath}/public/imgs/sp/${p.proID}/main.jpg"
                                                                         alt="${p.proName}" title="${p.proName}" />
                                                 </div>
@@ -245,6 +248,9 @@
                                                     </c:if>
                                                 </c:forEach>
                                                 <div class="card-image">
+                                                    <c:if test="${p.userSellID == authUser.id}">
+                                                        <span class="card-notify-badge">Sản phẩm của bạn</span>
+                                                    </c:if>
                                                     <img src="${pageContext.request.contextPath}/public/imgs/sp/${p.proID}/main.jpg"
                                                          alt="${p.proName}" title="${p.proName}" />
                                                 </div>

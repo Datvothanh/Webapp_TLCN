@@ -8,11 +8,6 @@
         <div class="card">
             <h4 class="card-header d-flex justify-content-between">
                 Selling List
-                <a class="btn btn-outline-success" href="${pageContext.request.contextPath}/Account/Profile"
-                   role="button">
-                    <i class="bi bi-backspace-fill" aria-hidden="true"></i>
-                    Trở về
-                </a>
             </h4>
             <div class="card-body">
                 <div class="row">

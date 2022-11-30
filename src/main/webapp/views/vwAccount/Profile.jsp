@@ -10,6 +10,11 @@
         <c:forEach items="${userList}" var="u">
             <c:if test="${u.id == authUser.id}">
                 <c:if test="${u.permission == 1}">
+                    <c:forEach items="${bankList}" var="b">
+                        <c:if test="${b.idUser == u.id}">
+                            <c:set var="test" value="1"/>
+                        </c:if>
+                    </c:forEach>
                     <div class="card">
                         <h4 class="card-header">
                             Profile
@@ -29,11 +34,6 @@
                                                 </div>
                                             </div>
                                             <div class="list-group list-group-flush">
-                                                <a href="${pageContext.request.contextPath}/Account/Recharge"
-                                                   class="list-group-item list-group-item-action"><i class="fa fa-caret-right"
-                                                                                                     aria-hidden="true"></i>
-                                                    Hướng dẫn nạp tiền vào tài khoản</a>
-
                                                 <a href="${pageContext.request.contextPath}/Account/Update"
                                                    class="list-group-item list-group-item-action"><i class="fa fa-caret-right"
                                                                                                      aria-hidden="true"></i>
@@ -215,10 +215,6 @@
                                                 </label>
                                             </form>
                                             <div class="list-group list-group-flush">
-                                                <a href="${pageContext.request.contextPath}/Account/Recharge"
-                                                   class="list-group-item list-group-item-action"><i class="fa fa-caret-right"
-                                                                                                     aria-hidden="true"></i>
-                                                    Hướng dẫn nạp tiền vào tài khoản</a>
                                                 <a href="${pageContext.request.contextPath}/Account/Update"
                                                    class="list-group-item list-group-item-action"><i class="fa fa-caret-right"
                                                                                                      aria-hidden="true"></i>
