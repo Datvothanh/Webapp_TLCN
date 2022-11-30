@@ -20,12 +20,8 @@
         <div class="card" style="background: #FEFBF6">
             <jsp:include page="../../views/partials/ad.jsp"/>
             <div class="card-body">
+                <h3>Sản phẩm có lượt đấu giá cao nhất <span class="badge badge-secondary" style="background-color: #DC3535;">  Top 5</span></h3>
                 <ul class="list-group">
-                    <div class="jumbotron jumbotron-fluid" style="background: #E0D8B0 ; border-radius: 20px">
-                        <div class="container" >
-                            <h1 class="display-4">5 Sản phẩm có lượt đấu giá cao nhất</h1>
-                        </div>
-                    </div>
                     <c:choose>
                         <c:when test="${listTop5HighestCountAuction.size() == 0}">
                             <div class="card-body">
@@ -185,11 +181,7 @@
                     </c:choose>
                 </ul>
                 <ul class="list-group">
-                    <div class="jumbotron jumbotron-fluid" style="background:  #DEA057  ; border-radius: 20px" >
-                        <div class="container" >
-                            <h1 class="display-4">5 Sản phẩm đang có giá cao nhất</h1>
-                        </div>
-                    </div>
+                    <h3>Sản phẩm đang có giá cao nhất <span class="badge badge-secondary" style="background-color: #DC3535;">  Top 5</span></h3>
                     <c:choose>
                         <c:when test="${listTop5HighestPrice.size() == 0}">
                             <div class="card-body">

@@ -5,7 +5,8 @@
 <head>
   <meta charset="UTF-8">
   <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
-  <title>Đăng nhập </title>
+  <title>Web App</title>
+  <link rel="shortcut icon" type="image/png" href="${pageContext.request.contextPath}/public/imgs/login/logo.svg"/>
   <link href="https://fonts.googleapis.com/css?family=Karla:400,700&display=swap" rel="stylesheet">
   <link rel="stylesheet" href="https://cdn.materialdesignicons.com/4.8.95/css/materialdesignicons.min.css">
   <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.4.1/css/bootstrap.min.css">
@@ -27,13 +28,13 @@
               <p class="login-card-description">Đăng nhập tài khoản của bạn</p>
               <c:if test="${hasError}">
                 <div class="alert alert-warning alert-dismissible fade show" role="alert">
-                  <strong>Login failed!</strong>${errorMessage}
+                  <strong>Đăng nhập không thành công! </strong><br/> ${errorMessage}
                   <button type="button" class="close" data-dismiss="alert" aria-label="Close">
                     <span aria-hidden="true">x</span>
                   </button>
                 </div>
               </c:if>
-              <form action="" method="post" >
+              <form action="" method="post" id="frmLogin" >
                   <div class="form-group">
                     <label for="txtUsername" class="sr-only">Tên đăng nhập</label>
                     <input type="text" name="username" id="txtUsername" class="form-control" placeholder="Tên đăng nhập">
@@ -42,7 +43,7 @@
                     <label for="txtPassword" class="sr-only">Mật khẩu</label>
                     <input type="password" name="password" id="txtPassword" class="form-control" placeholder="***********">
                   </div>
-                  <input name="login" id="login" class="btn btn-block login-btn mb-4" type="submit" value="Login" >
+                  <input name="login" id="login" class="btn btn-block login-btn mb-4" type="submit" value="Đăng nhập" >
                 </form>
                 <a href="#" class="forgot-password-link" data-toggle="modal" data-target="#forgetPassword">Bạn quên mật khẩu? </a>
               <!-- Modal -->
@@ -73,32 +74,6 @@
           </div>
         </div>
       </div>
-      <!-- <div class="card login-card">
-        <img src="assets/images/login.jpg" alt="login" class="login-card-img">
-        <div class="card-body">
-          <h2 class="login-card-title">Login</h2>
-          <p class="login-card-description">Sign in to your account to continue.</p>
-          <form action="#!">
-            <div class="form-group">
-              <label for="email" class="sr-only">Email</label>
-              <input type="email" name="email" id="email" class="form-control" placeholder="Email">
-            </div>
-            <div class="form-group">
-              <label for="password" class="sr-only">Password</label>
-              <input type="password" name="password" id="password" class="form-control" placeholder="Password">
-            </div>
-            <div class="form-prompt-wrapper">
-              <div class="custom-control custom-checkbox login-card-check-box">
-                <input type="checkbox" class="custom-control-input" id="customCheck1">
-                <label class="custom-control-label" for="customCheck1">Remember me</label>
-              </div>              
-              <a href="#!" class="text-reset">Forgot password?</a>
-            </div>
-            <input name="login" id="login" class="btn btn-block login-btn mb-4" type="button" value="Login">
-          </form>
-          <p class="login-card-footer-text">Don't have an account? <a href="#!" class="text-reset">Register here</a></p>
-        </div>
-      </div> -->
     </div>
   </main>
   <script src="https://code.jquery.com/jquery-3.4.1.min.js"></script>
@@ -114,24 +89,32 @@
               return;
             }
 
-            //Thêm các điều kiện khi đăng ký tài khoản
-
-
             $.getJSON('${pageContext.request.contextPath}/Account/IsAvailableSendEmail?email=' + email, function (data1) {//Kiểm tra UserName có tồn tại không
               if (data1 === false) {
-                <%--$.getJSON('${pageContext.request.contextPath}/Account/IsAvailableEmail?email=' + email, function (data) {//Kiểm tra UserName có tồn tại không--%>
-                <%--    if (data === true) {--%>
-                <%--        $('#frmRegister').off('submit').submit();--%>
-                <%--    } else {--%>
-                <%--        alert('Email đã tồn tại.');--%>
-                <%--    }--%>
-                <%--});--%>
                 $('#frmSendEmail').off('submit').submit();
               } else {
                 alert('Không tồn tại tài khoản đã đăng ký Email này.');
               }
             });
 
+
+          });
+        </script>
+        <script>
+          $('#frmLogin').on('submit', function (e) {
+            e.preventDefault();
+            const username = $('#txtUsername').val(); //Gán vào biến username
+            const password = $('#txtPassword').val();
+            if (username.length === 0) {
+              alert('Tên đăng nhập không hợp lệ.')//Nếu không có username thì sẽ hiện thông báo
+              return;
+            }
+            if (password.length === 0) {
+              alert('Mật khẩu không hợp lệ.')
+              return;
+            }
+
+            $('#frmLogin').off('submit').submit();
 
           });
         </script>

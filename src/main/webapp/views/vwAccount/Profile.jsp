@@ -28,6 +28,83 @@
                                                     <p class="text-muted mb-1">Người bán</p>
                                                 </div>
                                             </div>
+                                            <div class="list-group list-group-flush">
+                                                <a href="${pageContext.request.contextPath}/Account/Recharge"
+                                                   class="list-group-item list-group-item-action"><i class="fa fa-caret-right"
+                                                                                                     aria-hidden="true"></i>
+                                                    Hướng dẫn nạp tiền vào tài khoản</a>
+
+                                                <a href="${pageContext.request.contextPath}/Account/Update"
+                                                   class="list-group-item list-group-item-action"><i class="fa fa-caret-right"
+                                                                                                     aria-hidden="true"></i>
+                                                    Cập nhật thông tin cá nhân</a>
+
+                                                <c:if test="${test == 0}">
+                                                    <a href="${pageContext.request.contextPath}/Account/UpdateBank"
+                                                       class="list-group-item list-group-item-action"><i class="fa fa-caret-right"
+                                                                                                         aria-hidden="true"></i>
+                                                        Thêm thông tin ngân hàng</a>
+                                                </c:if>
+
+                                                <a href="${pageContext.request.contextPath}/Account/UpdatePassword"
+                                                   class="list-group-item list-group-item-action"><i class="fa fa-caret-right"
+                                                                                                     aria-hidden="true"></i>
+                                                    Thay đổi mật khẩu</a>
+
+
+                                                <c:choose>
+                                                    <c:when test="${test == 1}">
+                                                        <a href="${pageContext.request.contextPath}/Admin/Product/AddOfSeller"
+                                                           class="list-group-item list-group-item-action"><i class="fa fa-caret-right"
+                                                                                                             aria-hidden="true"></i>
+                                                            Tạo sản phẩm muốn bán </a>
+                                                        <c:set var="test" value="1"/>
+                                                    </c:when>
+                                                    <c:otherwise>
+                                                        <a class="list-group-item list-group-item-action" data-toggle="modal" data-target="#exampleModal">
+                                                            <i class="fa fa-caret-right" aria-hidden="true"></i>
+                                                            Tạo sản phẩm muốn bán </a>
+
+                                                        <!-- Modal -->
+                                                        <div class="modal fade" id="exampleModal" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
+                                                            <div class="modal-dialog">
+                                                                <div class="modal-content">
+                                                                    <div class="modal-header">
+                                                                        <h5 class="modal-title" id="exampleModalLabel">Thông báo</h5>
+                                                                        <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                                                                            <span aria-hidden="true">&times;</span>
+                                                                        </button>
+                                                                    </div>
+                                                                    <div class="modal-body">
+                                                                        Cập nhật thêm thông tin ngân hàng!
+                                                                    </div>
+                                                                    <div class="modal-footer">
+                                                                        <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
+                                                                    </div>
+                                                                </div>
+                                                            </div>
+                                                        </div>
+                                                        <c:set var="test" value="1"/>
+                                                    </c:otherwise>
+                                                </c:choose>
+
+                                                <a href="${pageContext.request.contextPath}/Account/SellingList"
+                                                   class="list-group-item list-group-item-action"><i class="fa fa-caret-right"
+                                                                                                     aria-hidden="true"></i>
+                                                    Danh sách sản phẩm đang bán </a>
+                                                <a href="${pageContext.request.contextPath}/Account/EndingList"
+                                                   class="list-group-item list-group-item-action"><i class="fa fa-caret-right"
+                                                                                                     aria-hidden="true"></i>
+                                                    Danh sách sản phẩm đã kết thúc </a>
+                                                <a href="${pageContext.request.contextPath}/Account/WatchList"
+                                                   class="list-group-item list-group-item-action"><i class="fa fa-caret-right"
+                                                                                                     aria-hidden="true"></i>
+                                                    Danh sách sản phầm yêu thích</a>
+                                                    <%--                                <a href="${pageContext.request.contextPath}/Admin/Product/Add"--%>
+                                                    <%--                                   class="list-group-item list-group-item-action"><i class="fa fa-caret-right"--%>
+                                                    <%--                                                                                     aria-hidden="true"></i>--%>
+                                                    <%--                                    Danh sách sản phẩm đã được đấu giá </a>--%>
+                                            </div>
                                         </div>
                                         <div class="col-lg-8">
                                             <div class="card mb-4">
@@ -106,89 +183,6 @@
                                     </div>
                                 </div>
                             </section>
-                            <div class="card mt-3">
-                                <h4 class="card-header">
-                                    <i class="bi bi-list"></i>
-                                    Danh mục người dùng
-                                </h4>
-                                <div class="list-group list-group-flush">
-                                    <a href="${pageContext.request.contextPath}/Account/Recharge"
-                                       class="list-group-item list-group-item-action"><i class="fa fa-caret-right"
-                                                                                         aria-hidden="true"></i>
-                                        Hướng dẫn nạp tiền vào tài khoản</a>
-
-                                    <a href="${pageContext.request.contextPath}/Account/Update"
-                                       class="list-group-item list-group-item-action"><i class="fa fa-caret-right"
-                                                                                         aria-hidden="true"></i>
-                                        Cập nhật thông tin cá nhân</a>
-
-                                    <c:if test="${test == 0}">
-                                        <a href="${pageContext.request.contextPath}/Account/UpdateBank"
-                                           class="list-group-item list-group-item-action"><i class="fa fa-caret-right"
-                                                                                             aria-hidden="true"></i>
-                                            Thêm thông tin ngân hàng</a>
-                                    </c:if>
-
-                                    <a href="${pageContext.request.contextPath}/Account/UpdatePassword"
-                                       class="list-group-item list-group-item-action"><i class="fa fa-caret-right"
-                                                                                         aria-hidden="true"></i>
-                                        Thay đổi mật khẩu</a>
-
-
-                                    <c:choose>
-                                        <c:when test="${test == 1}">
-                                            <a href="${pageContext.request.contextPath}/Admin/Product/AddOfSeller"
-                                               class="list-group-item list-group-item-action"><i class="fa fa-caret-right"
-                                                                                                 aria-hidden="true"></i>
-                                                Tạo sản phẩm muốn bán </a>
-                                            <c:set var="test" value="1"/>
-                                        </c:when>
-                                        <c:otherwise>
-                                            <a class="list-group-item list-group-item-action" data-toggle="modal" data-target="#exampleModal">
-                                                <i class="fa fa-caret-right" aria-hidden="true"></i>
-                                                Tạo sản phẩm muốn bán </a>
-
-                                            <!-- Modal -->
-                                            <div class="modal fade" id="exampleModal" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
-                                                <div class="modal-dialog">
-                                                    <div class="modal-content">
-                                                        <div class="modal-header">
-                                                            <h5 class="modal-title" id="exampleModalLabel">Thông báo</h5>
-                                                            <button type="button" class="close" data-dismiss="modal" aria-label="Close">
-                                                                <span aria-hidden="true">&times;</span>
-                                                            </button>
-                                                        </div>
-                                                        <div class="modal-body">
-                                                            Cập nhật thêm thông tin ngân hàng!
-                                                        </div>
-                                                        <div class="modal-footer">
-                                                            <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
-                                                        </div>
-                                                    </div>
-                                                </div>
-                                            </div>
-                                            <c:set var="test" value="1"/>
-                                        </c:otherwise>
-                                    </c:choose>
-
-                                    <a href="${pageContext.request.contextPath}/Account/SellingList"
-                                       class="list-group-item list-group-item-action"><i class="fa fa-caret-right"
-                                                                                         aria-hidden="true"></i>
-                                        Danh sách sản phẩm đang bán </a>
-                                    <a href="${pageContext.request.contextPath}/Account/EndingList"
-                                       class="list-group-item list-group-item-action"><i class="fa fa-caret-right"
-                                                                                         aria-hidden="true"></i>
-                                        Danh sách sản phẩm đã kết thúc </a>
-                                    <a href="${pageContext.request.contextPath}/Account/WatchList"
-                                       class="list-group-item list-group-item-action"><i class="fa fa-caret-right"
-                                                                                         aria-hidden="true"></i>
-                                        Danh sách sản phầm yêu thích</a>
-                                        <%--                                <a href="${pageContext.request.contextPath}/Admin/Product/Add"--%>
-                                        <%--                                   class="list-group-item list-group-item-action"><i class="fa fa-caret-right"--%>
-                                        <%--                                                                                     aria-hidden="true"></i>--%>
-                                        <%--                                    Danh sách sản phẩm đã được đấu giá </a>--%>
-                                </div>
-                            </div>
                         </div>
                     </div>
                 </c:if>
@@ -210,6 +204,54 @@
                                                     <h5 class="my-3">${u.name}</h5>
                                                     <p class="text-muted mb-1">Người mua</p>
                                                 </div>
+                                            </div>
+                                            <form id="frmAccountPermission" method="post"
+                                                  action="${pageContext.request.contextPath}/Account/UpdatePermission" hidden>
+                                                <label>
+                                                    <input value="${u.id}" name="idUser">
+                                                </label>
+                                                <label>
+                                                    <input value="2" name="permission">
+                                                </label>
+                                            </form>
+                                            <div class="list-group list-group-flush">
+                                                <a href="${pageContext.request.contextPath}/Account/Recharge"
+                                                   class="list-group-item list-group-item-action"><i class="fa fa-caret-right"
+                                                                                                     aria-hidden="true"></i>
+                                                    Hướng dẫn nạp tiền vào tài khoản</a>
+                                                <a href="${pageContext.request.contextPath}/Account/Update"
+                                                   class="list-group-item list-group-item-action"><i class="fa fa-caret-right"
+                                                                                                     aria-hidden="true"></i>
+                                                    Cập nhật thông tin cá nhân</a>
+                                                <a href="${pageContext.request.contextPath}/Account/UpdatePassword"
+                                                   class="list-group-item list-group-item-action"><i class="fa fa-caret-right"
+                                                                                                     aria-hidden="true"></i>
+                                                    Thay đổi mật khẩu</a>
+                                                <a href="${pageContext.request.contextPath}/Account/WatchList"
+                                                   class="list-group-item list-group-item-action"><i class="fa fa-caret-right"
+                                                                                                     aria-hidden="true"></i>
+                                                    Danh sách sản phầm yêu thích</a>
+                                                <c:choose>
+                                                    <c:when test="${u.permission == 2}">
+                                                        <a class="list-group-item list-group-item-action"><i class="fa fa-caret-right"
+                                                                                                             aria-hidden="true"></i>
+                                                            Đang chờ duyệt yêu cầu nâng
+                                                            cấp thành người bán</a>
+                                                    </c:when>
+                                                    <c:otherwise>
+                                                        <a href="javascript:$('#frmAccountPermission').submit()"
+                                                           class="list-group-item list-group-item-action"><i class="fa fa-caret-right"
+                                                                                                             aria-hidden="true"></i> Yêu cầu
+                                                            nâng
+                                                            cấp thành người bán</a>
+                                                    </c:otherwise>
+                                                </c:choose>
+                                                <a href="${pageContext.request.contextPath}/Account/AuctionList" class="list-group-item list-group-item-action"><i class="fa fa-caret-right"
+                                                                                                                                                                   aria-hidden="true"></i> Sản phẩm đang
+                                                    đấu giá </a>
+                                                <a href="${pageContext.request.contextPath}/Account/SuccessList" class="list-group-item list-group-item-action">
+                                                    <i class="fa fa-caret-right" aria-hidden="true"></i> Sản phẩm
+                                                    đấu giá thành công</a>
                                             </div>
                                         </div>
                                         <div class="col-lg-8">
@@ -266,61 +308,6 @@
                                     </div>
                                 </div>
                             </section>
-                            <div class="card mt-3">
-                                <h4 class="card-header">
-                                    <i class="bi bi-list"></i>
-                                    Danh mục người dùng
-                                </h4>
-                                <form id="frmAccountPermission" method="post"
-                                      action="${pageContext.request.contextPath}/Account/UpdatePermission">
-                                    <label>
-                                        <input value="${u.id}" name="idUser"
-                                               hidden>
-                                    </label>
-                                    <label>
-                                        <input value="2" name="permission" hidden>
-                                    </label>
-                                </form>
-                                <div class="list-group list-group-flush">
-                                    <a href="${pageContext.request.contextPath}/Account/Recharge"
-                                       class="list-group-item list-group-item-action"><i class="fa fa-caret-right"
-                                                                                         aria-hidden="true"></i>
-                                        Hướng dẫn nạp tiền vào tài khoản</a>
-                                    <a href="${pageContext.request.contextPath}/Account/Update"
-                                       class="list-group-item list-group-item-action"><i class="fa fa-caret-right"
-                                                                                         aria-hidden="true"></i>
-                                        Cập nhật thông tin cá nhân</a>
-                                    <a href="${pageContext.request.contextPath}/Account/UpdatePassword"
-                                       class="list-group-item list-group-item-action"><i class="fa fa-caret-right"
-                                                                                         aria-hidden="true"></i>
-                                        Thay đổi mật khẩu</a>
-                                    <a href="${pageContext.request.contextPath}/Account/WatchList"
-                                       class="list-group-item list-group-item-action"><i class="fa fa-caret-right"
-                                                                                         aria-hidden="true"></i>
-                                        Danh sách sản phầm yêu thích</a>
-                                    <c:choose>
-                                        <c:when test="${u.permission == 2}">
-                                            <a class="list-group-item list-group-item-action"><i class="fa fa-caret-right"
-                                                                                                 aria-hidden="true"></i>
-                                                Đang chờ duyệt yêu cầu nâng
-                                                cấp thành người bán</a>
-                                        </c:when>
-                                        <c:otherwise>
-                                            <a href="javascript:$('#frmAccountPermission').submit()"
-                                               class="list-group-item list-group-item-action"><i class="fa fa-caret-right"
-                                                                                                 aria-hidden="true"></i> Yêu cầu
-                                                nâng
-                                                cấp thành người bán</a>
-                                        </c:otherwise>
-                                    </c:choose>
-                                    <a href="${pageContext.request.contextPath}/Account/AuctionList" class="list-group-item list-group-item-action"><i class="fa fa-caret-right"
-                                                                                                  aria-hidden="true"></i> Sản phẩm đang
-                                    đấu giá </a>
-                                    <a href="${pageContext.request.contextPath}/Account/SuccessList" class="list-group-item list-group-item-action">
-                                       <i class="fa fa-caret-right" aria-hidden="true"></i> Sản phẩm
-                                            đấu giá thành công</a>
-                                </div>
-                            </div>
                         </div>
                     </div>
                 </c:if>

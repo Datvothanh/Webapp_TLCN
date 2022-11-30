@@ -5,7 +5,8 @@
 <head>
     <meta charset="UTF-8">
     <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
-    <title>Đăng Ký </title>
+    <title>Web App</title>
+    <link rel="shortcut icon" type="image/png" href="${pageContext.request.contextPath}/public/imgs/login/logo.svg"/>
     <link rel="stylesheet"
           href="https://cdnjs.cloudflare.com/ajax/libs/jquery-datetimepicker/2.5.20/jquery.datetimepicker.min.css"
           integrity="sha512-f0tzWhCwVFS3WeYaofoLWkTP62ObhewQ1EZn65oSYDZUg1+CyywGKkWzm8BxaJj5HGKI72PnMH9jYyIFz+GH7g=="
@@ -76,32 +77,6 @@
                 </div>
             </div>
         </div>
-        <!-- <div class="card login-card">
-          <img src="assets/images/login.jpg" alt="login" class="login-card-img">
-          <div class="card-body">
-            <h2 class="login-card-title">Login</h2>
-            <p class="login-card-description">Sign in to your account to continue.</p>
-            <form action="#!">
-              <div class="form-group">
-                <label for="email" class="sr-only">Email</label>
-                <input type="email" name="email" id="email" class="form-control" placeholder="Email">
-              </div>
-              <div class="form-group">
-                <label for="password" class="sr-only">Password</label>
-                <input type="password" name="password" id="password" class="form-control" placeholder="Password">
-              </div>
-              <div class="form-prompt-wrapper">
-                <div class="custom-control custom-checkbox login-card-check-box">
-                  <input type="checkbox" class="custom-control-input" id="customCheck1">
-                  <label class="custom-control-label" for="customCheck1">Remember me</label>
-                </div>
-                <a href="#!" class="text-reset">Forgot password?</a>
-              </div>
-              <input name="login" id="login" class="btn btn-block login-btn mb-4" type="button" value="Login">
-            </form>
-            <p class="login-card-footer-text">Don't have an account? <a href="#!" class="text-reset">Register here</a></p>
-          </div>
-        </div> -->
     </div>
 </main>
 <script src="https://code.jquery.com/jquery-3.4.1.min.js"></script>
@@ -122,6 +97,10 @@
         const dob = $('#txtDOB').val();
         const name = $('#txtName').val();
         const phone = $('#txtPhone').val();
+        if (name.length === 0) {
+            alert('Tên không hợp lệ.')
+            return;
+        }
         if (username.length === 0) {
             alert('Tên đăng nhập không hợp lệ.')//Nếu không có username thì sẽ hiện thông báo
             return;
@@ -134,16 +113,8 @@
             alert('Xác nhận mật khẩu không hợp lệ.')
             return;
         }
-        if (name.length === 0) {
-            alert('Tên không hợp lệ.')
-            return;
-        }
-        if (dob.length === 0) {
-            alert('Ngày tháng năm sinh không hợp lệ.')
-            return;
-        }
-        if (email.length === 0) {
-            alert('Email không hợp lệ.')
+        if (password !== passwordConfirm) {
+            alert('Xác nhận mật khẩu chưa đúng.')
             return;
         }
         if (address.length === 0) {
@@ -154,8 +125,12 @@
             alert('Số điện thoại không hợp lệ.')
             return;
         }
-        if (password !== passwordConfirm) {
-            alert('Xác nhận mật khẩu chưa đúng.')
+        if (email.length === 0) {
+            alert('Email không hợp lệ.')
+            return;
+        }
+        if (dob.length === 0) {
+            alert('Ngày tháng năm sinh không hợp lệ.')
             return;
         }
 

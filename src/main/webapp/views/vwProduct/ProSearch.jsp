@@ -11,7 +11,7 @@
         <jsp:include page="../../views/partials/ad.jsp"/>
         <div class="card">
             <h4 class="card-header d-flex justify-content-between">
-                  Tìm kiếm:"${txtSr}"
+                  Tìm kiếm: "${txtSr}"
             </h4>
             <c:choose>
                 <c:when test="${products.size() == 0}">

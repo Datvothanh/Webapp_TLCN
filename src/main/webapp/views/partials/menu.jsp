@@ -70,15 +70,18 @@
                 </c:forEach>
             </ul>
         </div>
-        <div style="padding-bottom: 21px">
+        <div style="padding-bottom: 21px ; padding-right: 15px;">
             <form method="post" class="form-inline" style="padding-top: 20px" action="${pageContext.request.contextPath}/Home/Index">
                 <input class="form-control mr-sm-2" type="text" id="txtSr" name="txtSr" placeholder="Tìm kiếm.." aria-label="Search">
                 <button class="btn btn-outline-danger my-2 my-sm-0" type="submit"><i class="bi bi-search"></i></button>
             </form>
         </div>
-        <div  class="collapse navbar-collapse">
+        <div>
             <c:choose>
                 <c:when test="${auth}">
+                    <div class="collapse navbar-collapse">
+
+
                     <form id="frmLogout" method="post" action="${pageContext.request.contextPath}/Account/Logout"></form>
 
                     <img src="${pageContext.request.contextPath}/public/imgs/avatar/user.png" alt="Avatar" class="avatar">
@@ -91,34 +94,35 @@
                             border-radius: 50%;
                         }
                     </style>
-                    <li class="nav-item dropdown" style="list-style: none">
-                        <a class="nav-link dropdown-toggle" href="#" id="navbarDropdownR" role="button"
+                    <div class="dropdown" style="list-style: none">
+                        <a class="nav-link dropdown-toggle" href="#" role="button"
                            data-toggle="dropdown"
                            aria-haspopup="true" aria-expanded="false">
                             Xin chào, <b>${authUser.name}!</b>
                         </a>
-                        <div class="dropdown-menu dropdown-menu-right" style="background-color: #eeeeee" aria-labelledby="navbarDropdown">
+                        <div class="dropdown-menu" style="background-color: #eeeeee ; padding-left: 12px; border-radius: 12px;" >
                             <a class="dropdown-item" href="${pageContext.request.contextPath}/Account/Profile">
                                 <i class="fa fa-user" aria-hidden="true"></i>
                                 Hồ sơ cá nhân
                             </a>
-                            <div class="dropdown-divider"></div>
+                            <div class="dropdown-divider" style="border-top:0.5px solid #e7d9d9;"></div>
                             <a class="dropdown-item" href="#">
                                 <i class="bi bi-piggy-bank" aria-hidden="true"></i>
                                     ${authUser.money}
                             </a>
-                            <div class="dropdown-divider"></div>
+                            <div class="dropdown-divider" style="border-top:0.5px solid #e7d9d9;"></div>
                             <a class="dropdown-item" href="#">
                                 <i class="bi bi-cart" aria-hidden="true"></i>
                                     ${authUser.moneyAu}
                             </a>
-                            <div class="dropdown-divider"></div>
+                            <div class="dropdown-divider" style="border-top:0.5px solid #e7d9d9;"></div>
                             <a class="dropdown-item" href="javascript:$('#frmLogout').submit()">
                                 <i class="fa fa-sign-out" aria-hidden="true"></i>
                                 Đăng xuất
                             </a>
                         </div>
-                    </li>
+                    </div>
+                    </div>
                 </c:when>
                 <c:otherwise>
                     <ul class="navbar-nav">

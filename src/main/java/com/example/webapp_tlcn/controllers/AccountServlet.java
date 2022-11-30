@@ -434,7 +434,7 @@ public class AccountServlet extends HttpServlet {
             // Verify CAPTCHA.
             valid = VerifyUtils.verify(gRecaptchaResponse);
             if (!valid) {
-                errorString = "Captcha invalid!";
+                errorString = "Chưa xác nhận Captcha!";
             }
         }
         if (!valid) {
@@ -516,18 +516,18 @@ public class AccountServlet extends HttpServlet {
 
                     } else {
                         request.setAttribute("hasError", true); //Thông báo lỗi
-                        request.setAttribute("errorMessage", "Invalid login."); // Thông báo lỗi
+                        request.setAttribute("errorMessage", "Tên đăng nhập hoặc mật khẩu không đúng."); // Thông báo lỗi
                         ServletUtils.forward("/views/vwAccount/Login.jsp", request, response);
                     }
                 }
                 else {
                     request.setAttribute("hasError", true); //Thông báo lỗi
-                    request.setAttribute("errorMessage", "Invalid login."); // Thông báo lỗi
+                    request.setAttribute("errorMessage", "Tên đăng nhập hoặc mật khẩu không đúng."); // Thông báo lỗi
                     ServletUtils.forward("/views/vwAccount/Login.jsp", request, response);
                 }
             } else {
                 request.setAttribute("hasError", true); //Thông báo lỗi
-                request.setAttribute("errorMessage", "Invalid login."); // Thông báo lỗi
+                request.setAttribute("errorMessage", "Tên đăng nhập hoặc mật khẩu không đúng."); // Thông báo lỗi
                 ServletUtils.forward("/views/vwAccount/Login.jsp", request, response);
             }
         }else {
