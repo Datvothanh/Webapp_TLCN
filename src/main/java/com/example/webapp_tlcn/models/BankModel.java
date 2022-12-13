@@ -1,6 +1,7 @@
 package com.example.webapp_tlcn.models;
 
 import com.example.webapp_tlcn.beans.Bank;
+import com.example.webapp_tlcn.beans.Product;
 import com.example.webapp_tlcn.beans.User;
 import com.example.webapp_tlcn.utils.DbUtils;
 import org.sql2o.Connection;
@@ -37,6 +38,19 @@ public class BankModel {
                     .addParameter("idBank", b.getIdBank())
                     .addParameter("id", b.getId())
                     .executeUpdate();
+        }
+    }
+
+    public static Bank findByUserId(int id) {
+        final String query = "select * from banks where idUser =:idUser";
+        try (Connection con = DbUtils.getConnection()) {
+            List<Bank> list = con.createQuery(query)
+                    .addParameter("idUser", id)
+                    .executeAndFetch(Bank.class);
+            if (list.size() == 0) {
+                return null;
+            }
+            return list.get(0);
         }
     }
 }

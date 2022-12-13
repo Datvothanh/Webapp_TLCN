@@ -8,6 +8,7 @@
     <file url="file://$PROJECT_DIR$/src/main/java/com/example/webapp_tlcn/models/FeedBackModel.java" dialect="MySQL" />
     <file url="file://$PROJECT_DIR$/src/main/java/com/example/webapp_tlcn/models/GroupCategoryModel.java" dialect="MySQL" />
     <file url="file://$PROJECT_DIR$/src/main/java/com/example/webapp_tlcn/models/ListBankModel.java" dialect="MySQL" />
+    <file url="file://$PROJECT_DIR$/src/main/java/com/example/webapp_tlcn/models/NoticeModel.java" dialect="MySQL" />
     <file url="file://$PROJECT_DIR$/src/main/java/com/example/webapp_tlcn/models/ProductModel.java" dialect="MySQL" />
     <file url="file://$PROJECT_DIR$/src/main/java/com/example/webapp_tlcn/models/UserModel.java" dialect="MySQL" />
   </component>

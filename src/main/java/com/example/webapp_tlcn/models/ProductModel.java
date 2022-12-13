@@ -8,7 +8,7 @@ import java.util.List;
 
 public class ProductModel {
     public static List<Product> findAll(int zero) {
-        final String query = "select * from products where Sell =:zero";
+        final String query = "select * from products where Sell =:zero AND `Delete` = 0";
         try (Connection con = DbUtils.getConnection()) {
             return con.createQuery(query)
                     .addParameter("zero", zero)
@@ -16,9 +16,10 @@ public class ProductModel {
         }
     }
 
+
     //Admin
     public static void add(Product p) {
-        String Sql = "INSERT INTO products (ProName, StartingPrice, CatID, TinyDes, FullDes, StepPrice, HighestPaidPrice, EndDay,UserID,Sell,CountAuction,UserSellID,Top,Ship) VALUES (:ProName,:StartingPrice,:CatID,:TinyDes,:FullDes,:StepPrice,:HighestPaidPrice,:EndDay,:UserID,:Sell,:CountAuction,:UserSellID,:Top,:Ship) ";
+        String Sql = "INSERT INTO products (ProID ,ProName, StartingPrice, CatID, TinyDes, FullDes, StepPrice, HighestPaidPrice, EndDay,UserID,Sell,CountAuction,UserSellID,Top,Ship,Year,Month,Day,Hour,Minute,Second, `Delete` , Paid) VALUES (:ProID,:ProName,:StartingPrice,:CatID,:TinyDes,:FullDes,:StepPrice,:HighestPaidPrice,:EndDay,:UserID,:Sell,:CountAuction,:UserSellID,:Top,:Ship,:Year,:Month,:Day,:Hour,:Minute,:Second, :Delete , :Paid) ";
         try (Connection con = DbUtils.getConnection()) {
             con.createQuery(Sql)
                     .addParameter("ProName", p.getProName())
@@ -35,12 +36,21 @@ public class ProductModel {
                     .addParameter("UserSellID", p.getUserSellID())
                     .addParameter("Top", p.getTop())
                     .addParameter("Ship", p.getShip())
+                    .addParameter("ProID", p.getProID())
+                    .addParameter("Year", p.getYear())
+                    .addParameter("Month", p.getMonth())
+                    .addParameter("Day", p.getDay())
+                    .addParameter("Hour", p.getHour())
+                    .addParameter("Minute", p.getMinute())
+                    .addParameter("Second", p.getSecond())
+                    .addParameter("Delete", p.getDelete())
+                    .addParameter("Paid", p.getPaid())
                     .executeUpdate();
         }
     }
 
     public static List<Product> findByTextSearch (String txtSr , int zero) {
-        final String query = "SELECT * FROM products WHERE ProName LIKE :txtSr and Sell =:zero";
+        final String query = "SELECT * FROM products WHERE ProName LIKE :txtSr and Sell =:zero  AND `Delete` = 0";
         try (Connection con = DbUtils.getConnection()) {
             return con.createQuery(query)
                     .addParameter("txtSr",txtSr)
@@ -50,7 +60,7 @@ public class ProductModel {
     }
 
     public static Product findById(int id) {
-        final String query = "select * from products where ProID =:ProID";
+        final String query = "select * from products where ProID =:ProID  AND `Delete` = 0";
         try (Connection con = DbUtils.getConnection()) {
             List<Product> list = con.createQuery(query)
                     .addParameter("ProID", id)
@@ -63,7 +73,7 @@ public class ProductModel {
     }
 
     public static void update(Product p) {
-        String Sql = "UPDATE products SET  ProName = :ProName, StartingPrice = :StartingPrice, CatID = :CatID, TinyDes = :TinyDes, FullDes = :FullDes, StepPrice = :StepPrice, HighestPaidPrice = :HighestPaidPrice, EndDay = :EndDay , Top = :Top WHERE ProID = :ProID";
+        String Sql = "UPDATE products SET  ProName = :ProName, StartingPrice = :StartingPrice, CatID = :CatID, TinyDes = :TinyDes, FullDes = :FullDes, StepPrice = :StepPrice, HighestPaidPrice = :HighestPaidPrice, EndDay = :EndDay , Top = :Top , `Delete` = :Delete , Paid = :Paid WHERE ProID = :ProID";
         try (Connection con = DbUtils.getConnection()) {
             con.createQuery(Sql)
                     .addParameter("ProName", p.getProName())
@@ -76,6 +86,8 @@ public class ProductModel {
                     .addParameter("EndDay", p.getEndDay())
                     .addParameter("ProID", p.getProID())
                     .addParameter("Top", p.getTop())
+                    .addParameter("Delete", p.getDelete())
+                    .addParameter("Paid", p.getPaid())
                     .executeUpdate();
         }
     }
@@ -125,7 +137,7 @@ public class ProductModel {
     //End
     //User
     public static List<Product> findByCatID(int catId , int zero) {
-        final String query = "select * from products where CatID =:CatID and Sell =:zero";
+        final String query = "select * from products where CatID =:CatID and Sell =:zero  AND `Delete` = 0";
         try (Connection con = DbUtils.getConnection()) {
             return con.createQuery(query)
                     .addParameter("CatID", catId)
@@ -136,7 +148,15 @@ public class ProductModel {
     //End
 
     public static List<Product> findTop5HighestPrice() {
-        final String query = "SELECT * FROM products where Sell = 0 order by Top desc limit 5";
+        final String query = "SELECT * FROM products where Sell = 0  AND `Delete` = 0 order by Top desc limit 5";
+        try (Connection con = DbUtils.getConnection()) {
+            return con.createQuery(query)
+                    .executeAndFetch(Product.class);
+        }
+    }
+
+    public static List<Product> findTop5End() {
+        final String query = "SELECT * FROM products where Sell = 0  AND `Delete` = 0 order by EndDay asc limit 5";
         try (Connection con = DbUtils.getConnection()) {
             return con.createQuery(query)
                     .executeAndFetch(Product.class);
@@ -144,7 +164,7 @@ public class ProductModel {
     }
 
     public static List<Product> findTop5HighestCountAuction() {
-        final String query = "SELECT * FROM products where Sell = 0 order by CountAuction desc limit 5";
+        final String query = "SELECT * FROM products where Sell = 0  AND `Delete` = 0 order by CountAuction desc limit 5";
         try (Connection con = DbUtils.getConnection()) {
             return con.createQuery(query)
                     .executeAndFetch(Product.class);
@@ -152,7 +172,7 @@ public class ProductModel {
     }
 
     public static List<Product> findByCatID5(int catId , int proId) {
-        final String query = "select * from products where CatID =:CatID AND NOT ProID =:ProID limit 5";
+        final String query = "select * from products where CatID =:CatID AND Sell = 0  AND `Delete` = 0 AND NOT ProID =:ProID limit 5";
         try (Connection con = DbUtils.getConnection()) {
             return con.createQuery(query)
                     .addParameter("CatID", catId)

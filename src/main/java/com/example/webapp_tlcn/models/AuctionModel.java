@@ -17,6 +17,7 @@ public class AuctionModel {
         }
     }
 
+
     public static Auction findById(int id) {
         final String query = "select * from auctions where AuID =:AuID";
         try (Connection con = DbUtils.getConnection()) {
@@ -31,19 +32,20 @@ public class AuctionModel {
     }
 
     public static void add(Auction a) {
-        String Sql = "INSERT INTO auctions (UserID, ProID, Price , Paid) VALUES (:UserID,:ProID,:Price,:Paid)";
+        String Sql = "INSERT INTO auctions (UserID, ProID, Price , Paid , Date) VALUES (:UserID,:ProID,:Price,:Paid,:Date)";
         try (Connection con = DbUtils.getConnection()) {
             con.createQuery(Sql)
                     .addParameter("UserID", a.getUserID())
                     .addParameter("ProID", a.getProID())
                     .addParameter("Price", a.getPrice())
                     .addParameter("Paid", a.getPaid())
+                    .addParameter("Date", a.getDate())
                     .executeUpdate();
         }
     }
 
     public static void update(Auction a) {
-        String Sql = "UPDATE auctions SET  UserID = :UserID, ProID = :ProID, Price = :Price , Paid =:Paid WHERE AuID = :AuID";
+        String Sql = "UPDATE auctions SET  UserID = :UserID, ProID = :ProID, Price = :Price , Paid =:Paid , Date=:Date WHERE AuID = :AuID";
         try (Connection con = DbUtils.getConnection()) {
             con.createQuery(Sql)
                     .addParameter("UserID", a.getUserID())
@@ -51,6 +53,7 @@ public class AuctionModel {
                     .addParameter("Price", a.getPrice())
                     .addParameter("Paid", a.getPaid())
                     .addParameter("AuID" , a.getAuID())
+                    .addParameter("Date", a.getDate())
                     .executeUpdate();
         }
     }

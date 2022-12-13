@@ -26,39 +26,41 @@
                 <c:otherwise>
                     <div class="card-body">
 
-                            <table class="table table-bordered">
-                                <thead>
+                        <table class="table table-bordered">
+                            <thead>
+                            <tr>
+                                <th scope="col">#</th>
+                                <th scope="col">Tên sản phẩm</th>
+                                <th scope="col">Giá khởi điểm</th>
+                                <th scope="col">Chú thích ngắn</th>
+                                <th scope="col">Bước giá</th>
+                                <th scope="col">Lúc kết thúc</th>
+                                <th scope="col">Người đăng sản phẩm</th>
+                                <th scope="col">Chỉnh sửa</th>
+                            </tr>
+                            </thead>
+                            <tbody>
+                            <c:forEach items="${products}" var="p">
                                 <tr>
-                                    <th scope="col">#</th>
-                                    <th scope="col">Product</th>
-                                    <th scope="col">StartingPrice</th>
-                                    <th scope="col">TinyDes</th>
-                                    <th scope="col">FullDes</th>
-                                    <th scope="col">StepPrice</th>
-                                    <th scope="col">HighestPaidPrice</th>
-                                    <th scope="col">&nbsp;</th>
+                                    <th scope="row">${p.proID}</th>
+                                    <td>${p.proName}</td>
+                                    <td>
+                                        <fmt:formatNumber value="${p.startingPrice}" type="number"/>
+                                    </td>
+                                    <td>${p.tinyDes}</td>
+                                    <td>${p.stepPrice}</td>
+                                    <td>${p.endDay}</td>
+                                    <td>${p.userSellID}</td>
+                                    <td class="text-right">
+                                        <a class="btn btn-outline-primary"
+                                           href="${pageContext.request.contextPath}/Admin/Product/Edit?id=${p.proID}"
+                                           role="button">
+                                            <i class="bi bi-box-seam"></i></a>
+                                    </td>
                                 </tr>
-                                </thead>
-                                <tbody>
-                                <c:forEach items="${products}" var="p">
-                                    <tr>
-                                        <th scope="row">${p.proID}</th>
-                                        <td>${p.proName}</td>
-                                        <td>
-                                            <fmt:formatNumber value="${p.startingPrice}" type="number"/>
-                                        </td>
-                                        <td>${p.tinyDes}</td>
-                                        <td>${p.fullDes}</td>
-                                        <td>${p.stepPrice}</td>
-                                        <td>${p.highestPaidPrice}</td>
-                                        <td class="text-right">
-                                            <a class="btn btn-outline-primary" href="${pageContext.request.contextPath}/Admin/Product/Edit?id=${p.proID}" role="button">
-                                                <i class="bi bi-box-seam"></i></a>
-                                        </td>
-                                    </tr>
-                                </c:forEach>
-                                </tbody>
-                            </table>
+                            </c:forEach>
+                            </tbody>
+                        </table>
                     </div>
                 </c:otherwise>
             </c:choose>

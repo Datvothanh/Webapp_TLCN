@@ -12,7 +12,7 @@ import java.io.IOException;
 import java.util.List;
 import java.util.Objects;
 
-import static com.example.webapp_tlcn.tools.mask.maskString;
+import static com.example.webapp_tlcn.tools.tools.maskString;
 
 
 @WebServlet(name = "HomeServlet", value = "/Home/*")
@@ -28,6 +28,7 @@ public class HomeServlet extends HttpServlet {
             case "/Index":
                 List<Product> listTop5HighestPrice = ProductModel.findTop5HighestPrice();
                 List<Product> listTop5HighestCountAuction = ProductModel.findTop5HighestCountAuction();
+                List<Product> listTop5End = ProductModel.findTop5End();
                 List<Favourite> listFavourite = FavouriteModel.findAll();
                 List<User> User = UserModel.findAll();
                 List<Auction> Auction = AuctionModel.findAll();
@@ -43,6 +44,7 @@ public class HomeServlet extends HttpServlet {
                 request.setAttribute("auction", Auction);
                 request.setAttribute("listTop5HighestCountAuction", listTop5HighestCountAuction);
                 request.setAttribute("listTop5HighestPrice", listTop5HighestPrice);
+                request.setAttribute("listTop5End", listTop5End);
                 ServletUtils.forward("/views/vwHome/Index.jsp", request, response);
                 break;
             case "/About":

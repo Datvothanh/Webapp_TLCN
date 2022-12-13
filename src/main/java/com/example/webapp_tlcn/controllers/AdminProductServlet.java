@@ -1,9 +1,7 @@
 package com.example.webapp_tlcn.controllers;
 
-import com.example.webapp_tlcn.beans.Category;
-import com.example.webapp_tlcn.beans.Product;
-import com.example.webapp_tlcn.models.CategoryModel;
-import com.example.webapp_tlcn.models.ProductModel;
+import com.example.webapp_tlcn.beans.*;
+import com.example.webapp_tlcn.models.*;
 import com.example.webapp_tlcn.utils.ServletUtils;
 
 import javax.servlet.ServletException;
@@ -79,8 +77,16 @@ public class AdminProductServlet extends HttpServlet {
                 }
                 break;
             case "/End":
-                List<Product> productList = ProductModel.findAll(1);
-                request.setAttribute("products", productList);
+                List<User> ListUser = UserModel.findAll();
+                List<Product> ListAllSucces = ProductModel.findAll(1);
+                List<Auction> ListAuction = AuctionModel.findAll();
+                List<FeedBack> ListFeedBack = FeedBackModel.findAll();
+                List<Notice> listNotices = NoticeModel.findAll();
+                request.setAttribute("listNotices", listNotices);
+                request.setAttribute("listUsers", ListUser);
+                request.setAttribute("feedBackAll", ListFeedBack);
+                request.setAttribute("productAll", ListAllSucces);
+                request.setAttribute("listAuction", ListAuction);
                 ServletUtils.forward("/views/vwProduct/End.jsp", request, response);
                 break;
             default:
@@ -119,8 +125,13 @@ public class AdminProductServlet extends HttpServlet {
     private void addProductOfSeller(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException{
         String name = request.getParameter("ProName");
         String proID = request.getParameter("ProID");
+        int ProID = Integer.parseInt(proID);
         int userSellID = Integer.parseInt(request.getParameter("UserSellID"));
         int startingPrice = Integer.parseInt(request.getParameter("StartingPrice"));
+        User U = UserModel.findByUserId(userSellID);
+        assert U != null;
+        User u = new User(U.getId() , U.getMoney() - startingPrice * 20/100  , U.getMoneyAu());
+        UserModel.updateMoney(u);
         int stepPrice = Integer.parseInt(request.getParameter("StepPrice"));
         int type = Integer.parseInt(request.getParameter("CatID"));
         int highestPaidPrice = 0;
@@ -132,7 +143,13 @@ public class AdminProductServlet extends HttpServlet {
         String strED = request.getParameter("EndDay");
         DateTimeFormatter df = DateTimeFormatter.ofPattern("yyyy/MM/dd HH:mm");
         LocalDateTime endDay = LocalDateTime.parse(strED, df);
-        Product p = new Product(startingPrice , type , stepPrice, highestPaidPrice , userID , sell ,countAuction,userSellID,name , tinyDes, fullDes, endDay , startingPrice , 0);
+        int day = endDay.getDayOfMonth();
+        int month = endDay.getMonthValue();
+        int year = endDay.getYear();
+        int hour = endDay.getHour();
+        int minute = endDay.getMinute();
+        int second = endDay.getSecond();
+        Product p = new Product(ProID , startingPrice , type , stepPrice, highestPaidPrice , userID , sell ,countAuction,userSellID,name , tinyDes, fullDes, endDay , startingPrice , 0 , year , month , day , hour , minute , second , 0 , 0);
         ProductModel.add(p);
         Part partMain = request.getPart("ImageMain");
         Part partSub1 = request.getPart("ImageSub1");
@@ -148,7 +165,8 @@ public class AdminProductServlet extends HttpServlet {
         partSub1.write(realPath + "/" + "sub1.jpg");
         partSub2.write(realPath + "/" + "sub2.jpg");
         partSub3.write(realPath + "/" + "sub3.jpg");
-        ServletUtils.redirect("/Admin/Product", request, response);
+        String url = request.getHeader("referer");
+        ServletUtils.redirect(url, request, response);
     }
 
     private void updateShip(HttpServletRequest request, HttpServletResponse response) throws IOException {
@@ -163,6 +181,7 @@ public class AdminProductServlet extends HttpServlet {
     private void addProduct(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
         String name = request.getParameter("ProName");
         String proID = request.getParameter("ProID");
+        int ProID = Integer.parseInt(proID);
         int userSellID = Integer.parseInt(request.getParameter("UserSellID"));
         int startingPrice = Integer.parseInt(request.getParameter("StartingPrice"));
         int stepPrice = Integer.parseInt(request.getParameter("StepPrice"));
@@ -176,7 +195,13 @@ public class AdminProductServlet extends HttpServlet {
         String strED = request.getParameter("EndDay");
         DateTimeFormatter df = DateTimeFormatter.ofPattern("yyyy/MM/dd HH:mm");
         LocalDateTime endDay = LocalDateTime.parse(strED, df);
-        Product p = new Product(startingPrice , type , stepPrice, highestPaidPrice , userID , sell ,countAuction,userSellID,name , tinyDes, fullDes, endDay , startingPrice , 0);
+        int day = endDay.getDayOfMonth();
+        int month = endDay.getMonthValue();
+        int year = endDay.getYear();
+        int hour = endDay.getHour();
+        int minute = endDay.getMinute();
+        int second = endDay.getSecond();
+        Product p = new Product(ProID ,startingPrice , type , stepPrice, highestPaidPrice , userID , sell ,countAuction,userSellID,name , tinyDes, fullDes, endDay , startingPrice , 0, year , month , day , hour , minute , second , 0 , 0);
         ProductModel.add(p);
         Part partMain = request.getPart("ImageMain");
         Part partSub1 = request.getPart("ImageSub1");
@@ -211,12 +236,24 @@ public class AdminProductServlet extends HttpServlet {
         String strED = request.getParameter("EndDay");
         if(Objects.equals(strED, "____/__/__ __:__")){
             LocalDateTime endDay = p.getEndDay();
-            Product P = new Product(id,startingPrice , type , stepPrice, highestPaidPrice , name , tinyDes, fullDes, endDay , top);
+            int day = endDay.getDayOfMonth();
+            int month = endDay.getMonthValue();
+            int year = endDay.getYear();
+            int hour = endDay.getHour();
+            int minute = endDay.getMinute();
+            int second = endDay.getSecond();
+            Product P = new Product(id,startingPrice , type , stepPrice, highestPaidPrice , name , tinyDes, fullDes, endDay , top , year , month , day , hour , minute , second ,0 , 0);
             ProductModel.update(P);
         }else {
             DateTimeFormatter df = DateTimeFormatter.ofPattern("yyyy/MM/dd HH:mm");
             LocalDateTime endDay = LocalDateTime.parse(strED, df);
-            Product P = new Product(id,startingPrice , type , stepPrice, highestPaidPrice , name , tinyDes, fullDes, endDay , top);
+            int day = endDay.getDayOfMonth();
+            int month = endDay.getMonthValue();
+            int year = endDay.getYear();
+            int hour = endDay.getHour();
+            int minute = endDay.getMinute();
+            int second = endDay.getSecond();
+            Product P = new Product(id,startingPrice , type , stepPrice, highestPaidPrice , name , tinyDes, fullDes, endDay , top , year , month , day , hour , minute , second , 0 , 0);
             ProductModel.update(P);
         }
 
@@ -225,7 +262,10 @@ public class AdminProductServlet extends HttpServlet {
 
     private void deleteProduct(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
         int id = Integer.parseInt(request.getParameter("ProID"));
-        ProductModel.delete(id);
+        Product p = ProductModel.findById(id);
+        assert p != null;
+        Product P = new Product(id, p.getStartingPrice(), p.getCatID() , p.getStepPrice(), p.getHighestPaidPrice(), p.getProName() ,p.getTinyDes(), p.getFullDes(), p.getEndDay() , p.getTop() , p.getYear() , p.getMonth() , p.getDay() , p.getDay() , p.getMinute() , p.getSecond() , 1 , 0);
+        ProductModel.update(P);
         ServletUtils.redirect("/Admin/Product", request, response);
     }
 }

@@ -1,14 +1,18 @@
 package com.example.webapp_tlcn.beans;
 
-public class Auction {
-    int AuID, UserID , ProID, Price , Paid ;
+import java.time.LocalDateTime;
 
-    public Auction(int auID, int userID, int proID, int price , int paid) {
+public class Auction {
+    private int AuID, UserID , ProID, Price , Paid;
+    private LocalDateTime Date;
+
+    public Auction(int auID, int userID, int proID, int price , int paid , LocalDateTime date) {
         AuID = auID;
         UserID = userID;
         ProID = proID;
         Price = price;
         Paid = paid;
+        Date = date;
     }
 
     public Auction(int auID, int paid) {
@@ -16,12 +20,13 @@ public class Auction {
         Paid = paid;
     }
 
-    public Auction(int userID, int proID, int price , int Paid) {
+    public Auction(int userID, int proID, int price , int paid , LocalDateTime date ) {
         AuID = -1;
         UserID = userID;
         ProID = proID;
         Price = price;
-        Paid = Paid;
+        Paid = paid;
+        Date = date;
     }
 
     public int getAuID() {
@@ -42,5 +47,9 @@ public class Auction {
 
     public int getPaid() {
         return Paid;
+    }
+
+    public LocalDateTime getDate() {
+        return Date;
     }
 }

@@ -19,7 +19,7 @@
                         <h4 class="card-header">
                             Profile
                         </h4>
-                        <div class="card-body">
+                        <div class="card-body" >
                             <section style="background-color: #eee;">
                                 <div class="container py-5">
                                     <div class="row">
@@ -34,17 +34,11 @@
                                                 </div>
                                             </div>
                                             <div class="list-group list-group-flush">
-                                                <a href="${pageContext.request.contextPath}/Account/Update"
+                                                <a href="${pageContext.request.contextPath}/Account/UpdateSeller"
                                                    class="list-group-item list-group-item-action"><i class="fa fa-caret-right"
                                                                                                      aria-hidden="true"></i>
                                                     Cập nhật thông tin cá nhân</a>
 
-                                                <c:if test="${test == 0}">
-                                                    <a href="${pageContext.request.contextPath}/Account/UpdateBank"
-                                                       class="list-group-item list-group-item-action"><i class="fa fa-caret-right"
-                                                                                                         aria-hidden="true"></i>
-                                                        Thêm thông tin ngân hàng</a>
-                                                </c:if>
 
                                                 <a href="${pageContext.request.contextPath}/Account/UpdatePassword"
                                                    class="list-group-item list-group-item-action"><i class="fa fa-caret-right"
@@ -100,56 +94,61 @@
                                                    class="list-group-item list-group-item-action"><i class="fa fa-caret-right"
                                                                                                      aria-hidden="true"></i>
                                                     Danh sách sản phầm yêu thích</a>
-                                                    <%--                                <a href="${pageContext.request.contextPath}/Admin/Product/Add"--%>
-                                                    <%--                                   class="list-group-item list-group-item-action"><i class="fa fa-caret-right"--%>
-                                                    <%--                                                                                     aria-hidden="true"></i>--%>
-                                                    <%--                                    Danh sách sản phẩm đã được đấu giá </a>--%>
+                                                <a href="${pageContext.request.contextPath}/Account/AuctionList"
+                                                   class="list-group-item list-group-item-action"><i
+                                                        class="fa fa-caret-right"
+                                                        aria-hidden="true"></i> Sản phẩm đang
+                                                    đấu giá </a>
+                                                <a href="${pageContext.request.contextPath}/Account/SuccessList"
+                                                   class="list-group-item list-group-item-action">
+                                                    <i class="fa fa-caret-right" aria-hidden="true"></i> Sản phẩm
+                                                    đấu giá thành công</a>
                                             </div>
                                         </div>
                                         <div class="col-lg-8">
                                             <div class="card mb-4">
                                                 <div class="card-body">
                                                     <div class="row">
-                                                        <div class="col-sm-3">
-                                                            <p class="mb-0">Tên</p>
+                                                        <div class="col-sm-4">
+                                                            <strong class="mb-0">Tên</strong>
                                                         </div>
-                                                        <div class="col-sm-9">
+                                                        <div class="col-sm-8">
                                                             <p class="text-muted mb-0">${u.name}</p>
                                                         </div>
                                                     </div>
                                                     <hr>
                                                     <div class="row">
-                                                        <div class="col-sm-3">
-                                                            <p class="mb-0">Email</p>
+                                                        <div class="col-sm-4">
+                                                            <strong class="mb-0">Email</strong>
                                                         </div>
-                                                        <div class="col-sm-9">
+                                                        <div class="col-sm-8">
                                                             <p class="text-muted mb-0">${u.email}</p>
                                                         </div>
                                                     </div>
                                                     <hr>
                                                     <div class="row">
-                                                        <div class="col-sm-3">
-                                                            <p class="mb-0">Phone</p>
+                                                        <div class="col-sm-4">
+                                                            <strong class="mb-0">Phone</strong>
                                                         </div>
-                                                        <div class="col-sm-9">
+                                                        <div class="col-sm-8">
                                                             <p class="text-muted mb-0">${u.phone}</p>
                                                         </div>
                                                     </div>
                                                     <hr>
                                                     <div class="row">
-                                                        <div class="col-sm-3">
-                                                            <p class="mb-0">Ngày tháng năm sinh</p>
+                                                        <div class="col-sm-4">
+                                                            <strong class="mb-0">Ngày tháng năm sinh</strong>
                                                         </div>
-                                                        <div class="col-sm-9">
+                                                        <div class="col-sm-8">
                                                             <p class="text-muted mb-0"><fmt:formatDate value="${u.dob}" pattern="dd/MM/yyyy"/></p>
                                                         </div>
                                                     </div>
                                                     <hr>
                                                     <div class="row">
-                                                        <div class="col-sm-3">
-                                                            <p class="mb-0">Địa chỉ</p>
+                                                        <div class="col-sm-4">
+                                                            <strong class="mb-0">Địa chỉ</strong>
                                                         </div>
-                                                        <div class="col-sm-9">
+                                                        <div class="col-sm-8">
                                                             <p class="text-muted mb-0">${u.address}</p>
                                                         </div>
                                                     </div>
@@ -157,19 +156,19 @@
                                                     <c:forEach items="${bankList}" var="b">
                                                         <c:if test="${b.idUser == u.id}">
                                                             <div class="row">
-                                                                <div class="col-sm-3">
-                                                                    <p class="mb-0">Ngân hàng</p>
+                                                                <div class="col-sm-4">
+                                                                    <strong class="mb-0">Ngân hàng</strong>
                                                                 </div>
-                                                                <div class="col-sm-9">
+                                                                <div class="col-sm-8">
                                                                     <p class="text-muted mb-0">${b.bank}</p>
                                                                 </div>
                                                             </div>
                                                             <hr>
                                                             <div class="row">
-                                                                <div class="col-sm-3">
-                                                                    <p class="mb-0">Số tài khoản</p>
+                                                                <div class="col-sm-4">
+                                                                    <strong class="mb-0">Số tài khoản</strong>
                                                                 </div>
-                                                                <div class="col-sm-9">
+                                                                <div class="col-sm-8">
                                                                     <p class="text-muted mb-0">${b.idBank}</p>
                                                                 </div>
                                                             </div>
@@ -215,7 +214,7 @@
                                                 </label>
                                             </form>
                                             <div class="list-group list-group-flush">
-                                                <a href="${pageContext.request.contextPath}/Account/Update"
+                                                <a href="${pageContext.request.contextPath}/Account/UpdateBidder"
                                                    class="list-group-item list-group-item-action"><i class="fa fa-caret-right"
                                                                                                      aria-hidden="true"></i>
                                                     Cập nhật thông tin cá nhân</a>
@@ -231,8 +230,7 @@
                                                     <c:when test="${u.permission == 2}">
                                                         <a class="list-group-item list-group-item-action"><i class="fa fa-caret-right"
                                                                                                              aria-hidden="true"></i>
-                                                            Đang chờ duyệt yêu cầu nâng
-                                                            cấp thành người bán</a>
+                                                            Đang chờ duyệt yêu cầu...</a>
                                                     </c:when>
                                                     <c:otherwise>
                                                         <a href="javascript:$('#frmAccountPermission').submit()"
@@ -254,46 +252,46 @@
                                             <div class="card mb-4">
                                                 <div class="card-body">
                                                     <div class="row">
-                                                        <div class="col-sm-3">
-                                                            <p class="mb-0">Tên</p>
+                                                        <div class="col-sm-4">
+                                                            <strong class="mb-0">Tên</strong>
                                                         </div>
-                                                        <div class="col-sm-9">
+                                                        <div class="col-sm-8">
                                                             <p class="text-muted mb-0">${u.name}</p>
                                                         </div>
                                                     </div>
                                                     <hr>
                                                     <div class="row">
-                                                        <div class="col-sm-3">
-                                                            <p class="mb-0">Email</p>
+                                                        <div class="col-sm-4">
+                                                            <strong class="mb-0">Email</strong>
                                                         </div>
-                                                        <div class="col-sm-9">
+                                                        <div class="col-sm-8">
                                                             <p class="text-muted mb-0">${u.email}</p>
                                                         </div>
                                                     </div>
                                                     <hr>
                                                     <div class="row">
-                                                        <div class="col-sm-3">
-                                                            <p class="mb-0">Số điện thoại</p>
+                                                        <div class="col-sm-4">
+                                                            <strong class="mb-0">Số điện thoại</strong>
                                                         </div>
-                                                        <div class="col-sm-9">
+                                                        <div class="col-sm-8">
                                                             <p class="text-muted mb-0">${u.phone}</p>
                                                         </div>
                                                     </div>
                                                     <hr>
                                                     <div class="row">
-                                                        <div class="col-sm-3">
-                                                            <p class="mb-0">Ngày tháng năm sinh</p>
+                                                        <div class="col-sm-4">
+                                                            <strong class="mb-0">Ngày tháng năm sinh</strong>
                                                         </div>
-                                                        <div class="col-sm-9">
+                                                        <div class="col-sm-8">
                                                             <p class="text-muted mb-0"><fmt:formatDate value="${u.dob}" pattern="dd/MM/yyyy"/></p>
                                                         </div>
                                                     </div>
                                                     <hr>
                                                     <div class="row">
-                                                        <div class="col-sm-3">
-                                                            <p class="mb-0">Địa chỉ</p>
+                                                        <div class="col-sm-4">
+                                                            <strong class="mb-0">Địa chỉ</strong>
                                                         </div>
-                                                        <div class="col-sm-9">
+                                                        <div class="col-sm-8">
                                                             <p class="text-muted mb-0">${u.address}</p>
                                                         </div>
                                                     </div>

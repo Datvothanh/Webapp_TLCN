@@ -20,11 +20,12 @@
                     </div>
                     <div class="form-group">
                         <label for="txtCatName">Tên loại sản phẩm</label>
-                        <input type="text" class="form-control" id="txtCatName" name="CatName" >
+                        <input type="text" class="form-control" id="txtCatName" name="CatName">
                     </div>
                 </div>
                 <div class="card-footer">
-                    <a class="btn btn-outline-success" href="${pageContext.request.contextPath}/Admin/Category/" role="button">
+                    <a class="btn btn-outline-success" href="${pageContext.request.contextPath}/Admin/Category/"
+                       role="button">
                         <i class="fa fa-backward" aria-hidden="true"></i>
                         Danh sách
                     </a>

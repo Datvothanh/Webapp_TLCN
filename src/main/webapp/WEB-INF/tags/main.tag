@@ -14,9 +14,14 @@
     <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.10.2/font/bootstrap-icons.css">
     <!-- Latest compiled and minified JavaScript -->
 
-    <link href='https://fonts.googleapis.com/css?family=Roboto+Condensed:400,700,400italic,700italic,300italic,300' rel='stylesheet' type='text/css'>
-    <style><%@include file="/css/styleMain.css"%></style>
-    <style><%@include file="/css/footer.css"%></style>
+    <link href='https://fonts.googleapis.com/css?family=Roboto+Condensed:400,700,400italic,700italic,300italic,300'
+          rel='stylesheet' type='text/css'>
+    <style>
+        <%@include file="/css/styleMain.css" %>
+    </style>
+    <style>
+        <%@include file="/css/footer.css" %>
+    </style>
 
     <jsp:invoke fragment="css"/>
 
@@ -30,7 +35,8 @@
         <div class="row justify-content-center">
             <div class="col-md-9 text-center">
                 <div class="footer-site-logo mb-4">
-                   <a href="${pageContext.request.contextPath}/Home/Index"> <img src="${pageContext.request.contextPath}/public/imgs/login/logo.svg" alt="logo" class="logo"></a>
+                    <a href="${pageContext.request.contextPath}/Home/Index"> <img
+                            src="${pageContext.request.contextPath}/public/imgs/login/logo.svg" alt="logo" class="logo"></a>
                 </div>
                 <ul class="list-unstyled nav-links mb-5">
                     <li><a href="#">Giới thiệu về chúng tôi</a></li>
@@ -65,6 +71,7 @@
 <script src="https://cdn.jsdelivr.net/npm/bootstrap@4.6.0/dist/js/bootstrap.min.js"
         integrity="sha384-+YQ4JLhjyBLPDQt//I+STsc9iw4uQqACwlvpslubQzn4u2UU2UFM80nGisd026JF"
         crossorigin="anonymous"></script>
+
 <jsp:invoke fragment="js"/>
 </body>
 

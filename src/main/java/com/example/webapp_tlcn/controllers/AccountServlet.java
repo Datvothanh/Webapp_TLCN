@@ -4,31 +4,26 @@ import at.favre.lib.crypto.bcrypt.BCrypt;
 import com.example.webapp_tlcn.beans.*;
 import com.example.webapp_tlcn.models.*;
 import com.example.webapp_tlcn.recaptcha.VerifyUtils;
+import com.example.webapp_tlcn.tools.tools;
 import com.example.webapp_tlcn.utils.ServletUtils;
 
 import javax.mail.*;
 import javax.mail.internet.InternetAddress;
 import javax.mail.internet.MimeMessage;
-import javax.servlet.*;
+import javax.servlet.RequestDispatcher;
+import javax.servlet.ServletException;
+import javax.servlet.annotation.WebServlet;
 import javax.servlet.http.*;
-import javax.servlet.http.Part;
-import java.io.File;
 import java.io.IOException;
 import java.io.PrintWriter;
-import java.nio.file.Files;
-import java.nio.file.Path;
 import java.time.LocalDate;
-import javax.servlet.ServletException;
+import java.time.LocalDateTime;
 import java.time.format.DateTimeFormatter;
 import java.util.List;
-import javax.servlet.http.HttpServlet;
-import javax.servlet.http.HttpServletRequest;
-import javax.servlet.http.HttpServletResponse;
-import javax.servlet.annotation.WebServlet;
 import java.util.Properties;
 import java.util.Random;
 
-import static com.example.webapp_tlcn.tools.mask.maskString;
+import static com.example.webapp_tlcn.tools.tools.maskString;
 
 @WebServlet(name = "AccountServlet", value = "/Account/*")
 public class AccountServlet extends HttpServlet {
@@ -41,12 +36,17 @@ public class AccountServlet extends HttpServlet {
         switch (path) {
             case "/Otp":
                 String email3 = request.getParameter("email");
-                request.setAttribute("email" , email3);
-                ServletUtils.forward("/views/vwAccount/Otp.jsp", request , response);
+                request.setAttribute("email", email3);
+                ServletUtils.forward("/views/vwAccount/Otp.jsp", request, response);
+                break;
+            case "/OtpErr":
+                String email4 = request.getParameter("email");
+                request.setAttribute("email", email4);
+                ServletUtils.forward("/views/vwAccount/OtpErr.jsp", request, response);
                 break;
             case "/ForgetPassword":
                 String email2 = request.getParameter("email");
-                request.setAttribute("email" , email2);
+                request.setAttribute("email", email2);
                 ServletUtils.forward("/views/vwAccount/ForgetPassword.jsp", request, response);
                 break;
             case "/Register":
@@ -54,16 +54,16 @@ public class AccountServlet extends HttpServlet {
                 break;
             case "/Login":
                 HttpSession session = request.getSession();
-                    Cookie arr[] = request.getCookies();
-                    for (Cookie o :arr){
-                        if(o.getName().equals("_userid")){
-                            int id = Integer.parseInt(o.getValue());
-                            User user = UserModel.findByUserId(id);
-                            assert user != null;
-                            request.setAttribute("username", user.getUsername());
-                            request.setAttribute("password", user.getPassword());
-                        }
+                Cookie arr[] = request.getCookies();
+                for (Cookie o : arr) {
+                    if (o.getName().equals("_userid")) {
+                        int id = Integer.parseInt(o.getValue());
+                        User user = UserModel.findByUserId(id);
+                        assert user != null;
+                        request.setAttribute("username", user.getUsername());
+                        request.setAttribute("password", user.getPassword());
                     }
+                }
                 if ((boolean) session.getAttribute("auth")) {
                     ServletUtils.redirect("/Home", request, response);
                 } else
@@ -72,8 +72,8 @@ public class AccountServlet extends HttpServlet {
             case "/Profile":
                 List<Bank> bankList = BankModel.findAll();
                 List<User> userList = UserModel.findAll();
-                request.setAttribute("userList" , userList);
-                request.setAttribute("bankList" , bankList);
+                request.setAttribute("userList", userList);
+                request.setAttribute("bankList", bankList);
                 ServletUtils.forward("/views/vwAccount/Profile.jsp", request, response);
                 break;
             case "/WatchList":
@@ -83,59 +83,70 @@ public class AccountServlet extends HttpServlet {
                 request.setAttribute("favourite", listFavourite);
                 ServletUtils.forward("/views/vwAccount/WatchList.jsp", request, response);
                 break;
-            case "/Update":
+            case "/UpdateSeller":
                 List<ListBank> listBanks = ListBankModel.findAll();
                 List<Bank> BankList = BankModel.findAll();
                 List<User> UserList = UserModel.findAll();
-                request.setAttribute("userList" , UserList);
-                request.setAttribute("BankList" , BankList);
-                request.setAttribute("listBanks" , listBanks);
-                ServletUtils.forward("/views/vwAccount/Update.jsp", request, response);
+                request.setAttribute("userList", UserList);
+                request.setAttribute("bankList", BankList);
+                request.setAttribute("listBanks", listBanks);
+                ServletUtils.forward("/views/vwAccount/UpdateSeller.jsp", request, response);
+                break;
+            case "/UpdateBidder":
+                List<User> UserList1 = UserModel.findAll();
+                request.setAttribute("userList", UserList1);
+                ServletUtils.forward("/views/vwAccount/UpdateBidder.jsp", request, response);
                 break;
             case "/UpdatePassword":
                 List<User> UserLisT = UserModel.findAll();
-                request.setAttribute("userList" , UserLisT);
+                request.setAttribute("userList", UserLisT);
                 ServletUtils.forward("/views/vwAccount/UpdatePassword.jsp", request, response);
                 break;
-            case "/UpdateBank":
-                List<User> UserLisT1 = UserModel.findAll();
-                request.setAttribute("userList" , UserLisT1);
-                ServletUtils.forward("/views/vwAccount/UpdateBank.jsp", request, response);
-                break;
             case "/AuctionList":
+                List<Favourite> listFavourite1 = FavouriteModel.findAll();
                 List<Product> ListAll = ProductModel.findAll(0);
                 List<Auction> listAuction = AuctionModel.findAll();
+
+                request.setAttribute("favourite", listFavourite1);
                 request.setAttribute("productAll", ListAll);
                 request.setAttribute("listAuction", listAuction);
+
                 ServletUtils.forward("/views/vwAccount/AuctionList.jsp", request, response);
                 break;
+
             case "/SuccessList":
                 List<Product> ListAllSucces = ProductModel.findAll(1);
                 List<Auction> ListAuction = AuctionModel.findAll();
                 List<FeedBack> ListFeedBack = FeedBackModel.findAll();
+                List<Notice> listNotices = NoticeModel.findAll();
+                request.setAttribute("listNotices", listNotices);
                 request.setAttribute("feedBackAll", ListFeedBack);
                 request.setAttribute("productAll", ListAllSucces);
                 request.setAttribute("listAuction", ListAuction);
                 ServletUtils.forward("/views/vwAccount/SuccessList.jsp", request, response);
                 break;
             case "/SellingList":
-                List<Product> list = ProductModel.findAll(0 );
+                List<Favourite> listFavourite2 = FavouriteModel.findAll();
+                List<Product> list = ProductModel.findAll(0);
                 request.setAttribute("products", list);
+                request.setAttribute("favourite", listFavourite2);
                 ServletUtils.forward("/views/vwAccount/SellingList.jsp", request, response);
                 break;
             case "/Recharge":
                 ServletUtils.forward("/views/vwAccount/Recharge.jsp", request, response);
                 break;
             case "/EndingList":
-                List<Product> List = ProductModel.findAll(1 );
+                List<Product> List = ProductModel.findAll(1);
                 List<Auction> Auction = AuctionModel.findAll();
+                List<Notice> notices = NoticeModel.findAll();
                 request.setAttribute("products", List);
                 request.setAttribute("listAuction", Auction);
+                request.setAttribute("notices", notices);
                 ServletUtils.forward("/views/vwAccount/EndList.jsp", request, response);
                 break;
             case "/FeedBack":
-                int userId =  Integer.parseInt(request.getParameter("idUser"));
-                int proId =  Integer.parseInt(request.getParameter("idPro"));
+                int userId = Integer.parseInt(request.getParameter("idUser"));
+                int proId = Integer.parseInt(request.getParameter("idPro"));
                 Product product = ProductModel.findById(proId);
                 User userFeedBack = UserModel.findByUserId(userId);
                 assert product != null;
@@ -146,7 +157,7 @@ public class AccountServlet extends HttpServlet {
                 ServletUtils.forward("/views/vwAccount/FeedBack.jsp", request, response);
                 break;
             case "/FeedBackSeller":
-                int id =  Integer.parseInt(request.getParameter("id"));
+                int id = Integer.parseInt(request.getParameter("id"));
                 List<FeedBack> ListFeedBack2 = FeedBackModel.findAll();
                 User user3 = UserModel.findByUserId(id);
                 try {
@@ -180,7 +191,7 @@ public class AccountServlet extends HttpServlet {
                 out1.flush();
                 break;
             case "/IsAvailablePassword":
-                int userID =  Integer.parseInt(request.getParameter("idUser"));
+                int userID = Integer.parseInt(request.getParameter("idUser"));
                 String password = request.getParameter("password");
                 User user2 = UserModel.findByUserId(userID);
                 assert user2 != null;
@@ -203,6 +214,199 @@ public class AccountServlet extends HttpServlet {
                 out3.print(isAvailableSendEmail);
                 out3.flush();
                 break;
+            case "/Event":
+                List<Auction> auctions = AuctionModel.findAll();
+                List<Product> products = ProductModel.findAll(1);
+                List<Notice> Notices = NoticeModel.findAll();
+                for (Auction a : auctions) {
+                    for (Product p : products) {
+                        int AId = a.getAuID();
+                        int AUserId = a.getUserID();
+                        int AProId = a.getProID();
+                        int APrice = a.getPrice();
+                        int APaid = a.getPaid();
+                        int PProId = p.getProID();
+                        int PUserId = p.getUserID();
+                        int PStart = p.getStartingPrice() * 20 / 100; //20% giá ban đầu
+                        if (AProId == PProId && APaid == 0) {//Lấy các đơn hàng chưa xét , xét id sản phẩm trùng với các đơn đâu giá
+                            int pay = APrice - PStart;//Tiền phải trả của khách.
+                            User User = UserModel.findByUserId(AUserId);//Tìm thông tin của khách trong đơn đấu giá này,
+                            assert User != null;
+                            int UserId = User.getId();//Lấy id người này.
+                            String Email = User.getEmail();//Lấy email người này.
+                            int money = User.getMoney();//Lấy thông tin tiền của người này.
+                            int moneyAu = User.getMoneyAu();//Lấy thông tin tiền đặt cọc của người này.
+                            if (PUserId == AUserId) {//Nếu người này đấu giá thắng
+                                if (money >= pay) {//Đủ tiền đã trả số tiền còn lại
+                                    User U = new User(UserId, money - pay, moneyAu - PStart);
+                                    UserModel.updateMoney(U);//Cập nhật tiền cho người đấu giá thắng món hàng này: trừ tiền đấu giá vào tài khoảng chính và xóa tiền cọc của sp này.
+                                    Product Product = new Product(p.getProID(), p.getStartingPrice(), p.getCatID(), p.getStepPrice(), p.getHighestPaidPrice(), p.getProName(), p.getTinyDes(), p.getFullDes(), p.getEndDay(), p.getTop(), p.getYear(), p.getMonth(), p.getDay(), p.getDay(), p.getMinute(), p.getSecond(), 0, 1);
+                                    ProductModel.update(Product);//Cập nhật sản phẩm này đã được thanh toán rồi.
+                                    Notice n = new Notice(p.getUserSellID(), "Bạn cần giao hàng cho khách", 0, LocalDateTime.now().plusDays(7), p.getHighestPaidPrice(), 2, PProId);
+                                    NoticeModel.add(n);//Tạo thông báo yêu cầu giao hàng cho khách
+                                    User User1 = UserModel.findByUserId(p.getUserSellID());
+                                    assert User1 != null;
+                                    String emailSubject = "Request delivery to customers";
+                                    String emailContent = "Request you to deliver to the customer who ordered the product with the code:" + p.getProID();
+                                    tools.email(User1.getEmail(), emailSubject, emailContent);//Gửi cho người bán: sản phẩm này đã bán thành công và yêu cầu bạn gửi hàng!
+                                    String emailSubject1 = "Successful auction";
+                                    String emailContent1 = "You have made a successful purchase with the product code:" + p.getProID();
+                                    tools.email(User.getEmail(), emailSubject1, emailContent1);//Gửi cho khách: bạn đã mua thành công!
+                                } else {//Không đủ tiền để trả
+                                    User U = new User(UserId, money, moneyAu - PStart);
+                                    UserModel.updateMoney(U); //Cập nhật tiền cho người đấu giá thắng món hàng này: xóa tiền cọc của sp này.
+                                    Notice n = new Notice(UserId, "Bạn cần nạp vào tài khoản thêm: " + pay, 0, LocalDateTime.now().plusDays(1), pay, 1, PProId);
+                                    NoticeModel.add(n);//Tạo thông báo yêu cầu thanh toán số tiền còn lại trong vòng 24h.
+                                    String emailSubject = "Request more money";
+                                    String emailContent = "You require additional funds to be added to your account to complete payment of the amount: " + pay + " of products with code: " + PProId + ", If after 24 hours you do not pay, you will lose the deposit with the amount of: " + PStart;
+                                    tools.email(Email, emailSubject, emailContent);// Gửi cho khách: bạn cần nạp tiền để thanh toán số tiền còn lại nếu không bạn sẽ mất cọc!
+                                }
+
+                            } else {//Không phải người đấu giá thắng
+                                User U1 = new User(UserId, money + PStart, moneyAu - PStart);
+                                UserModel.updateMoney(U1);//Cập nhật tiền cho người đấu giá thất bại món hàng này: cộng tiền đã cộc vào tài khoản chính và trừ tiền đặt cọc món hàng này.
+                                String emailSubject = "Auction failed";
+                                String emailContent = "You have failed to bid on a product with code: " + PProId;
+                                tools.email(Email, emailSubject, emailContent);// Gửi cho khách:Bạn đã đấu giá thất bại!
+                            }
+                            Auction auction = new Auction(AId, 1);
+                            AuctionModel.updatePaid(auction);//Cập nhật đã xét đơn đấu giá này.
+                        }
+                    }
+                }
+
+                for (Product p : products){
+                    if( p.getUserID() == -1 && p.getPaid() == 0){
+                        User U = UserModel.findByUserId(p.getUserSellID());
+                        assert U != null;
+                        Product P = new Product(p.getProID(), p.getStartingPrice(), p.getCatID(), p.getStepPrice(), p.getHighestPaidPrice(), p.getProName(), p.getTinyDes(), p.getFullDes(), p.getEndDay(), p.getTop(), p.getYear(), p.getMonth(), p.getDay(), p.getDay(), p.getMinute(), p.getSecond(), p.getDelete(), -1);
+                        ProductModel.update(P);
+                        String emailSubject = "Selling failed";
+                        String emailContent = "Products with code:" + p.getProID() + " No one participated in the auction";
+                        tools.email(U.getEmail(), emailSubject, emailContent);// Gửi cho khách: bạn cần nạp tiền để thanh toán số tiền còn lại nếu không bạn sẽ mất cọc!
+                    }
+                }
+
+                for (Notice n : Notices) {
+                    User User1 = UserModel.findByUserId(n.getIdUser());// Lấy thông tin của người nhận thông báo
+                    assert User1 != null;
+                    String Email1 = User1.getEmail();//Lấy Email
+                    Product p = ProductModel.findById(n.getIdPro());//Lấy thông tin sản phẩm
+                    assert p != null;
+                    if (n.getStt() == 1) {// Xét những thông báo của khách cần trả số tiền còn lại mà chưa trả
+                        if (n.getType() == 0) {//Nếu còn thời để thanh toán
+                            if (User1.getMoney() >= n.getPrice()) {//Nếu tiền của người đó đủ để thanh toán số tiền còn lại
+                                User U1 = new User(User1.getId(), User1.getMoney() - n.getPrice(), User1.getMoneyAu());
+                                UserModel.updateMoney(U1);//Người khách đó phải bị trừ số tiền phải trả còn lại.
+                                Notice N = new Notice(n.getId(), n.getIdUser(), "Bạn đã trả xong số tiền còn lại", n.getType(), n.getDateEnd(),0, 0, n.getIdPro());
+                                NoticeModel.update(N); //Cập nhật thông báo là đã thanh toán trước thời hạn
+                                Product Product1 = new Product(p.getProID(), p.getStartingPrice(), p.getCatID(), p.getStepPrice(), p.getHighestPaidPrice(), p.getProName(), p.getTinyDes(), p.getFullDes(), p.getEndDay(), p.getTop(), p.getYear(), p.getMonth(), p.getDay(), p.getDay(), p.getMinute(), p.getSecond(), 0, 1);
+                                ProductModel.update(Product1);//Cập nhật sản phẩm này đã được thanh toán rồi.
+                                Notice n1 = new Notice(p.getUserSellID(), "Bạn cần giao hàng cho khách", 0, LocalDateTime.now().plusDays(7), p.getHighestPaidPrice(), 2, p.getProID());
+                                NoticeModel.add(n1);//Tạo thông báo cho người bán sản phẩm này: yêu cầu giao hàng cho khách!
+                                User UserSell = UserModel.findByUserId(p.getUserSellID());//Tìm thông tin của người bán
+                                assert UserSell != null;
+                                String emailSubject = "Request delivery to customers";
+                                String emailContent = "Request you to deliver to the customer who ordered the product with the code:" + p.getProID() + ", Please confirm after delivery!";
+                                tools.email(UserSell.getEmail(), emailSubject, emailContent);// Gửi cho người bán: Bạn hãy giao hàng cho khách!
+                                String emailSubject1 = "Successful auction";
+                                String emailContent1 = "You have made a successful purchase with the product code:" + p.getProID();
+                                tools.email(Email1, emailSubject1, emailContent1);// Gửi cho người khách: Bạn đã đấu giá thành công!
+                            }
+
+                        }
+                        if (n.getType() == 1) {//Nếu hét thời gian thanh toán
+                            User UserSell = UserModel.findByUserId(p.getUserSellID());//Tìm thông tin người bán này
+                            assert UserSell != null;
+                            User U1 = new User(UserSell.getId(), UserSell.getMoney() + (p.getStartingPrice() * 20 / 100), UserSell.getMoneyAu());
+                            UserModel.updateMoney(U1);//Trả lại tiền cộc 20% giá sản phẩm bắt đầu cho người bán.
+                            Notice N = new Notice(n.getId(), n.getIdUser(),"Bạn đã mất cộc", n.getType(), n.getDateEnd(), n.getPrice(), -1, n.getIdPro());
+                            NoticeModel.update(N);//Cập nhật thông báo là người này mất cộc
+                            String emailSubject = "Notice of loss of deposit";
+                            String emailContent = "You have not paid us for the product with the code: " + n.getIdPro() + " and you lost your money with the money : " + p.getStartingPrice() * 20 / 100;
+                            tools.email(Email1, emailSubject, emailContent);//Thông báo cho khách: bạn đã mất tiền cộc.
+                            String emailSubject1 = "Selling failed product";
+                            String emailContent1 = "Buyer did not pay for product with code: " + n.getIdPro() + " ,We refunded your deposit.";
+                            tools.email(UserSell.getEmail(), emailSubject1, emailContent1);//Thông báo cho người bán: bán hàng thất bại.
+                        }
+                    }
+                    if (n.getStt() == 2) {
+                        if (n.getType() == 0) {//Nếu còn thời để giao
+                            if(p.getShip() == 1){//Đã giao rồi
+                                User U = UserModel.findByUserId(p.getUserID());//Lấy thông tin người mua
+                                assert U != null;
+                                Notice N = new Notice(n.getId(), n.getIdUser(), "Đã giao hàng", n.getType(), n.getDateEnd() , n.getPrice(), 3, n.getIdPro());
+                                NoticeModel.update(N);//Cập nhật thông báo là người bán đã giao hàng.
+                                String emailSubject = "Delivered";
+                                DateTimeFormatter myFormatObj = DateTimeFormatter.ofPattern("dd-MM-yyyy HH:mm:ss");
+                                String formattedDate = LocalDateTime.now().format(myFormatObj);
+                                String emailContent = "Seller of products with code: " + n.getIdPro() + " delivered to you at "+ formattedDate +", please confirm your order has arrived.";
+                                tools.email( U.getEmail(), emailSubject, emailContent);//Thông báo cho khách: đã giao hàng tới.
+                            }
+                        }
+                        if (n.getType() == 1) {//Nếu hét thời gian để giao
+                            if(p.getShip() == 0){//Chưa giao
+                                User U = UserModel.findByUserId(p.getUserID());//Lấy thông tin người mua
+                                assert U != null;
+                                User U1 = new User(U.getId(), U.getMoney() + n.getPrice() + (p.getStartingPrice() * 20/100), U.getMoneyAu());
+                                UserModel.updateMoney(U1);//Người khách được hoàn tiền lại.
+                                Notice N = new Notice(n.getId(), n.getIdUser(), "Chưa giao hàng", n.getType(), n.getDateEnd(), n.getPrice(), -2, n.getIdPro());
+                                NoticeModel.update(N);//Cập nhật thông báo là người bán chưa giao hàng.
+                                Product P = new Product(p.getProID() , -1);
+                                ProductModel.updateShip(P);
+                                String emailSubject = "Delivery failed";
+                                String emailContent = "The seller did not deliver the item to you with the product code: " + n.getIdPro() + ", We will refund.";
+                                tools.email( U.getEmail(), emailSubject, emailContent);//Thông báo cho khách: giao hàng thất bại.
+                                String emailSubject1 = "Delivery failed";
+                                String emailContent1 = "You delivered late than the specified time of products with code: " + n.getIdPro() + ", you will lose your deposit.";
+                                tools.email( Email1, emailSubject1, emailContent1);//Thông báo cho người bán: giao hàng trễ so với thời gian quy định nên không trã tiền cộc.
+                                //Thêm một nhận xét xấu từ Admin
+                            }
+                        }
+
+                    }
+                    if (n.getStt() == 3) {
+                        if (n.getType() == 0) {//Nếu còn thời để giao
+                            if(p.getShip() == 2){//Đã xác nhận nhận được hàng
+                                Notice N = new Notice(n.getId(),p.getUserID(), "Đã nhận hàng", n.getType(), n.getDateEnd() , n.getPrice(), 4, n.getIdPro());
+                                NoticeModel.update(N);//Cập nhật thông báo là người mua đã nhận hàng.
+                                User U1 = new User(User1.getId(), User1.getMoney() + p.getStartingPrice() * 20/100, User1.getMoneyAu());
+                                UserModel.updateMoney(U1);//Người bán được hoàn tiền lại.
+                                String emailSubject1 = "Successful sale";
+                                String emailContent1 = "You have successfully sold the product with the code: " + n.getIdPro() + ",We will transfer the money to you.";
+                                tools.email( Email1, emailSubject1, emailContent1);//Thông báo cho người bán: bán hàng thành công.
+                                //Tạo đơn chuyển tiền cho người bán
+                            }
+                        }
+                        if (n.getType() == 1) {//Nếu hét thời gian để giao
+                            if(p.getShip() == 1){//Chưa xác nhận đã nhận hàng
+                                User U = UserModel.findByUserId(p.getUserID());//Lấy thông tin người mua
+                                assert U != null;
+//                                User U1 = new User(U.getId(), U.getMoney() + n.getPrice() , U.getMoneyAu());
+//                                UserModel.updateMoney(U1);//Người khách được hoàn tiền lại.
+                                Notice N = new Notice(n.getId(), p.getUserID(), "Người nhận chưa nhận được hàng", n.getType(), n.getDateEnd(), n.getPrice(), -3, n.getIdPro());
+                                NoticeModel.update(N);//Cập nhật thông báo là khách chưa nhận được hàng.
+                                Product P = new Product(p.getProID() , -2);
+                                ProductModel.updateShip(P);
+                                String emailSubject = "Delivery failed for customer";
+                                String emailContent = "The seller did not deliver the item to you with the product code: " + n.getIdPro() + ", we will consider.";
+                                tools.email( U.getEmail(), emailSubject, emailContent);//Thông báo cho khách: giao hàng thất bại.
+                                String emailSubject1 = "Delivery failed for  seller";
+                                String emailContent1 = "The customer has not received the product with the code: " + n.getIdPro() + ", we will consider.";
+                                tools.email( Email1, emailSubject1, emailContent1);//Thông báo cho người bán: người nhận chưa xác nhận nhận hàng nên không trã tiền cộc.
+
+                            }
+                        }
+
+
+                    }
+                }
+                PrintWriter out4 = response.getWriter();
+                response.setContentType("application/json");
+                response.setCharacterEncoding("utf-8");
+                out4.print(true);
+                out4.flush();
+                break;
             default:
                 ServletUtils.forward("/views/404.jsp", request, response);
                 break;
@@ -216,22 +420,22 @@ public class AccountServlet extends HttpServlet {
         String path = request.getPathInfo();
         switch (path) {
             case "/Delete":
-                deleteUser(request,response);
+                deleteUser(request, response);
                 break;
             case "/ForgetPassword":
-                forgetPassword(request,response);
+                forgetPassword(request, response);
                 break;
             case "/UpdatePermission":
-                updatePermission(request,response);
+                updatePermission(request, response);
                 break;
             case "/Otp":
-                otpUser(request,response);
+                otpUser(request, response);
+                break;
+            case "/OtpErr":
+                otpErrUser(request, response);
                 break;
             case "/UpdatePassword":
-                updatePassword(request,response);
-                break;
-            case "/UpdateBank":
-                updateBank(request,response);
+                updatePassword(request, response);
                 break;
             case "/Register":
                 registerUser(request, response);
@@ -242,14 +446,14 @@ public class AccountServlet extends HttpServlet {
             case "/Logout":
                 logoutUser(request, response);
                 break;
-            case "/Update":
-                updateUser(request,response);
+            case "/UpdateSeller":
+                updateUserSeller(request, response);
                 break;
-            case "/Profile":
-                updateImg(request,response);
+            case "/UpdateBidder":
+                updateUserBidder(request, response);
                 break;
             case "/FeedBack":
-                feedBack(request,response);
+                feedBack(request, response);
                 break;
             default:
                 ServletUtils.forward("/views/404.jsp", request, response);
@@ -264,7 +468,7 @@ public class AccountServlet extends HttpServlet {
         String bcryptHashString = BCrypt.withDefaults().hashToString(12, rawpwd.toCharArray());
         User u = UserModel.findByEmail(email);
         assert u != null;
-        User User = new User(u.getId() , u.getPermission() , u.getCode() , u.getUsername() , bcryptHashString , u.getName() , u.getEmail() , u.getDob() , u.getMoney() , u.getMoneyAu() , u.getAddress() , u.getPhone() );
+        User User = new User(u.getId(), u.getPermission(), u.getCode(), u.getUsername(), bcryptHashString, u.getName(), u.getEmail(), u.getDob(), u.getMoney(), u.getMoneyAu(), u.getAddress(), u.getPhone());
         UserModel.update(User);
         String url = "/Account/Login";
         ServletUtils.redirect(url, request, response);
@@ -272,64 +476,52 @@ public class AccountServlet extends HttpServlet {
 
 
     private void feedBack(HttpServletRequest request, HttpServletResponse response) throws IOException {
-        int happy =  Integer.parseInt(request.getParameter("happy"));
-        int userFbID =  Integer.parseInt(request.getParameter("userFbID"));
-        int userSellID =  Integer.parseInt(request.getParameter("userSellID"));
-        int ProID =  Integer.parseInt(request.getParameter("proID"));
+        int happy = Integer.parseInt(request.getParameter("happy"));
+        int userFbID = Integer.parseInt(request.getParameter("userFbID"));
+        int userSellID = Integer.parseInt(request.getParameter("userSellID"));
+        int ProID = Integer.parseInt(request.getParameter("proID"));
         String FeedBack = request.getParameter("feedBack");
-        FeedBack feedBack = new FeedBack(ProID,userFbID , userSellID , happy , FeedBack);
+        FeedBack feedBack = new FeedBack(ProID, userFbID, userSellID, happy, FeedBack);
         FeedBackModel.add(feedBack);
         ServletUtils.redirect("/Account/SuccessList", request, response);
     }
 
-    private void updateImg(HttpServletRequest request, HttpServletResponse response) throws  ServletException , IOException {
-        Part part = request.getPart("ImageUser");
-        String idUser = request.getParameter("idUser");
-        String realpath = "/public/imgs/avatar/";
-        String realPathAll = realpath.concat(idUser);
-        String realPathAll2 = realPathAll.concat("/main.jpg");
-        String realPath = this.getServletContext().getRealPath(realPathAll);
-        String realPath2 = this.getServletContext().getRealPath(realPathAll2);
-        if (!Files.exists(Path.of(realPath))) {
-            Files.createDirectory(Path.of(realPath));
-        }
-        if (Files.exists(Path.of(realPath2))) {
-            File storeFile = new File(realPath2);
-            boolean erased = storeFile.delete();
-            System.out.print(erased);
-        }
-        part.write(realPath + "/" + "main.jpg");
-
-        String url = request.getHeader("referer");
-        ServletUtils.redirect(url, request, response);
-    }
 
     private void updatePassword(HttpServletRequest request, HttpServletResponse response) throws IOException {
         String rawpwd = request.getParameter("newPassword");
         String bcryptHashString = BCrypt.withDefaults().hashToString(12, rawpwd.toCharArray());
-        int userID =  Integer.parseInt(request.getParameter("id"));
+        int userID = Integer.parseInt(request.getParameter("id"));
         User user = UserModel.findByUserId(userID);
-        if(user != null){
-            User u = new User(userID , user.getPermission() , user.getCode() , user.getUsername() , bcryptHashString , user.getName() , user.getEmail() , user.getDob() , user.getMoney() , user.getMoneyAu() , user.getAddress() , user.getPhone() );
+        if (user != null) {
+            User u = new User(userID, user.getPermission(), user.getCode(), user.getUsername(), bcryptHashString, user.getName(), user.getEmail(), user.getDob(), user.getMoney(), user.getMoneyAu(), user.getAddress(), user.getPhone());
             UserModel.update(u);
         }
         String url = request.getHeader("referer");
         ServletUtils.redirect(url, request, response);
     }
 
-    private void updateBank(HttpServletRequest request, HttpServletResponse response) throws IOException {
-        String inputBank = request.getParameter("inputBank");
-        String idBank = request.getParameter("idBank");
-        int userID =  Integer.parseInt(request.getParameter("id"));
-        Bank b = new Bank(userID , inputBank , idBank);
-        BankModel.add(b);
+
+    private void updateUserBidder(HttpServletRequest request, HttpServletResponse response) throws IOException {
+        int userID = Integer.parseInt(request.getParameter("id"));
+        String name = request.getParameter("name");
+        String email = request.getParameter("email");
+        String phone = request.getParameter("phone");
+        String strDob = request.getParameter("dob");
+        DateTimeFormatter df = DateTimeFormatter.ofPattern("dd/MM/yyyy");//theo format của java
+        LocalDate dob = LocalDate.parse(strDob, df);
+        String address = request.getParameter("address");
+        User user = UserModel.findByUserId(userID);
+        if (user != null) {
+            User u = new User(userID, user.getPermission(), user.getCode(), user.getUsername(), user.getPassword(), name, email, dob, user.getMoney(), user.getMoneyAu(), address, phone);
+            UserModel.update(u);
+        }
         String url = request.getHeader("referer");
         ServletUtils.redirect(url, request, response);
     }
 
-    private void updateUser(HttpServletRequest request, HttpServletResponse response) throws IOException {
-        int userID =  Integer.parseInt(request.getParameter("id"));
-        int idB =  Integer.parseInt(request.getParameter("idB"));
+    private void updateUserSeller(HttpServletRequest request, HttpServletResponse response) throws IOException {
+        int userID = Integer.parseInt(request.getParameter("id"));
+        String idB = request.getParameter("idB");
         String inputBank = request.getParameter("inputBank");
         String idBank = request.getParameter("idBank");
         String name = request.getParameter("name");
@@ -340,13 +532,19 @@ public class AccountServlet extends HttpServlet {
         LocalDate dob = LocalDate.parse(strDob, df);
         String address = request.getParameter("address");
         User user = UserModel.findByUserId(userID);
-        if(user != null){
-            User u = new User(userID , user.getPermission() , user.getCode() , user.getUsername() , user.getPassword() , name , email , dob , user.getMoney() , user.getMoneyAu() , address , phone );
+        Bank bank = BankModel.findByUserId(userID);
+        if (user != null) {
+            User u = new User(userID, user.getPermission(), user.getCode(), user.getUsername(), user.getPassword(), name, email, dob, user.getMoney(), user.getMoneyAu(), address, phone);
             UserModel.update(u);
         }
-        if( inputBank != null && idBank != null){
-            Bank b = new Bank(idB ,userID , inputBank , idBank);
-            BankModel.update(b);
+        if (!inputBank.isEmpty() && !idBank.isEmpty()) {
+            if (bank != null) {
+                Bank b = new Bank(bank.getId(), userID, inputBank, idBank);
+                BankModel.update(b);
+            } else {
+                Bank b = new Bank(userID, inputBank, idBank);
+                BankModel.add(b);
+            }
         }
         String url = request.getHeader("referer");
         ServletUtils.redirect(url, request, response);
@@ -354,16 +552,16 @@ public class AccountServlet extends HttpServlet {
     }
 
     private void deleteUser(HttpServletRequest request, HttpServletResponse response) throws IOException {
-        int userID =  Integer.parseInt(request.getParameter("idUser"));
+        int userID = Integer.parseInt(request.getParameter("idUser"));
         UserModel.delete(userID);
         String url = request.getHeader("referer");
         ServletUtils.redirect(url, request, response);
     }
 
     private void updatePermission(HttpServletRequest request, HttpServletResponse response) throws IOException {
-        int userID =  Integer.parseInt(request.getParameter("idUser"));
+        int userID = Integer.parseInt(request.getParameter("idUser"));
         int permission = Integer.parseInt(request.getParameter("permission"));
-        User user = new User(userID , permission);
+        User user = new User(userID, permission);
         UserModel.updatePermission(user);
         String url = request.getHeader("referer");
         ServletUtils.redirect(url, request, response);
@@ -377,16 +575,16 @@ public class AccountServlet extends HttpServlet {
         String codeInt4 = request.getParameter("4");
         String codeInt5 = request.getParameter("5");
         String codeInt6 = request.getParameter("6");
+        String email1 = request.getParameter("email");
         String codeString = codeInt1.concat(codeInt2).concat(codeInt3).concat(codeInt4).concat(codeInt5).concat(codeInt6);
-        int codeInt =  Integer.parseInt(codeString);
+        int codeInt = Integer.parseInt(codeString);
         User user = UserModel.findByCode(codeInt);
-        if(user == null){
-            request.setAttribute("hasError", true); //Thông báo lỗi
-            request.setAttribute("errorMessage", "Sai mã OTP"); // Thông báo lỗi
-            ServletUtils.forward("/views/vwAccount/Otp.jsp", request, response);
-        }else{
+        if (user == null) {
+            String url = "/Account/OtpErr?email=" + email1;
+            ServletUtils.redirect(url, request, response);
+        } else {
             int id = user.getId();
-            int permission = 3;
+            int permission = 1;
             int code = 1;
             String bcryptHashString = user.getPassword();
             LocalDate Dob = user.getDob();
@@ -395,7 +593,45 @@ public class AccountServlet extends HttpServlet {
             String email = user.getEmail();
             String address = user.getAddress();
             String phone = user.getPhone();
-            User User = new User(id , permission, code , username, bcryptHashString, name, email, Dob , 0 , 0 , address , phone );
+            User User = new User(id, permission, code, username, bcryptHashString, name, email, Dob, 0, 0, address, phone);
+            UserModel.update(User);
+            HttpSession session = request.getSession();
+            session.setAttribute("otp", false);
+            session.setAttribute("auth", true);
+            session.setAttribute("authUser", user);//Tắt quyền vào trang OTP
+            String url = "/Home";
+            ServletUtils.redirect(url, request, response);
+        }
+
+    }
+
+    private void otpErrUser(HttpServletRequest request, HttpServletResponse response) throws IOException, ServletException {
+//        int Code = Integer.parseInt(request.getParameter("code"));
+        String codeInt1 = request.getParameter("1");
+        String codeInt2 = request.getParameter("2");
+        String codeInt3 = request.getParameter("3");
+        String codeInt4 = request.getParameter("4");
+        String codeInt5 = request.getParameter("5");
+        String codeInt6 = request.getParameter("6");
+        String email1 = request.getParameter("email");
+        String codeString = codeInt1.concat(codeInt2).concat(codeInt3).concat(codeInt4).concat(codeInt5).concat(codeInt6);
+        int codeInt = Integer.parseInt(codeString);
+        User user = UserModel.findByCode(codeInt);
+        if (user == null) {
+            String url = "/Account/OtpErr?email=\"+ email";
+            ServletUtils.redirect(url, request, response);
+        } else {
+            int id = user.getId();
+            int permission = 1;
+            int code = 1;
+            String bcryptHashString = user.getPassword();
+            LocalDate Dob = user.getDob();
+            String username = user.getUsername();
+            String name = user.getName();
+            String email = user.getEmail();
+            String address = user.getAddress();
+            String phone = user.getPhone();
+            User User = new User(id, permission, code, username, bcryptHashString, name, email, Dob, 0, 0, address, phone);
             UserModel.update(User);
             HttpSession session = request.getSession();
             session.setAttribute("otp", false);
@@ -450,10 +686,10 @@ public class AccountServlet extends HttpServlet {
             String emailContent = String.valueOf(numberRandom);
 
             Properties prop = new Properties();
-            prop.put("mail.smtp.host" , "smtp.gmail.com");
-            prop.put("mail.smtp.port" , "587");
-            prop.put("mail.smtp.auth" , "true");
-            prop.put("mail.smtp.starttls.enable" , "true");
+            prop.put("mail.smtp.host", "smtp.gmail.com");
+            prop.put("mail.smtp.port", "587");
+            prop.put("mail.smtp.auth", "true");
+            prop.put("mail.smtp.starttls.enable", "true");
             Authenticator auth = new Authenticator() {
                 protected PasswordAuthentication getPasswordAuthentication() {
                     return new PasswordAuthentication(usernameEmail, passwordEmail);
@@ -470,28 +706,28 @@ public class AccountServlet extends HttpServlet {
                 message.setSubject(emailSubject);
                 message.setText(emailContent);
                 Transport.send(message);
-            }catch (Exception e){
+            } catch (Exception e) {
 
             }
             int permission = 4;
-            User user = new User(permission, code , username, bcryptHashString, name, email, Dob , 0 ,0 , address , phone);
+            User user = new User(permission, code, username, bcryptHashString, name, email, Dob, 0, 0, address, phone);
             UserModel.add(user);
             HttpSession session = request.getSession(); //Dùng chung cho mọi request
             session.setAttribute("otp", true); //Bật quyền vào trang OTP
-            ServletUtils.redirect("/Account/Otp?email="+ email, request, response);
+            ServletUtils.redirect("/Account/Otp?email=" + email, request, response);
         }
     }
 
     private void loginUser(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
         String email = request.getParameter("email");
-        if(email == null){
+        if (email == null) {
             String username = request.getParameter("username");
             String password = request.getParameter("password");
 
             User user = UserModel.findByUsername(username);
 
-            if (user != null ) {
-                if(user.getPermission() != 4){
+            if (user != null) {
+                if (user.getPermission() != 4) {
                     int id = user.getId();
                     String ID = String.valueOf(id);
                     BCrypt.Result result = BCrypt.verifyer().verify(password.toCharArray(), user.getPassword());
@@ -502,14 +738,14 @@ public class AccountServlet extends HttpServlet {
 
 //                Lưu account lên trân cookie
 
-                        Cookie userID = new Cookie("_userid" , ID );
-                        userID.setMaxAge(60*60*24*365);
+                        Cookie userID = new Cookie("_userid", ID);
+                        userID.setMaxAge(60 * 60 * 24 * 365);
                         userID.setPath("/");
                         response.addCookie(userID);
                         String url;
-                        if(user.getPermission() == 0){
+                        if (user.getPermission() == 0) {
                             url = "/Admin";
-                        }else {
+                        } else {
                             url = "/Home";
                         }
                         ServletUtils.redirect(url, request, response);
@@ -519,8 +755,7 @@ public class AccountServlet extends HttpServlet {
                         request.setAttribute("errorMessage", "Tên đăng nhập hoặc mật khẩu không đúng."); // Thông báo lỗi
                         ServletUtils.forward("/views/vwAccount/Login.jsp", request, response);
                     }
-                }
-                else {
+                } else {
                     request.setAttribute("hasError", true); //Thông báo lỗi
                     request.setAttribute("errorMessage", "Tên đăng nhập hoặc mật khẩu không đúng."); // Thông báo lỗi
                     ServletUtils.forward("/views/vwAccount/Login.jsp", request, response);
@@ -530,38 +765,38 @@ public class AccountServlet extends HttpServlet {
                 request.setAttribute("errorMessage", "Tên đăng nhập hoặc mật khẩu không đúng."); // Thông báo lỗi
                 ServletUtils.forward("/views/vwAccount/Login.jsp", request, response);
             }
-        }else {
-                //Note: tạo riêng một class java gửi Email rồi gọi nó ra.
-                final String usernameEmail = "19110186@student.hcmute.edu.vn";
-                final String passwordEmail = "Tao?may2cau";
-                String emailSubject = "Forget Password";
-                String emailContent = "http://localhost:8080/Webapp_TLCN/Account/ForgetPassword?email="+ usernameEmail;
+        } else {
+            //Note: tạo riêng một class java gửi Email rồi gọi nó ra.
+            final String usernameEmail = "19110186@student.hcmute.edu.vn";
+            final String passwordEmail = "Tao?may2cau";
+            String emailSubject = "Forget Password";
+            String emailContent = "http://localhost:8080/Webapp_TLCN/Account/ForgetPassword?email=" + usernameEmail;
 
-                Properties prop = new Properties();
-                prop.put("mail.smtp.host" , "smtp.gmail.com");
-                prop.put("mail.smtp.port" , "587");
-                prop.put("mail.smtp.auth" , "true");
-                prop.put("mail.smtp.starttls.enable" , "true");
-                Authenticator auth = new Authenticator() {
-                    protected PasswordAuthentication getPasswordAuthentication() {
-                        return new PasswordAuthentication(usernameEmail, passwordEmail);
-                    }
-                };
-                Session sessionEmail = Session.getInstance(prop, auth);
-                //Đăng nhập được email
-                try {
-                    MimeMessage message = new MimeMessage(sessionEmail);
-                    message.setFrom(new InternetAddress(usernameEmail));
-                    message.setRecipients(
-                            Message.RecipientType.TO, InternetAddress.parse(email)
-                    );
-                    message.setSubject(emailSubject);
-                    message.setText(emailContent);
-                    Transport.send(message);
-                }catch (Exception e){
-
+            Properties prop = new Properties();
+            prop.put("mail.smtp.host", "smtp.gmail.com");
+            prop.put("mail.smtp.port", "587");
+            prop.put("mail.smtp.auth", "true");
+            prop.put("mail.smtp.starttls.enable", "true");
+            Authenticator auth = new Authenticator() {
+                protected PasswordAuthentication getPasswordAuthentication() {
+                    return new PasswordAuthentication(usernameEmail, passwordEmail);
                 }
-                ServletUtils.redirect("/Account/Login", request, response);
+            };
+            Session sessionEmail = Session.getInstance(prop, auth);
+            //Đăng nhập được email
+            try {
+                MimeMessage message = new MimeMessage(sessionEmail);
+                message.setFrom(new InternetAddress(usernameEmail));
+                message.setRecipients(
+                        Message.RecipientType.TO, InternetAddress.parse(email)
+                );
+                message.setSubject(emailSubject);
+                message.setText(emailContent);
+                Transport.send(message);
+            } catch (Exception e) {
+
+            }
+            ServletUtils.redirect("/Account/Login", request, response);
         }
 
     }

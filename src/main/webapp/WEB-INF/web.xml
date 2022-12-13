@@ -19,10 +19,6 @@
         <url-pattern>/*</url-pattern>
     </filter-mapping>
 
-    <filter-mapping>
-        <filter-name>PayFilter</filter-name>
-        <url-pattern>/*</url-pattern>
-    </filter-mapping>
 
     <filter-mapping>
         <filter-name>ProductPaidFilter</filter-name>
@@ -38,12 +34,14 @@
         <filter-name>AuthFilter</filter-name>
         <url-pattern>/Account/Profile</url-pattern>
         <url-pattern>/Account/UpdatePassword</url-pattern>
-        <url-pattern>/Account/Update</url-pattern>
+        <url-pattern>/Account/UpdateSeller</url-pattern>
+        <url-pattern>/Account/UpdateBidder</url-pattern>
         <url-pattern>/Account/WatchList</url-pattern>
         <url-pattern>/Account/SuccessList</url-pattern>
         <url-pattern>/Account/AuctionList</url-pattern>
         <url-pattern>/Account/Recharge</url-pattern>
         <url-pattern>/Account/EndingList</url-pattern>
+        <url-pattern>/Admin/*</url-pattern>
     </filter-mapping>
 
 
@@ -68,10 +66,6 @@
         <url-pattern>/Admin/Product/Add</url-pattern>
     </filter-mapping>
 
-    <filter-mapping>
-        <filter-name>AuthSellerFilter</filter-name>
-        <url-pattern>/Account/SellingList</url-pattern>
-    </filter-mapping>
 
 
 </web-app>

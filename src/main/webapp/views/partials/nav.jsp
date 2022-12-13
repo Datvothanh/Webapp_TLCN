@@ -2,17 +2,17 @@
 <%@ taglib prefix="t" tagdir="/WEB-INF/tags" %>
 
 <script>
-    function SearchFunction(){
+    function SearchFunction() {
         let txtSr = document.getElementById("txtSr").value;
         if (txtSr !== "") {
-            window.location.href = "${pageContext.request.contextPath}/Product/ProSearch?txtSr=" + txtSr ;
+            window.location.href = "${pageContext.request.contextPath}/Product/ProSearch?txtSr=" + txtSr;
         }
 
     }
 
 </script>
 <style>
-    .topbar-123{
+    .topbar-123 {
         position: sticky;
         top: 0;
         z-index: 100;
@@ -54,9 +54,11 @@
             </li>
         </ul>
         <form class="form-inline my-2 my-lg-0">
-            <input class="form-control mr-sm-2" type="text" placeholder="Tìm kiếm" id="txtSr" name="txtSr" aria-label="Search">
+            <input class="form-control mr-sm-2" type="text" placeholder="Tìm kiếm" id="txtSr" name="txtSr"
+                   aria-label="Search">
             <button onclick="SearchFunction()" class="btn btn-outline-success my-2 my-sm-0" type="button"><i
-                    class="fa fa-search" aria-hidden="true"></i>&nbsp;Search</button>
+                    class="fa fa-search" aria-hidden="true"></i>&nbsp;Search
+            </button>
         </form>
     </div>
 
@@ -65,7 +67,7 @@
             <c:when test="${auth}">
                 <c:if test="${authUser.permission != 0}">
                     Money:${authUser.money} - MoneyAu:${authUser.moneyAu}
-    
+
                 </c:if>
                 <form id="frmLogout" method="post" action="${pageContext.request.contextPath}/Account/Logout"></form>
 

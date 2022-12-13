@@ -18,7 +18,7 @@
 
             $('#frmUpdatePassword').on('submit', function (e) {
                 e.preventDefault();
-                const newPassword= $('#txtNewPassword').val();
+                const newPassword = $('#txtNewPassword').val();
                 const confirmPassword = $('#txtConfirmPassword').val();
                 const oldPassword = $('#txtOldPassword').val();
                 const idUser = $('#txtIdUser').val();
@@ -35,9 +35,9 @@
                     return;
                 }
 
-            <%--    //Thêm các điều kiện khi đăng ký tài khoản--%>
+                <%--    //Thêm các điều kiện khi đăng ký tài khoản--%>
 
-                $.getJSON('${pageContext.request.contextPath}/Account/IsAvailablePassword?password=' + newPassword + '&idUser=' + idUser , function (data) {//Kiểm tra UserName có tồn tại không
+                $.getJSON('${pageContext.request.contextPath}/Account/IsAvailablePassword?password=' + newPassword + '&idUser=' + idUser, function (data) {//Kiểm tra UserName có tồn tại không
                     if (data === true) {
                         alert('Cập nhật thành công.');
                         $('#frmUpdatePassword').off('submit').submit();
@@ -64,17 +64,18 @@
                                     <div class="col-lg-4">
                                         <div class="card mb-4">
                                             <div class="card-body text-center">
-                                                <img src="${pageContext.request.contextPath}/public/imgs/avatar/user.png" alt="avatar"
+                                                <img src="${pageContext.request.contextPath}/public/imgs/avatar/user.png"
+                                                     alt="avatar"
                                                      class="rounded-circle img-fluid" style="width: 150px;">
                                                 <h5 class="my-3">${u.name}</h5>
-                                            <c:choose>
-                                                <c:when test="${u.permission == 3 || u.permission == 2}">
-                                                    <p class="text-muted mb-1">Người mua</p>
-                                                </c:when>
-                                                <c:otherwise>
-                                                    <p class="text-muted mb-1">Người bán</p>
-                                                </c:otherwise>
-                                            </c:choose>
+                                                <c:choose>
+                                                    <c:when test="${u.permission == 3 || u.permission == 2}">
+                                                        <p class="text-muted mb-1">Người mua</p>
+                                                    </c:when>
+                                                    <c:otherwise>
+                                                        <p class="text-muted mb-1">Người bán</p>
+                                                    </c:otherwise>
+                                                </c:choose>
                                             </div>
                                         </div>
                                     </div>
@@ -83,30 +84,34 @@
                                             <div class="card-body">
                                                 <form action="" method="post" id="frmUpdatePassword">
                                                     <div class="col-sm-3">
-                                                        <label  for="txtIdUser" hidden>IdUser</label>
+                                                        <label for="txtIdUser" hidden>IdUser</label>
                                                     </div>
                                                     <div class="col-sm-9">
-                                                        <input type="number" class="form-control" id="txtIdUser" name="id" value="${u.id}" hidden>
-                                                        <input type="text" class="form-control" id="txtOldPassword"  value="${u.password}" hidden>
+                                                        <input type="number" class="form-control" id="txtIdUser"
+                                                               name="id" value="${u.id}" hidden>
+                                                        <input type="text" class="form-control" id="txtOldPassword"
+                                                               value="${u.password}" hidden>
                                                     </div>
-                                                <div class="row">
-                                                    <div class="col-sm-3">
-                                                        <label  for="txtNewPassword">Mật khẩu mới</label>
-                                                    </div>
-                                                    <div class="col-sm-9">
-                                                        <input type="password" class="form-control" id="txtNewPassword" name="newPassword">
-                                                    </div>
+                                                    <div class="row">
+                                                        <div class="col-sm-3">
+                                                            <label for="txtNewPassword">Mật khẩu mới</label>
+                                                        </div>
+                                                        <div class="col-sm-9">
+                                                            <input type="password" class="form-control"
+                                                                   id="txtNewPassword" name="newPassword">
+                                                        </div>
 
-                                                </div>
-                                                <hr>
-                                                <div class="row">
-                                                    <div class="col-sm-3">
-                                                        <label  for="txtConfirmPassword">Xác nhận mật khẩu</label>
                                                     </div>
-                                                    <div class="col-sm-9">
-                                                        <input type="password" class="form-control" id="txtConfirmPassword" name="confirmPassword" >
+                                                    <hr>
+                                                    <div class="row">
+                                                        <div class="col-sm-3">
+                                                            <label for="txtConfirmPassword">Xác nhận mật khẩu</label>
+                                                        </div>
+                                                        <div class="col-sm-9">
+                                                            <input type="password" class="form-control"
+                                                                   id="txtConfirmPassword" name="confirmPassword">
+                                                        </div>
                                                     </div>
-                                                </div>
                                                     <br>
                                                     <button type="submit" class="btn btn-primary">
                                                         <i class="fa fa-check" aria-hidden="true"></i>

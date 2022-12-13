@@ -11,9 +11,12 @@ import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import javax.servlet.http.HttpSession;
 import java.io.IOException;
+import java.io.PrintWriter;
+import java.time.LocalDateTime;
+import java.util.Date;
 import java.util.List;
 
-import static com.example.webapp_tlcn.tools.mask.maskString;
+import static com.example.webapp_tlcn.tools.tools.maskString;
 
 @WebServlet(name = "ProductFEServlet", value = "/Product/*")
 public class ProductFEServlet extends HttpServlet {
@@ -72,27 +75,67 @@ public class ProductFEServlet extends HttpServlet {
                 HttpSession session = request.getSession();
                 Product product = ProductModel.findById(proId);
                 session.setAttribute("Product", product);
-                if (product == null) {
-                    ServletUtils.redirect("/Home", request, response);
-                } else {
-                    request.setAttribute("product", product);
-                    List<Auction> TopAuctionHighestPrice = AuctionModel.findTopHighestPrice();
-                    request.setAttribute("TopAuctionHighestPrice", TopAuctionHighestPrice);
-                    List<Favourite> ListFavourite = FavouriteModel.findAll();
-                    request.setAttribute("favourite", ListFavourite);
-                    List<Product> proCat5 = ProductModel.findByCatID5(product.getCatID(), proId);
-                    request.setAttribute("proCat5", proCat5);
-                    List<User> user = UserModel.findAll();
-                    for (com.example.webapp_tlcn.beans.User value : user) {
-                        try {
-                            value.setName(maskString(value.getName(), 0, 4, '*'));
-                        } catch (Exception e) {
-                            e.printStackTrace();
-                        }
+                assert product != null;
+                var day = product.getEndDay().getDayOfMonth();
+                var month = product.getEndDay().getMonthValue();
+                var year = product.getEndDay().getYear();
+                var hour = product.getEndDay().getHour();
+                var minute = product.getEndDay().getMinute();
+                var second = product.getEndDay().getSecond();
+                request.setAttribute("day", day);
+                request.setAttribute("month", month);
+                request.setAttribute("year", year);
+                request.setAttribute("hour", hour);
+                request.setAttribute("minute", minute);
+                request.setAttribute("second", second);
+
+                request.setAttribute("product", product);
+                List<Auction> TopAuctionHighestPrice = AuctionModel.findTopHighestPrice();
+                request.setAttribute("TopAuctionHighestPrice", TopAuctionHighestPrice);
+                List<Favourite> ListFavourite = FavouriteModel.findAll();
+                request.setAttribute("favourite", ListFavourite);
+                List<Product> proCat5 = ProductModel.findByCatID5(product.getCatID(), proId);
+                request.setAttribute("proCat5", proCat5);
+                List<User> user = UserModel.findAll();
+                for (com.example.webapp_tlcn.beans.User value : user) {
+                    try {
+                        value.setName(maskString(value.getName(), 0, 4, '*'));
+                    } catch (Exception e) {
+                        e.printStackTrace();
                     }
-                    request.setAttribute("user", user);
-                    ServletUtils.forward("/views/vwProduct/Detail.jsp", request, response);
                 }
+                request.setAttribute("user", user);
+                ServletUtils.forward("/views/vwProduct/Detail.jsp", request, response);
+                break;
+
+            case "/DetailProductEnd":
+                int proId1 = Integer.parseInt(request.getParameter("id"));
+                Product product1 = ProductModel.findById(proId1);
+                assert product1 != null;
+                request.setAttribute("product", product1);
+                List<Auction> TopAuctionHighestPrice1 = AuctionModel.findTopHighestPrice();
+                request.setAttribute("TopAuctionHighestPrice", TopAuctionHighestPrice1);
+                List<User> user1 = UserModel.findAll();
+                for (com.example.webapp_tlcn.beans.User value : user1) {
+                    try {
+                        value.setName(maskString(value.getName(), 0, 4, '*'));
+                    } catch (Exception e) {
+                        e.printStackTrace();
+                    }
+                }
+                request.setAttribute("user", user1);
+                ServletUtils.forward("/views/vwProduct/DetailProductEnd.jsp", request, response);
+                break;
+            case "/Event":
+                int idUser = Integer.parseInt(request.getParameter("idUser"));
+                int idPro = Integer.parseInt(request.getParameter("idPro"));
+                int test = AuctionModel.findUserIDProID(idUser, idPro);
+                boolean Event = (test == -1);
+                PrintWriter out3 = response.getWriter();
+                response.setContentType("application/json");
+                response.setCharacterEncoding("utf-8");
+                out3.print(Event);
+                out3.flush();
                 break;
             default:
                 ServletUtils.forward("/views/404.jsp", request, response);
@@ -128,19 +171,22 @@ public class ProductFEServlet extends HttpServlet {
         int price = Integer.parseInt(request.getParameter("price"));
         int countAuction = Integer.parseInt(request.getParameter("countAuction"));
         User user = UserModel.findByUserId(idUser);
+        Product product = ProductModel.findById(idPro);
         assert user != null;
+        assert product != null;
+        int moneyPay = product.getStartingPrice() * 20/100;
         int money = user.getMoney();
         int moneyAu = user.getMoneyAu();
         int stepAu ;
-
+        LocalDateTime Date = LocalDateTime.now(); // Create a date object
         List<Auction> Auction = AuctionModel.findAll();
         request.setAttribute("auction", Auction);
         if (AuctionModel.findUserIDProID(idUser, idPro) == -1) {
 
-            Auction auction = new Auction(idUser, idPro, price, 0);
+            Auction auction = new Auction(idUser, idPro, price, 0 , Date );
             AuctionModel.add(auction);
             int CountAuction = countAuction + 1;
-            User u = new User(idUser , money - price , moneyAu + price);
+            User u = new User(idUser , money - moneyPay , moneyAu + moneyPay);
             Product p = new Product(idPro, price, idUser, CountAuction ,price);
             UserModel.updateMoney(u);
             ProductModel.updateHighestPaidPrice(p);
@@ -149,12 +195,10 @@ public class ProductFEServlet extends HttpServlet {
             Auction a = AuctionModel.findById(idAu);
             assert a != null;
             int priced = a.getPrice();
-            Auction auction = new Auction(idAu, idUser, idPro, price , 0);
+            Auction auction = new Auction(idAu, idUser, idPro, price , 0 , Date);
             AuctionModel.update(auction);
             stepAu = price - priced;
-            User u = new User(idUser , money - stepAu , moneyAu + stepAu);
             Product p = new Product(idPro, price, idUser, countAuction , price);
-            UserModel.updateMoney(u);
             ProductModel.updateHighestPaidPrice(p);
         }
 

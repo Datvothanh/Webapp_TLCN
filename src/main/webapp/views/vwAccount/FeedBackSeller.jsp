@@ -21,32 +21,35 @@
                     <c:if test="${f.userSellID == user.id}">
                         <div class="frame">
                             <div class="avatar">
-                                <img src="${pageContext.request.contextPath}/public/imgs/avatar/${user.id}/main.jpg" alt="Avatar" class="avatar">
+                                <img src="${pageContext.request.contextPath}/public/imgs/avatar/${user.id}/main.jpg"
+                                     alt="Avatar" class="avatar">
                                     ${user.name}
                             </div>
                             <div class="stt">
                                     ${f.feedBack}
-                                    <c:if test="${f.happy == 0}">
-                                        <i class="bi bi-hand-thumbs-down"></i>
-                                    </c:if>
-                                        <c:if test="${f.happy == 1}">
-                                            <i class="bi bi-hand-thumbs-up"></i>
-                                        </c:if>
+                                <c:if test="${f.happy == 0}">
+                                    <i class="bi bi-hand-thumbs-down"></i>
+                                </c:if>
+                                <c:if test="${f.happy == 1}">
+                                    <i class="bi bi-hand-thumbs-up"></i>
+                                </c:if>
                             </div>
                         </div>
                         <br>
                         <style>
 
-                            .stt{
+                            .stt {
                                 margin: 0 10px;
                             }
-                            .avatar{
+
+                            .avatar {
                                 margin-left: 3px;
                                 display: flex;
                                 width: fit-content;
                                 align-items: center;
                             }
-                            .frame{
+
+                            .frame {
                                 position: relative;
                                 display: flex;
                                 align-items: center;
@@ -55,7 +58,8 @@
                                 padding: 10px;
                                 border-radius: 5px;
                             }
-                            .avatar::after{
+
+                            .avatar::after {
                                 content: "";
                                 border-left: 1px solid #333333;
                                 height: 100%;

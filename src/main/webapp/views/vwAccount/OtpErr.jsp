@@ -1,0 +1,61 @@
+<%@ page contentType="text/html;charset=UTF-8" language="java" %>
+<jsp:useBean id="email" scope="request" type="java.lang.String"/>
+<%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
+    <title>Web App</title>
+    <link rel="shortcut icon" type="image/png" href="${pageContext.request.contextPath}/public/imgs/login/logo.svg"/>
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap@4.6.0/dist/css/bootstrap.min.css"
+          integrity="sha384-B0vP5xmATw1+K9KRQjQERJvTumQW0nPEzvF6L/Z6nronJ3oUOFUFpCjEUQouq2+l" crossorigin="anonymous">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css">
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.5.0/font/bootstrap-icons.css">
+    <style>
+        <%@include file="/css/otp.css" %>
+    </style>
+</head>
+<body>
+<div class="container height-100 d-flex justify-content-center align-items-center">
+    <div class="position-relative">
+        <div class="card p-2 text-center">
+            <div class="alert alert-warning alert-dismissible fade show" role="alert">
+                        Sai mã OTP
+                    <button type="button" class="close" data-dismiss="alert" aria-label="Close">
+                        <span aria-hidden="true">x</span>
+                    </button>
+                </div>
+            <a class="brand-wrapper" href="${pageContext.request.contextPath}/Account/Login">
+                <img src="${pageContext.request.contextPath}/public/imgs/login/logo.svg" alt="logo" class="logo">
+            </a>
+            <h6>Vui lòng nhập mật mã OTP<br> để xác nhận tài khoản</h6>
+            <div><span>Một mã đã OTP được gửi đến</span> <small>${email}</small></div>
+            <form method="post">
+                <div id="otp" class="inputs d-flex flex-row justify-content-center mt-2">
+                    <input class="m-2 text-center form-control rounded" name="1" type="text" id="first" maxlength="1"/>
+                    <input class="m-2 text-center form-control rounded" name="2" type="text" id="second" maxlength="1"/>
+                    <input class="m-2 text-center form-control rounded" name="3" type="text" id="third" maxlength="1"/>
+                    <input class="m-2 text-center form-control rounded" name="4" type="text" id="fourth" maxlength="1"/>
+                    <input class="m-2 text-center form-control rounded" name="5" type="text" id="fifth" maxlength="1"/>
+                    <input class="m-2 text-center form-control rounded" name="6" type="text " id="sixth" maxlength="1"/>
+                    <input name="email" value="${email}" hidden/>
+                </div>
+                <div class="mt-4">
+                    <button type="submit" class="btn btn-danger px-4 validate">Xác nhận</button>
+                </div>
+            </form>
+        </div>
+    </div>
+</div>
+
+
+<script src="https://code.jquery.com/jquery-3.6.0.min.js" crossorigin="anonymous"></script>
+<script src="https://cdn.jsdelivr.net/npm/popper.js@1.16.1/dist/umd/popper.min.js"
+        integrity="sha384-9/reFTGAW83EW2RDu2S0VKaIzap3H66lZH81PoYlFhbGU+6BZp6G7niu735Sk7lN"
+        crossorigin="anonymous"></script>
+<script src="https://cdn.jsdelivr.net/npm/bootstrap@4.6.0/dist/js/bootstrap.min.js"
+        integrity="sha384-+YQ4JLhjyBLPDQt//I+STsc9iw4uQqACwlvpslubQzn4u2UU2UFM80nGisd026JF"
+        crossorigin="anonymous"></script>
+
+</body>
+</html>

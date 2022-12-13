@@ -2,30 +2,48 @@
 <%@attribute name="css" fragment="true" required="false" %>
 <%@attribute name="js" fragment="true" required="false" %>
 <!DOCTYPE html>
-<html lang="en" >
+<html lang="en">
 <head>
     <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
     <title>Admin</title>
-
+    <link rel="shortcut icon" type="image/png" href="${pageContext.request.contextPath}/public/imgs/login/logo.svg"/>
     <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap@5.0.0-beta1/dist/css/bootstrap.min.css">
     <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap@5.0.0-beta1/dist/js/bootstrap.bundle.min.js">
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.2.1/jquery.min.js">
     <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/boxicons@latest/css/boxicons.min.css">
     <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.5.0/font/bootstrap-icons.css">
-    <style><%@include file="/css/styleAdmin.css"%></style>
+    <style>
+        <%@include file="/css/styleAdmin.css" %>
+    </style>
     <jsp:invoke fragment="css"/>
 
 </head>
 <body id="body-pd">
 <header class="header" id="header">
-    <div class="header_toggle"> <i class='bx bx-menu' id="header-toggle"></i> </div>
-    <div class="header_img"> <img src="https://i.imgur.com/hczKIze.jpg" alt=""> </div>
+    <div class="header_toggle"><i class='bx bx-menu' id="header-toggle"></i></div>
 </header>
 <div class="l-navbar" id="nav-bar">
     <nav class="nav">
-        <div> <a href="#" class="nav_logo"> <i class="bi bi-house-fill"></i> <span class="nav_logo-name">Admin</span> </a>
-            <div class="nav_list"> <a href="${pageContext.request.contextPath}/Admin/Product/" class="nav_link active">  <i class="bi bi-box-seam"></i> <span class="nav_name">Sản phẩm</span> </a> <a href="${pageContext.request.contextPath}/Admin/Permission/" class="nav_link"> <i class='bx bx-user nav_icon'></i> <span class="nav_name">Người dùng</span> </a> <a href="${pageContext.request.contextPath}/Admin/Category/" class="nav_link"> <i class="bi bi-three-dots-vertical"></i> <span class="nav_name">Loại sản phẩm</span> </a> <a href="${pageContext.request.contextPath}/Admin/GroupCategory/" class="nav_link"> <i class="bi bi-menu-button-wide"></i> <span class="nav_name">Nhóm sản phẩm</span> </a> <a href="${pageContext.request.contextPath}/Admin/Product/End" class="nav_link"> <i class='bx bx-folder nav_icon'></i> <span class="nav_name">Sản phẩm kết thúc</span> </a> <a href="#" class="nav_link"> <i class='bx bx-bar-chart-alt-2 nav_icon'></i> <span class="nav_name">Stats</span> </a> </div>
-        </div> <a href="#" class="nav_link"> <i class='bx bx-log-out nav_icon'></i> <span class="nav_name">SignOut</span> </a>
+        <div>
+            <a href="#" class="nav_logo"> <i class="bi bi-house-fill"></i> <span class="nav_logo-name">Admin</span></a>
+            <div class="nav_list">
+                <a href="${pageContext.request.contextPath}/Admin/Product/" class="nav_link active">
+                    <i class="bi bi-box-seam"></i> <span class="nav_name">Sản phẩm</span> </a>
+                <a href="${pageContext.request.contextPath}/Admin/Permission/" class="nav_link"> <i
+                        class='bx bx-user nav_icon'></i> <span class="nav_name">Người dùng</span> </a>
+                <a href="${pageContext.request.contextPath}/Admin/Category/" class="nav_link"> <i
+                        class="bi bi-three-dots-vertical"></i> <span class="nav_name">Loại sản phẩm</span> </a>
+                <a href="${pageContext.request.contextPath}/Admin/GroupCategory/" class="nav_link"> <i
+                    class="bi bi-menu-button-wide"></i> <span class="nav_name">Nhóm sản phẩm</span> </a>
+                <a href="${pageContext.request.contextPath}/Admin/Product/End" class="nav_link"> <i
+                    class='bx bx-folder nav_icon'></i> <span class="nav_name">Sản phẩm kết thúc</span> </a>
+            </div>
+        </div>
+        <form id="frmLogout" method="post"
+              action="${pageContext.request.contextPath}/Account/Logout">
+        <a href="javascript:$('#frmLogout').submit()" class="nav_link"> <i class='bx bx-log-out nav_icon'></i> <span
+                class="nav_name">Đăng xuất</span> </a>
+        </form>
     </nav>
 </div>
 <!--Container Main start-->
@@ -42,17 +60,17 @@
         crossorigin="anonymous"></script>
 <jsp:invoke fragment="js"/>
 <script type="text/javascript">
-    document.addEventListener("DOMContentLoaded", function(event) {
+    document.addEventListener("DOMContentLoaded", function (event) {
 
-        const showNavbar = (toggleId, navId, bodyId, headerId) =>{
+        const showNavbar = (toggleId, navId, bodyId, headerId) => {
             const toggle = document.getElementById(toggleId),
                 nav = document.getElementById(navId),
                 bodypd = document.getElementById(bodyId),
                 headerpd = document.getElementById(headerId)
 
 // Validate that all variables exist
-            if(toggle && nav && bodypd && headerpd){
-                toggle.addEventListener('click', ()=>{
+            if (toggle && nav && bodypd && headerpd) {
+                toggle.addEventListener('click', () => {
 // show navbar
                     nav.classList.toggle('show')
 // change icon
@@ -65,22 +83,26 @@
             }
         }
 
-        showNavbar('header-toggle','nav-bar','body-pd','header')
+        showNavbar('header-toggle', 'nav-bar', 'body-pd', 'header')
 
         /*===== LINK ACTIVE =====*/
         const linkColor = document.querySelectorAll('.nav_link')
 
-        function colorLink(){
-            if(linkColor){
-                linkColor.forEach(l=> l.classList.remove('active'))
+        function colorLink() {
+            if (linkColor) {
+                linkColor.forEach(l => l.classList.remove('active'))
                 this.classList.add('active')
             }
         }
-        linkColor.forEach(l=> l.addEventListener('click', colorLink))
+
+        linkColor.forEach(l => l.addEventListener('click', colorLink))
+
 
         // Your code to run since DOM is loaded and ready
     });
-
+    setInterval(function () {
+        $.getJSON('${pageContext.request.contextPath}/Account/Event');
+    }, 5000)
 
 </script>
 

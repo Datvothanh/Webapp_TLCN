@@ -23,6 +23,9 @@
                                 <th scope="col">Tên</th>
                                 <th scope="col">Email</th>
                                 <th scope="col">Phân quyền</th>
+                                <th scope="col">Tiền khả dụng</th>
+                                <th scope="col">Tiền đang đấu giá</th>
+                                <th scope="col">Nạp tiền</th>
                                 <th scope="col">&nbsp;</th>
                                 <th scope="col">&nbsp;</th>
                             </tr>
@@ -72,7 +75,28 @@
                                     <c:if test="${u.permission == 0}">
                                         <td>Admin</td>
                                     </c:if>
-                                    <td class="text-right">
+                                    <td>${u.money}</td>
+                                    <td>${u.moneyAu}</td>
+                                    <td >
+                                        <form method="post">
+                                        <div class="row g-3 align-items-center" style="flex-wrap: nowrap;">
+                                                <div class="col-auto">
+                                                    <input type="number" name="money" class="form-control" aria-describedby="passwordHelpInline">
+                                                    <input type="number" name="id" value="${u.id}" hidden>
+
+                                                </div>
+                                                <div class="col-auto">
+                                                    <button class="btn mb-2 btn-outline-success" formaction="${pageContext.request.contextPath}/Admin/Permission/AddMoney" type="submit">
+                                                        <i class="bi bi-cash-coin" aria-hidden="true"></i>
+                                                    </button>
+                                                    <button class="btn mb-2 btn-outline-danger" formaction="${pageContext.request.contextPath}/Admin/Permission/MinusMoney" type="submit">
+                                                        <i class="bi bi-cash-coin" aria-hidden="true"></i>
+                                                    </button>
+                                                </div>
+                                        </div>
+                                        </form>
+                                    </td>
+                                    <td class="text-right" style="padding-left: 100px;">
                                         <a class="btn btn-outline-danger"
                                            href="javascript:$('#frmDelete${u.id}').submit()" role="button">
                                             <i class="bi bi-x-lg" aria-hidden="true"></i></a>

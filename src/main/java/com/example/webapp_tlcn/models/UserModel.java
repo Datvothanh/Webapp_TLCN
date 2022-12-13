@@ -9,7 +9,7 @@ import java.util.List;
 public class UserModel {
 
     public static List<User> findAll() {
-        final String query = "select * from users";
+        final String query = "select * from users where not permission = 0";
         try (Connection con = DbUtils.getConnection()) {
             return con.createQuery(query)
                     .executeAndFetch(User.class);
@@ -54,9 +54,10 @@ public class UserModel {
             List<User> list = con.createQuery(query)
                     .addParameter("username", username)
                     .executeAndFetch(User.class);
-            if (list.size() == 0) {
+            if (list.size() == 0 ) {
                 return null;
             }
+
             return list.get(0);
         }
     }
@@ -67,10 +68,12 @@ public class UserModel {
             List<User> list = con.createQuery(query)
                     .addParameter("email", email)
                     .executeAndFetch(User.class);
-            if (list.size() == 0) {
+            if (list.size() == 0 || list.size() == 1) {
                 return null;
+            } else {
+                return list.get(0);
             }
-            return list.get(0);
+
         }
     }
 
