@@ -27,6 +27,8 @@
         <div>
             <a href="#" class="nav_logo"> <i class="bi bi-house-fill"></i> <span class="nav_logo-name">Admin</span></a>
             <div class="nav_list">
+                <a href="${pageContext.request.contextPath}/Admin/Statistical" class="nav_link active">
+                    <i class="bi bi-bar-chart"></i> <span class="nav_name">Thống kê</span> </a>
                 <a href="${pageContext.request.contextPath}/Admin/Product/" class="nav_link active">
                     <i class="bi bi-box-seam"></i> <span class="nav_name">Sản phẩm</span> </a>
                 <a href="${pageContext.request.contextPath}/Admin/Permission/" class="nav_link"> <i
@@ -34,9 +36,8 @@
                 <a href="${pageContext.request.contextPath}/Admin/Category/" class="nav_link"> <i
                         class="bi bi-three-dots-vertical"></i> <span class="nav_name">Loại sản phẩm</span> </a>
                 <a href="${pageContext.request.contextPath}/Admin/GroupCategory/" class="nav_link"> <i
-                    class="bi bi-menu-button-wide"></i> <span class="nav_name">Nhóm sản phẩm</span> </a>
-                <a href="${pageContext.request.contextPath}/Admin/Product/End" class="nav_link"> <i
-                    class='bx bx-folder nav_icon'></i> <span class="nav_name">Sản phẩm kết thúc</span> </a>
+                    class="bi bi-menu-button-wide"></i> <span class="nav_name">Nhóm loại sản phẩm</span> </a>
+                <a href="${pageContext.request.contextPath}/Admin/Product/End" class="nav_link"> <i class="bi bi-alarm"></i> <span class="nav_name">Sản phẩm kết thúc</span> </a>
             </div>
         </div>
         <form id="frmLogout" method="post"

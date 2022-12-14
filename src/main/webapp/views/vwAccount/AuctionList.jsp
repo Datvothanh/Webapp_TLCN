@@ -103,13 +103,12 @@
     </jsp:attribute>
     <jsp:body>
         <div class="card">
-            <h4 class="card-header d-flex justify-content-between">
-                Danh sách đang đấu giá
-                <a class="btn btn-outline-success" href="${pageContext.request.contextPath}/Account/Profile"
-                   role="button">
+            <h4 class="card-header d-flex">
+                <a href="${pageContext.request.contextPath}/Account/Profile"
+                   role="button" style=" margin-right: 27px;">
                     <i class="bi bi-backspace-fill" aria-hidden="true"></i>
-                    Trở về
                 </a>
+                <p>Sản phẩm đang tham gia đấu giá</p>
             </h4>
             <div class="card-body">
                 <ul class="list-group">
@@ -187,7 +186,7 @@
                                                         </c:if>
                                                         <c:forEach items="${auction}" var="a">
                                                             <c:if test="${a.proID == p.proID && a.userID == authUser.id && test == 0}">
-                                                                <span class="card-notify-badge">Sản phẩm đang đấu giá</span>
+                                                                <span class="card-notify-badge" style="background: #2d9abc;">Sản phẩm đang đấu giá</span>
                                                             </c:if>
                                                         </c:forEach>
                                                         <img src="${pageContext.request.contextPath}/public/imgs/sp/${p.proID}/main.jpg"

@@ -11,12 +11,9 @@
     <jsp:body>
         <div class="card">
             <h4 class="card-header d-flex justify-content-between">
-                Danh sách tài khoản
+                Sản phẩm kết thúc
             </h4>
             <div class="card-body">
-<%--                <c:set var="UserSell" scope="session" value="${-1}"/>--%>
-<%--                <c:set var="stt" scope="session" value="${-1}"/>--%>
-<%--                <c:set var="test" scope="session" value="${0}"/>--%>
                  <c:set var="Test" scope="session" value="${1}"/>
                 <table class="table table-hover">
                     <thead>
@@ -53,46 +50,51 @@
                         <tr>
                             <td>${p.proID}</td>
                             <td>${p.proName}</td>
-                            <td>${p.endDay}</td>
+                            <td>${p.strDate}</td>
                             <td>${userSell}</td>
                             <td>${userBuy}</td>
-                            <td>${p.highestPaidPrice}</td>
+                            <td><span><fmt:formatNumber
+                                    value="${p.highestPaidPrice}" type="number"/> đ</span></td>
                             <c:set value="0" var="NoUser"/>
                             <c:if test="${p.userID == -1}">
                                 <td>Không có ai tham gia đấu giá</td>
-                                <td>+${p.startingPrice * 20/100}</td>
+                                <td><span style="color: #7a7a7a;">+<fmt:formatNumber
+                                        value="${p.startingPrice * 20/100}" type="number"/> đ</span></td>
                                 <c:set value="1" var="NoUser"/>
                             </c:if>
                             <c:if test="${stt == -3}">
                                 <td>Người mua chưa nhận được hàng<br/>
                                     <p>Admin cần xem xét </p></td>
-                                <td>+0</td>
+                                <td style="color: #E6ED0DFE">+0 đ</td>
                             </c:if>
                             <c:if test="${stt == -2 && NoUser == 0 }">
                                 <td>Người bán không giao hàng</td>
-                                <td>+${p.startingPrice * 20/100}</td>
+                                <td><span style="color: red">+<fmt:formatNumber
+                                        value="${p.startingPrice * 20/100}" type="number"/> đ</span></td>
                             </c:if>
                             <c:if test="${stt == -1}">
                                 <td>Người mua không thanh toán</td>
-                                <td>+${p.startingPrice * 20/100}</td>
+                                <td><span style="color: red">+<fmt:formatNumber
+                                        value="${p.startingPrice * 20/100}" type="number"/> đ</span></td>
                             </c:if>
                             <c:if test="${stt == 1}">
                                 <td>Đang chờ người mua than toán</td>
-                                <td>+0</td>
+                                <td style="color: #E6ED0DFE">+0 đ</td>
                             </c:if>
                             <c:if test="${stt == 2}">
                                 <td>Đang chờ người bán giao hàng</td>
-                                <td>+0</td>
+                                <td style="color: #E6ED0DFE">+0 đ</td>
                             </c:if>
                             <c:if test="${stt == 3}">
                                 <td>Đang chờ người mua xác nhận</td>
-                                <td>+0</td>
+                                <td style="color: rgba(230,237,13,1)">+0 đ</td>
                             </c:if>
                             <c:if test="${stt == 4}">
                                 <td>Đơn hàng đã giao dịch thành công<br/>
                                     <a>Admin cần chuyển tiền </a></td>
 
-                                <td>+${p.highestPaidPrice  * 20/100}</td>
+                                <td><span style="color: #0cf10e">+<fmt:formatNumber
+                                        value="${p.highestPaidPrice  * 20/100}" type="number"/> đ</span></td>
                             </c:if>
                         </tr>
                     </c:forEach>

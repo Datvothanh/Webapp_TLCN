@@ -4,15 +4,34 @@ import java.time.LocalDateTime;
 
 public class FeedBack {
     private int FbID , ProID , UserFbID, UserSellID , Happy;
-    private String FeedBack;
+    private String FeedBack , StrDate;
+    private LocalDateTime Date;
 
-    public FeedBack(int proID, int userFbID,int userSellID ,int happy, String feedBack) {
+    public FeedBack(int proID, int userFbID,int userSellID ,int happy, String feedBack , LocalDateTime date , String strDate) {
         FbID = -1;
         ProID = proID;
         UserFbID = userFbID;
         UserSellID = userSellID;
         Happy = happy;
         FeedBack = feedBack;
+        Date =date;
+        StrDate = strDate;
+    }
+
+    public String getStrDate() {
+        return StrDate;
+    }
+
+    public void setStrDate(String strDate) {
+        StrDate = strDate;
+    }
+
+    public LocalDateTime getDate() {
+        return Date;
+    }
+
+    public void setDate(LocalDateTime date) {
+        Date = date;
     }
 
     public int getFbID() {

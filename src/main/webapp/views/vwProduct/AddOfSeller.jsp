@@ -94,15 +94,12 @@
     <jsp:body>
         <form action="" method="post" enctype="multipart/form-data" id="frmAdd">
             <div class="card">
-                <h4 class="card-header d-flex justify-content-between">
-                    Sản phẩm mới
-                    <c:if test="${authUser.permission != 0}">
-                        <a class="btn btn-outline-success" href="${pageContext.request.contextPath}/Account/Profile"
-                           role="button">
-                            <i class="bi bi-backspace-fill" aria-hidden="true"></i>
-                            Trở về
-                        </a>
-                    </c:if>
+                <h4 class="card-header d-flex">
+                    <a href="${pageContext.request.contextPath}/Account/Profile"
+                       role="button" style=" margin-right: 27px;">
+                        <i class="bi bi-backspace-fill" aria-hidden="true"></i>
+                    </a>
+                    <p>Tạo sản phẩm muốn bán</p>
                 </h4>
                 <div class="card-body">
                     <div class="form-group" hidden>
@@ -112,7 +109,7 @@
                         <input type="number" id="money" name="money"
                                value="${authUser.money}">
                     </div>
-                    <div class="form-group">
+                    <div class="form-group" hidden>
                         <label for="ProID">ProID</label>
                         <input type="text" class="form-control" id="ProID" name="ProID" value="${idProEnd + 1}">
                     </div>

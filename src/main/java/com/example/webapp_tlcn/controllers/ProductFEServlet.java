@@ -13,7 +13,7 @@ import javax.servlet.http.HttpSession;
 import java.io.IOException;
 import java.io.PrintWriter;
 import java.time.LocalDateTime;
-import java.util.Date;
+import java.time.format.DateTimeFormatter;
 import java.util.List;
 
 import static com.example.webapp_tlcn.tools.tools.maskString;
@@ -91,7 +91,7 @@ public class ProductFEServlet extends HttpServlet {
 
                 request.setAttribute("product", product);
                 List<Auction> TopAuctionHighestPrice = AuctionModel.findTopHighestPrice();
-                request.setAttribute("TopAuctionHighestPrice", TopAuctionHighestPrice);
+
                 List<Favourite> ListFavourite = FavouriteModel.findAll();
                 request.setAttribute("favourite", ListFavourite);
                 List<Product> proCat5 = ProductModel.findByCatID5(product.getCatID(), proId);
@@ -104,7 +104,10 @@ public class ProductFEServlet extends HttpServlet {
                         e.printStackTrace();
                     }
                 }
+
+
                 request.setAttribute("user", user);
+                request.setAttribute("TopAuctionHighestPrice", TopAuctionHighestPrice);
                 ServletUtils.forward("/views/vwProduct/Detail.jsp", request, response);
                 break;
 
@@ -116,13 +119,6 @@ public class ProductFEServlet extends HttpServlet {
                 List<Auction> TopAuctionHighestPrice1 = AuctionModel.findTopHighestPrice();
                 request.setAttribute("TopAuctionHighestPrice", TopAuctionHighestPrice1);
                 List<User> user1 = UserModel.findAll();
-                for (com.example.webapp_tlcn.beans.User value : user1) {
-                    try {
-                        value.setName(maskString(value.getName(), 0, 4, '*'));
-                    } catch (Exception e) {
-                        e.printStackTrace();
-                    }
-                }
                 request.setAttribute("user", user1);
                 ServletUtils.forward("/views/vwProduct/DetailProductEnd.jsp", request, response);
                 break;
@@ -179,11 +175,13 @@ public class ProductFEServlet extends HttpServlet {
         int moneyAu = user.getMoneyAu();
         int stepAu ;
         LocalDateTime Date = LocalDateTime.now(); // Create a date object
+        DateTimeFormatter myFormatObj = DateTimeFormatter.ofPattern("dd-MM-yyyy HH:mm:ss");
+        String  StrDate = Date.format(myFormatObj);
         List<Auction> Auction = AuctionModel.findAll();
         request.setAttribute("auction", Auction);
         if (AuctionModel.findUserIDProID(idUser, idPro) == -1) {
 
-            Auction auction = new Auction(idUser, idPro, price, 0 , Date );
+            Auction auction = new Auction(idUser, idPro, price, 0 , Date , StrDate );
             AuctionModel.add(auction);
             int CountAuction = countAuction + 1;
             User u = new User(idUser , money - moneyPay , moneyAu + moneyPay);
@@ -195,7 +193,7 @@ public class ProductFEServlet extends HttpServlet {
             Auction a = AuctionModel.findById(idAu);
             assert a != null;
             int priced = a.getPrice();
-            Auction auction = new Auction(idAu, idUser, idPro, price , 0 , Date);
+            Auction auction = new Auction(idAu, idUser, idPro, price , 0 , Date , StrDate);
             AuctionModel.update(auction);
             stepAu = price - priced;
             Product p = new Product(idPro, price, idUser, countAuction , price);

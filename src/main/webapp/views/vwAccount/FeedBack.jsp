@@ -8,13 +8,12 @@
 <t:main>
     <jsp:body>
         <div class="card">
-            <h4 class="card-header d-flex justify-content-between">
-                FeedBack
-                <a class="btn btn-outline-success" href="${pageContext.request.contextPath}/Account/SuccessList"
-                   role="button">
+            <h4 class="card-header d-flex">
+                <a href="${pageContext.request.contextPath}/Account/SuccessList"
+                   role="button" style=" margin-right: 27px;">
                     <i class="bi bi-backspace-fill" aria-hidden="true"></i>
-                    Trở về
                 </a>
+                <p>Phản hồi từ khách mua</p>
             </h4>
             <div class="card-body">
                 <form method="post">

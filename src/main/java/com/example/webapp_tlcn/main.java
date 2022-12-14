@@ -57,7 +57,7 @@ public class main {
                                 UserModel.updateMoney(u);
                                 Product product1 = ProductModel.findById(PProId);
                                 assert product1 != null;
-                                Product product = new Product(product1.getProID(), product1.getStartingPrice(), product1.getCatID(), product1.getStepPrice(), product1.getHighestPaidPrice(), product1.getProName(), product1.getTinyDes(), product1.getFullDes(), product1.getEndDay(), product1.getTop(), product1.getYear(), product1.getMonth(), product1.getDay(), product1.getDay(), product1.getMinute(), product1.getSecond(), 0, 1);
+                                Product product = new Product(product1.getProID(), product1.getStartingPrice(), product1.getCatID(), product1.getStepPrice(), product1.getHighestPaidPrice(), product1.getProName(), product1.getTinyDes(), product1.getFullDes(), product1.getEndDay(), product1.getTop(), product1.getYear(), product1.getMonth(), product1.getDay(), product1.getDay(), product1.getMinute(), product1.getSecond(), 0, 1 , product1.getStrDate());
                                 ProductModel.update(product);
                                 Notice n = new Notice(product1.getUserSellID(), "Bạn cần giao hàng cho khách", 0, LocalDateTime.now().plusDays(7), product1.getHighestPaidPrice(), 2, PProId);
                                 NoticeModel.add(n);//Tạo thông báo yêu cầu giao hàng cho khách

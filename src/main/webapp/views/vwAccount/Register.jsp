@@ -76,7 +76,7 @@
                             </div>
                             <div class="form-group form-check">
                                 <input type="checkbox" class="form-check-input" id="exampleCheck1">
-                                <label class="form-check-label" for="exampleCheck1"> <a  data-toggle="modal" data-target="#staticBackdrop" >Đồng ý với điều kiện của chúng tôi</a></label>
+                                <label class="form-check-label" for="exampleCheck1"> <a  data-toggle="modal" data-target="#staticBackdrop" ><p style="color: #963a3a">Đồng ý với điều kiện của chúng tôi</p></a></label>
                             </div>
                             <!-- Modal -->
                             <div class="modal fade" id="staticBackdrop" data-backdrop="static" data-keyboard="false" tabindex="-1" aria-labelledby="staticBackdropLabel" aria-hidden="true">

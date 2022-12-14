@@ -19,7 +19,7 @@ public class ProductModel {
 
     //Admin
     public static void add(Product p) {
-        String Sql = "INSERT INTO products (ProID ,ProName, StartingPrice, CatID, TinyDes, FullDes, StepPrice, HighestPaidPrice, EndDay,UserID,Sell,CountAuction,UserSellID,Top,Ship,Year,Month,Day,Hour,Minute,Second, `Delete` , Paid) VALUES (:ProID,:ProName,:StartingPrice,:CatID,:TinyDes,:FullDes,:StepPrice,:HighestPaidPrice,:EndDay,:UserID,:Sell,:CountAuction,:UserSellID,:Top,:Ship,:Year,:Month,:Day,:Hour,:Minute,:Second, :Delete , :Paid) ";
+        String Sql = "INSERT INTO products (ProID ,ProName, StartingPrice, CatID, TinyDes, FullDes, StepPrice, HighestPaidPrice, EndDay,UserID,Sell,CountAuction,UserSellID,Top,Ship,Year,Month,Day,Hour,Minute,Second, `Delete` , Paid , StrDate) VALUES (:ProID,:ProName,:StartingPrice,:CatID,:TinyDes,:FullDes,:StepPrice,:HighestPaidPrice,:EndDay,:UserID,:Sell,:CountAuction,:UserSellID,:Top,:Ship,:Year,:Month,:Day,:Hour,:Minute,:Second, :Delete , :Paid , :StrDate) ";
         try (Connection con = DbUtils.getConnection()) {
             con.createQuery(Sql)
                     .addParameter("ProName", p.getProName())
@@ -45,6 +45,7 @@ public class ProductModel {
                     .addParameter("Second", p.getSecond())
                     .addParameter("Delete", p.getDelete())
                     .addParameter("Paid", p.getPaid())
+                    .addParameter("StrDate", p.getStrDate())
                     .executeUpdate();
         }
     }
@@ -73,7 +74,7 @@ public class ProductModel {
     }
 
     public static void update(Product p) {
-        String Sql = "UPDATE products SET  ProName = :ProName, StartingPrice = :StartingPrice, CatID = :CatID, TinyDes = :TinyDes, FullDes = :FullDes, StepPrice = :StepPrice, HighestPaidPrice = :HighestPaidPrice, EndDay = :EndDay , Top = :Top , `Delete` = :Delete , Paid = :Paid WHERE ProID = :ProID";
+        String Sql = "UPDATE products SET  ProName = :ProName, StartingPrice = :StartingPrice, CatID = :CatID, TinyDes = :TinyDes, FullDes = :FullDes, StepPrice = :StepPrice, HighestPaidPrice = :HighestPaidPrice, EndDay = :EndDay , Top = :Top , `Delete` = :Delete , Paid = :Paid , StrDate = :StrDate WHERE ProID = :ProID";
         try (Connection con = DbUtils.getConnection()) {
             con.createQuery(Sql)
                     .addParameter("ProName", p.getProName())
@@ -88,6 +89,7 @@ public class ProductModel {
                     .addParameter("Top", p.getTop())
                     .addParameter("Delete", p.getDelete())
                     .addParameter("Paid", p.getPaid())
+                    .addParameter("StrDate", p.getStrDate())
                     .executeUpdate();
         }
     }

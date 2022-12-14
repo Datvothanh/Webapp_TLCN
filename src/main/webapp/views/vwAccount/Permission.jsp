@@ -6,7 +6,7 @@
     <jsp:body>
         <div class="card">
             <h4 class="card-header d-flex justify-content-between">
-                Danh sách tài khoản
+                Người dùng
             </h4>
             <c:choose>
                 <c:when test="${userList.size() == 0}">

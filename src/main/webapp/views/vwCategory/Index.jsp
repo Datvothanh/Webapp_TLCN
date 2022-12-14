@@ -7,7 +7,7 @@
     <jsp:body>
         <div class="card">
             <h4 class="card-header d-flex justify-content-between">
-                Danh sách loại sản phẩm
+                Loại sản phẩm
                 <div>
                     <a class="btn btn-outline-success" href="${pageContext.request.contextPath}/Admin/Category/Add"
                        role="button">

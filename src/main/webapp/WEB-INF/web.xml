@@ -15,6 +15,11 @@
     </filter-mapping>
 
     <filter-mapping>
+        <filter-name>ProductPaidFilter</filter-name>
+        <url-pattern>/*</url-pattern>
+    </filter-mapping>
+
+    <filter-mapping>
         <filter-name>AuthCookieFilter</filter-name>
         <url-pattern>/*</url-pattern>
     </filter-mapping>

@@ -35,7 +35,9 @@ public class AdminProductServlet extends HttpServlet {
 
         switch (path) {
             case "/Index":
+                List<User> ListUser1 = UserModel.findAll();
                 List<Product> list = ProductModel.findAll(0);
+                request.setAttribute("listUsers", ListUser1);
                 request.setAttribute("products", list);
                 ServletUtils.forward("/views/vwProduct/Index.jsp", request, response);
                 break;
@@ -149,7 +151,9 @@ public class AdminProductServlet extends HttpServlet {
         int hour = endDay.getHour();
         int minute = endDay.getMinute();
         int second = endDay.getSecond();
-        Product p = new Product(ProID , startingPrice , type , stepPrice, highestPaidPrice , userID , sell ,countAuction,userSellID,name , tinyDes, fullDes, endDay , startingPrice , 0 , year , month , day , hour , minute , second , 0 , 0);
+        DateTimeFormatter myFormatObj = DateTimeFormatter.ofPattern("dd-MM-yyyy HH:mm:ss");
+        String  StrDate = endDay.format(myFormatObj);
+        Product p = new Product(ProID , startingPrice , type , stepPrice, highestPaidPrice , userID , sell ,countAuction,userSellID,name , tinyDes, fullDes, endDay , startingPrice , 0 , year , month , day , hour , minute , second , 0 , 0 , StrDate);
         ProductModel.add(p);
         Part partMain = request.getPart("ImageMain");
         Part partSub1 = request.getPart("ImageSub1");
@@ -201,7 +205,9 @@ public class AdminProductServlet extends HttpServlet {
         int hour = endDay.getHour();
         int minute = endDay.getMinute();
         int second = endDay.getSecond();
-        Product p = new Product(ProID ,startingPrice , type , stepPrice, highestPaidPrice , userID , sell ,countAuction,userSellID,name , tinyDes, fullDes, endDay , startingPrice , 0, year , month , day , hour , minute , second , 0 , 0);
+        DateTimeFormatter myFormatObj = DateTimeFormatter.ofPattern("dd-MM-yyyy HH:mm:ss");
+        String  StrDate = endDay.format(myFormatObj);
+        Product p = new Product(ProID ,startingPrice , type , stepPrice, highestPaidPrice , userID , sell ,countAuction,userSellID,name , tinyDes, fullDes, endDay , startingPrice , 0, year , month , day , hour , minute , second , 0 , 0 , StrDate);
         ProductModel.add(p);
         Part partMain = request.getPart("ImageMain");
         Part partSub1 = request.getPart("ImageSub1");
@@ -242,7 +248,9 @@ public class AdminProductServlet extends HttpServlet {
             int hour = endDay.getHour();
             int minute = endDay.getMinute();
             int second = endDay.getSecond();
-            Product P = new Product(id,startingPrice , type , stepPrice, highestPaidPrice , name , tinyDes, fullDes, endDay , top , year , month , day , hour , minute , second ,0 , 0);
+            DateTimeFormatter myFormatObj = DateTimeFormatter.ofPattern("dd-MM-yyyy HH:mm:ss");
+            String  StrDate = endDay.format(myFormatObj);
+            Product P = new Product(id,startingPrice , type , stepPrice, highestPaidPrice , name , tinyDes, fullDes, endDay , top , year , month , day , hour , minute , second ,0 , 0 , StrDate);
             ProductModel.update(P);
         }else {
             DateTimeFormatter df = DateTimeFormatter.ofPattern("yyyy/MM/dd HH:mm");
@@ -253,7 +261,9 @@ public class AdminProductServlet extends HttpServlet {
             int hour = endDay.getHour();
             int minute = endDay.getMinute();
             int second = endDay.getSecond();
-            Product P = new Product(id,startingPrice , type , stepPrice, highestPaidPrice , name , tinyDes, fullDes, endDay , top , year , month , day , hour , minute , second , 0 , 0);
+            DateTimeFormatter myFormatObj = DateTimeFormatter.ofPattern("dd-MM-yyyy HH:mm:ss");
+            String  StrDate = endDay.format(myFormatObj);
+            Product P = new Product(id,startingPrice , type , stepPrice, highestPaidPrice , name , tinyDes, fullDes, endDay , top , year , month , day , hour , minute , second , 0 , 0 , StrDate);
             ProductModel.update(P);
         }
 
@@ -264,7 +274,9 @@ public class AdminProductServlet extends HttpServlet {
         int id = Integer.parseInt(request.getParameter("ProID"));
         Product p = ProductModel.findById(id);
         assert p != null;
-        Product P = new Product(id, p.getStartingPrice(), p.getCatID() , p.getStepPrice(), p.getHighestPaidPrice(), p.getProName() ,p.getTinyDes(), p.getFullDes(), p.getEndDay() , p.getTop() , p.getYear() , p.getMonth() , p.getDay() , p.getDay() , p.getMinute() , p.getSecond() , 1 , 0);
+        DateTimeFormatter myFormatObj = DateTimeFormatter.ofPattern("dd-MM-yyyy HH:mm:ss");
+        String  StrDate = p.getEndDay().format(myFormatObj);
+        Product P = new Product(id, p.getStartingPrice(), p.getCatID() , p.getStepPrice(), p.getHighestPaidPrice(), p.getProName() ,p.getTinyDes(), p.getFullDes(), p.getEndDay() , p.getTop() , p.getYear() , p.getMonth() , p.getDay() , p.getDay() , p.getMinute() , p.getSecond() , 1 , 0 , StrDate);
         ProductModel.update(P);
         ServletUtils.redirect("/Admin/Product", request, response);
     }

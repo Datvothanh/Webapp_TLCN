@@ -17,7 +17,7 @@
                     </c:forEach>
                     <div class="card">
                         <h4 class="card-header">
-                            Profile
+                            Quản lý cá nhân
                         </h4>
                         <div class="card-body" >
                             <section style="background-color: #eee;">
@@ -30,11 +30,10 @@
                                                          class="rounded-circle img-fluid" style="width: 150px;">
 
                                                     <h5 class="my-3">${u.name}</h5>
-                                                    <p class="text-muted mb-1">Người bán</p>
                                                 </div>
                                             </div>
                                             <div class="list-group list-group-flush">
-                                                <a href="${pageContext.request.contextPath}/Account/UpdateSeller"
+                                                <a href="${pageContext.request.contextPath}/Account/UpdateInfo"
                                                    class="list-group-item list-group-item-action"><i class="fa fa-caret-right"
                                                                                                      aria-hidden="true"></i>
                                                     Cập nhật thông tin cá nhân</a>
@@ -73,7 +72,7 @@
                                                                         Cập nhật thêm thông tin ngân hàng!
                                                                     </div>
                                                                     <div class="modal-footer">
-                                                                        <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
+                                                                        <button type="button" class="btn btn-secondary" data-dismiss="modal">Đóng</button>
                                                                     </div>
                                                                 </div>
                                                             </div>
@@ -85,24 +84,23 @@
                                                 <a href="${pageContext.request.contextPath}/Account/SellingList"
                                                    class="list-group-item list-group-item-action"><i class="fa fa-caret-right"
                                                                                                      aria-hidden="true"></i>
-                                                    Danh sách sản phẩm đang bán </a>
+                                                    Sản phẩm đang bán </a>
                                                 <a href="${pageContext.request.contextPath}/Account/EndingList"
                                                    class="list-group-item list-group-item-action"><i class="fa fa-caret-right"
                                                                                                      aria-hidden="true"></i>
-                                                    Danh sách sản phẩm đã kết thúc </a>
+                                                    Sản phẩm bán đã kết thúc </a>
                                                 <a href="${pageContext.request.contextPath}/Account/WatchList"
                                                    class="list-group-item list-group-item-action"><i class="fa fa-caret-right"
                                                                                                      aria-hidden="true"></i>
-                                                    Danh sách sản phầm yêu thích</a>
+                                                    Sản phầm yêu thích</a>
                                                 <a href="${pageContext.request.contextPath}/Account/AuctionList"
                                                    class="list-group-item list-group-item-action"><i
                                                         class="fa fa-caret-right"
-                                                        aria-hidden="true"></i> Sản phẩm đang
-                                                    đấu giá </a>
+                                                        aria-hidden="true"></i> Sản phẩm đang tham gia đấu giá </a>
                                                 <a href="${pageContext.request.contextPath}/Account/SuccessList"
                                                    class="list-group-item list-group-item-action">
-                                                    <i class="fa fa-caret-right" aria-hidden="true"></i> Sản phẩm
-                                                    đấu giá thành công</a>
+                                                    <i class="fa fa-caret-right" aria-hidden="true"></i>
+                                                    Sản phẩm đấu giá kết thúc</a>
                                             </div>
                                         </div>
                                         <div class="col-lg-8">
@@ -128,7 +126,7 @@
                                                     <hr>
                                                     <div class="row">
                                                         <div class="col-sm-4">
-                                                            <strong class="mb-0">Phone</strong>
+                                                            <strong class="mb-0">Số điện thoại</strong>
                                                         </div>
                                                         <div class="col-sm-8">
                                                             <p class="text-muted mb-0">${u.phone}</p>
@@ -201,7 +199,6 @@
                                                     <img src="${pageContext.request.contextPath}/public/imgs/avatar/user.png" alt="avatar"
                                                          class="rounded-circle img-fluid" style="width: 150px;">
                                                     <h5 class="my-3">${u.name}</h5>
-                                                    <p class="text-muted mb-1">Người mua</p>
                                                 </div>
                                             </div>
                                             <form id="frmAccountPermission" method="post"

@@ -443,7 +443,7 @@
                                                         </c:if>
                                                         <c:forEach items="${auction}" var="a">
                                                             <c:if test="${a.proID == p.proID && a.userID == authUser.id && test == 0}">
-                                                                <span class="card-notify-badge">Sản phẩm đang đấu giá</span>
+                                                                <span class="card-notify-badge" style="background: #2d9abc;">Sản phẩm đang đấu giá</span>
                                                             </c:if>
                                                         </c:forEach>
                                                         <img src="${pageContext.request.contextPath}/public/imgs/sp/${p.proID}/main.jpg"
@@ -641,7 +641,7 @@
                                                         </c:if>
                                                         <c:forEach items="${auction}" var="a">
                                                             <c:if test="${a.proID == p.proID && a.userID == authUser.id && test == 0}">
-                                                                <span class="card-notify-badge">Sản phẩm đang đấu giá</span>
+                                                                <span class="card-notify-badge" style="background: #2d9abc;">Sản phẩm đang đấu giá</span>
                                                             </c:if>
                                                         </c:forEach>
                                                         <img src="${pageContext.request.contextPath}/public/imgs/sp/${p.proID}/main.jpg"

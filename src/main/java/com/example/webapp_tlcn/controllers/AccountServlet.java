@@ -76,6 +76,15 @@ public class AccountServlet extends HttpServlet {
                 request.setAttribute("bankList", bankList);
                 ServletUtils.forward("/views/vwAccount/Profile.jsp", request, response);
                 break;
+            case "/Info":
+                int id1 = Integer.parseInt(request.getParameter("id"));
+                List<Bank> bankList1 = BankModel.findAll();
+                List<User> userList1 = UserModel.findAll();
+                request.setAttribute("id", id1);
+                request.setAttribute("userList", userList1);
+                request.setAttribute("bankList", bankList1);
+                ServletUtils.forward("/views/vwAccount/Info.jsp", request, response);
+                break;
             case "/WatchList":
                 List<Product> listAll = ProductModel.findAll(0);
                 List<Favourite> listFavourite = FavouriteModel.findAll();
@@ -83,7 +92,7 @@ public class AccountServlet extends HttpServlet {
                 request.setAttribute("favourite", listFavourite);
                 ServletUtils.forward("/views/vwAccount/WatchList.jsp", request, response);
                 break;
-            case "/UpdateSeller":
+            case "/UpdateInfo":
                 List<ListBank> listBanks = ListBankModel.findAll();
                 List<Bank> BankList = BankModel.findAll();
                 List<User> UserList = UserModel.findAll();
@@ -158,6 +167,7 @@ public class AccountServlet extends HttpServlet {
                 break;
             case "/FeedBackSeller":
                 int id = Integer.parseInt(request.getParameter("id"));
+                int idPro = Integer.parseInt(request.getParameter("idPro"));
                 List<FeedBack> ListFeedBack2 = FeedBackModel.findAll();
                 User user3 = UserModel.findByUserId(id);
                 try {
@@ -166,6 +176,7 @@ public class AccountServlet extends HttpServlet {
                 } catch (Exception e) {
                     e.printStackTrace();
                 }
+                request.setAttribute("id", idPro);
                 request.setAttribute("user", user3);
                 request.setAttribute("feedBackAll", ListFeedBack2);
                 ServletUtils.forward("/views/vwAccount/FeedBackSeller.jsp", request, response);
@@ -240,7 +251,7 @@ public class AccountServlet extends HttpServlet {
                                 if (money >= pay) {//Đủ tiền đã trả số tiền còn lại
                                     User U = new User(UserId, money - pay, moneyAu - PStart);
                                     UserModel.updateMoney(U);//Cập nhật tiền cho người đấu giá thắng món hàng này: trừ tiền đấu giá vào tài khoảng chính và xóa tiền cọc của sp này.
-                                    Product Product = new Product(p.getProID(), p.getStartingPrice(), p.getCatID(), p.getStepPrice(), p.getHighestPaidPrice(), p.getProName(), p.getTinyDes(), p.getFullDes(), p.getEndDay(), p.getTop(), p.getYear(), p.getMonth(), p.getDay(), p.getDay(), p.getMinute(), p.getSecond(), 0, 1);
+                                    Product Product = new Product(p.getProID(), p.getStartingPrice(), p.getCatID(), p.getStepPrice(), p.getHighestPaidPrice(), p.getProName(), p.getTinyDes(), p.getFullDes(), p.getEndDay(), p.getTop(), p.getYear(), p.getMonth(), p.getDay(), p.getDay(), p.getMinute(), p.getSecond(), 0, 1 , p.getStrDate());
                                     ProductModel.update(Product);//Cập nhật sản phẩm này đã được thanh toán rồi.
                                     Notice n = new Notice(p.getUserSellID(), "Bạn cần giao hàng cho khách", 0, LocalDateTime.now().plusDays(7), p.getHighestPaidPrice(), 2, PProId);
                                     NoticeModel.add(n);//Tạo thông báo yêu cầu giao hàng cho khách
@@ -279,7 +290,7 @@ public class AccountServlet extends HttpServlet {
                     if( p.getUserID() == -1 && p.getPaid() == 0){
                         User U = UserModel.findByUserId(p.getUserSellID());
                         assert U != null;
-                        Product P = new Product(p.getProID(), p.getStartingPrice(), p.getCatID(), p.getStepPrice(), p.getHighestPaidPrice(), p.getProName(), p.getTinyDes(), p.getFullDes(), p.getEndDay(), p.getTop(), p.getYear(), p.getMonth(), p.getDay(), p.getDay(), p.getMinute(), p.getSecond(), p.getDelete(), -1);
+                        Product P = new Product(p.getProID(), p.getStartingPrice(), p.getCatID(), p.getStepPrice(), p.getHighestPaidPrice(), p.getProName(), p.getTinyDes(), p.getFullDes(), p.getEndDay(), p.getTop(), p.getYear(), p.getMonth(), p.getDay(), p.getDay(), p.getMinute(), p.getSecond(), p.getDelete(), -1 , p.getStrDate());
                         ProductModel.update(P);
                         String emailSubject = "Selling failed";
                         String emailContent = "Products with code:" + p.getProID() + " No one participated in the auction";
@@ -300,7 +311,7 @@ public class AccountServlet extends HttpServlet {
                                 UserModel.updateMoney(U1);//Người khách đó phải bị trừ số tiền phải trả còn lại.
                                 Notice N = new Notice(n.getId(), n.getIdUser(), "Bạn đã trả xong số tiền còn lại", n.getType(), n.getDateEnd(),0, 0, n.getIdPro());
                                 NoticeModel.update(N); //Cập nhật thông báo là đã thanh toán trước thời hạn
-                                Product Product1 = new Product(p.getProID(), p.getStartingPrice(), p.getCatID(), p.getStepPrice(), p.getHighestPaidPrice(), p.getProName(), p.getTinyDes(), p.getFullDes(), p.getEndDay(), p.getTop(), p.getYear(), p.getMonth(), p.getDay(), p.getDay(), p.getMinute(), p.getSecond(), 0, 1);
+                                Product Product1 = new Product(p.getProID(), p.getStartingPrice(), p.getCatID(), p.getStepPrice(), p.getHighestPaidPrice(), p.getProName(), p.getTinyDes(), p.getFullDes(), p.getEndDay(), p.getTop(), p.getYear(), p.getMonth(), p.getDay(), p.getDay(), p.getMinute(), p.getSecond(), 0, 1 , p.getStrDate());
                                 ProductModel.update(Product1);//Cập nhật sản phẩm này đã được thanh toán rồi.
                                 Notice n1 = new Notice(p.getUserSellID(), "Bạn cần giao hàng cho khách", 0, LocalDateTime.now().plusDays(7), p.getHighestPaidPrice(), 2, p.getProID());
                                 NoticeModel.add(n1);//Tạo thông báo cho người bán sản phẩm này: yêu cầu giao hàng cho khách!
@@ -446,7 +457,7 @@ public class AccountServlet extends HttpServlet {
             case "/Logout":
                 logoutUser(request, response);
                 break;
-            case "/UpdateSeller":
+            case "/UpdateInfo":
                 updateUserSeller(request, response);
                 break;
             case "/UpdateBidder":
@@ -480,8 +491,10 @@ public class AccountServlet extends HttpServlet {
         int userFbID = Integer.parseInt(request.getParameter("userFbID"));
         int userSellID = Integer.parseInt(request.getParameter("userSellID"));
         int ProID = Integer.parseInt(request.getParameter("proID"));
+        DateTimeFormatter myFormatObj = DateTimeFormatter.ofPattern("dd-MM-yyyy HH:mm:ss");
+        String  StrDate = LocalDateTime.now().format(myFormatObj);
         String FeedBack = request.getParameter("feedBack");
-        FeedBack feedBack = new FeedBack(ProID, userFbID, userSellID, happy, FeedBack);
+        FeedBack feedBack = new FeedBack(ProID, userFbID, userSellID, happy, FeedBack , LocalDateTime.now() ,  StrDate);
         FeedBackModel.add(feedBack);
         ServletUtils.redirect("/Account/SuccessList", request, response);
     }

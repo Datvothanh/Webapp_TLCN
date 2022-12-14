@@ -102,8 +102,12 @@
     </jsp:attribute>
     <jsp:body>
         <div class="card">
-            <h4 class="card-header d-flex justify-content-between">
-                Danh sách đang bán
+            <h4 class="card-header d-flex ">
+                <a href="${pageContext.request.contextPath}/Account/Profile"
+                   role="button" style=" margin-right: 27px;">
+                    <i class="bi bi-backspace-fill" aria-hidden="true"></i>
+                </a>
+                <p>Sản phẩm đang bán</p>
             </h4>
             <div class="card-body">
                 <ul class="list-group">
@@ -294,11 +298,13 @@
                             </c:forEach>
                         </div>
                     </div>
+                    <c:if test="${Test1 == 1}">
+                        <p class="card-text">Chưa có sản phẩm đang bán.</p>
+                    </c:if>
                 </ul>
+
             </div>
         </div>
-        <c:if test="${Test1 == 1}">
-            <p class="card-text">Không có dữ liệu.</p>
-        </c:if>
+
     </jsp:body>
 </t:main>

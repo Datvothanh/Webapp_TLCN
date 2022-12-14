@@ -50,13 +50,12 @@
     </jsp:attribute>
     <jsp:body>
         <div class="card">
-            <h4 class="card-header d-flex justify-content-between">
-                End List
-                <a class="btn btn-outline-success" href="${pageContext.request.contextPath}/Account/Profile"
-                   role="button">
+            <h4 class="card-header d-flex">
+                <a href="${pageContext.request.contextPath}/Account/Profile"
+                   role="button" style=" margin-right: 27px;">
                     <i class="bi bi-backspace-fill" aria-hidden="true"></i>
-                    Trở về
                 </a>
+                <p>Sản phẩm bán đã kết thúc</p>
             </h4>
             <c:set var="Test1" scope="session" value="${1}"/>
             <c:set var="test" scope="session" value="${0}"/>
@@ -97,7 +96,7 @@
                                             </label>
                                         </form>
                                         <td>${p.proID}</td>
-                                        <td>${p.endDay}</td>
+                                        <td>${p.strDate}</td>
                                         <c:choose>
                                             <c:when test="${p.paid == 1}">
                                                 <c:if test="${p.ship == -1}">
@@ -125,8 +124,8 @@
 
                                                     </td>
                                                 </c:if>
-                                                <td class="text-end"><span
-                                                        class="fw-bolder">${p.highestPaidPrice}</span></td>
+                                                <td class="text-end"><span class="fw-bolder"><fmt:formatNumber
+                                                        value="${p.highestPaidPrice}" type="number"/> đ</span></td>
                                             </c:when>
                                             <c:otherwise>
                                                 <c:if test="${p.userID == -1}">
@@ -149,7 +148,7 @@
                                             </c:otherwise>
                                         </c:choose>
                                         <td>
-                                            <a href="${pageContext.request.contextPath}/Product/DetailProductEnd?id=${p.proID}">Xem</a>
+                                            <a href="${pageContext.request.contextPath}/Product/DetailProductEnd?id=${p.proID}"><p style="color: blue">Xem</p></a>
                                         </td>
                                     </tr>
                                     <c:set var="test" scope="session" value="${0}"/>
@@ -157,15 +156,12 @@
                             </c:forEach>
                             </tbody>
                         </table>
-
+                        <c:if test="${Test1 == 1}">
+                            <p class="card-text">Không có dữ liệu.</p>
+                        </c:if>
                     </div>
-
                 </div>
             </div>
-
-            <c:if test="${Test1 == 1}">
-                <p class="card-text">Không có dữ liệu.</p>
-            </c:if>
         </div>
     </jsp:body>
 </t:main>

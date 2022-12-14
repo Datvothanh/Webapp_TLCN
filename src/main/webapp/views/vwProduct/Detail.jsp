@@ -16,220 +16,6 @@
 <t:main>
     <jsp:attribute name="css">
         <style>
-            /*****************globals*************/
-            body {
-                font-family: 'open sans';
-                overflow-x: hidden;
-            }
-
-            img {
-                max-width: 100%;
-            }
-
-            .preview {
-                display: -webkit-box;
-                display: -webkit-flex;
-                display: -ms-flexbox;
-                display: flex;
-                -webkit-box-orient: vertical;
-                -webkit-box-direction: normal;
-                -webkit-flex-direction: column;
-                -ms-flex-direction: column;
-                flex-direction: column;
-            }
-
-            @media screen and (max-width: 996px) {
-                .preview {
-                    margin-bottom: 20px;
-                }
-            }
-
-            .preview-pic {
-                -webkit-box-flex: 1;
-                -webkit-flex-grow: 1;
-                -ms-flex-positive: 1;
-                flex-grow: 1;
-            }
-
-            .preview-thumbnail.nav-tabs {
-                border: none;
-                margin-top: 15px;
-            }
-
-            .preview-thumbnail.nav-tabs li {
-                width: 23%;
-                margin-right: 2.5%;
-            }
-
-            .preview-thumbnail.nav-tabs li img {
-                max-width: 100%;
-                display: block;
-            }
-
-            .preview-thumbnail.nav-tabs li a {
-                padding: 0;
-                margin: 0;
-            }
-
-            .preview-thumbnail.nav-tabs li:last-of-type {
-                margin-right: 0;
-            }
-
-            .tab-content {
-                overflow: hidden;
-            }
-
-            .tab-content img {
-                width: 100%;
-                -webkit-animation-name: opacity;
-                animation-name: opacity;
-                -webkit-animation-duration: .3s;
-                animation-duration: .3s;
-            }
-
-            .cardProduct {
-                background: #eee;
-                padding: 3em;
-                line-height: 1.5em;
-            }
-
-            @media screen and (min-width: 997px) {
-                .wrapper {
-                    display: -webkit-box;
-                    display: -webkit-flex;
-                    display: -ms-flexbox;
-                    display: flex;
-                }
-            }
-
-            .details {
-                display: -webkit-box;
-                display: -webkit-flex;
-                display: -ms-flexbox;
-                display: flex;
-                -webkit-box-orient: vertical;
-                -webkit-box-direction: normal;
-                -webkit-flex-direction: column;
-                -ms-flex-direction: column;
-                flex-direction: column;
-            }
-
-            .colors {
-                -webkit-box-flex: 1;
-                -webkit-flex-grow: 1;
-                -ms-flex-positive: 1;
-                flex-grow: 1;
-            }
-
-            .product-title, .price, .sizes, .colors {
-                text-transform: UPPERCASE;
-                font-weight: bold;
-            }
-
-            .checked, .price span {
-                color: #ff9f1a;
-            }
-
-            .product-title, .rating, .product-description, .price, .vote, .sizes {
-                margin-bottom: 15px;
-            }
-
-            .product-title {
-                margin-top: 0;
-            }
-
-            .size {
-                margin-right: 10px;
-            }
-
-            .size:first-of-type {
-                margin-left: 40px;
-            }
-
-            .color {
-                display: inline-block;
-                vertical-align: middle;
-                margin-right: 10px;
-                height: 2em;
-                width: 2em;
-                border-radius: 2px;
-            }
-
-            .color:first-of-type {
-                margin-left: 20px;
-            }
-
-            .add-to-cart, .like {
-                background: #ff9f1a;
-                padding: 1.2em 1.5em;
-                border: none;
-                text-transform: UPPERCASE;
-                font-weight: bold;
-                color: #fff;
-                -webkit-transition: background .3s ease;
-                transition: background .3s ease;
-            }
-
-            .add-to-cart:hover, .like:hover {
-                background: #b36800;
-                color: #fff;
-            }
-
-            .not-available {
-                text-align: center;
-                line-height: 2em;
-            }
-
-            .not-available:before {
-                font-family: fontawesome;
-                content: "\f00d";
-                color: #fff;
-            }
-
-            .orange {
-                background: #ff9f1a;
-            }
-
-            .green {
-                background: #85ad00;
-            }
-
-            .blue {
-                background: #0076ad;
-            }
-
-            .tooltip-inner {
-                padding: 1.3em;
-            }
-
-            @-webkit-keyframes opacity {
-                0% {
-                    opacity: 0;
-                    -webkit-transform: scale(3);
-                    transform: scale(3);
-                }
-                100% {
-                    opacity: 1;
-                    -webkit-transform: scale(1);
-                    transform: scale(1);
-                }
-            }
-
-            @keyframes opacity {
-                0% {
-                    opacity: 0;
-                    -webkit-transform: scale(3);
-                    transform: scale(3);
-                }
-                100% {
-                    opacity: 1;
-                    -webkit-transform: scale(1);
-                    transform: scale(1);
-                }
-            }
-
-            /*# sourceMappingURL=style.css.map */
-
             /* general styling */
             :root {
                 --smaller: .75;
@@ -264,7 +50,7 @@
 
             li span {
                 display: block;
-                font-size: 2rem;
+                font-size: 1rem;
             }
 
 
@@ -297,7 +83,7 @@
                 let step = Number($('#step').val());
                 let highest = Number($('#highest').val());
                 if (result) {
-                    if (price <= 0) {
+                    if (price <= 0 ) {
                         alert('Đấu giá không hợp lệ.');
                     } else {
                         if (highest === 0) {
@@ -323,6 +109,34 @@
                 }
 
             });
+            <c:forEach items="${proCat5}" var="p">
+            (function () {
+                const second = 1000,
+                    minute = second * 60,
+                    hour = minute * 60,
+                    day = hour * 24;
+
+                //end
+                const countDown = new Date(${p.year}, ${p.month}-1, ${p.day}, ${p.hour}, ${p.minute}, ${p.second}).getTime(),
+                    x = setInterval(function () {
+
+                        const now = new Date().getTime(),
+                            distance = countDown - now;
+
+                        document.getElementById("days1${p.proID}").innerText = Math.floor(distance / (day)),
+                            document.getElementById("hours1${p.proID}").innerText = Math.floor((distance % (day)) / (hour)),
+                            document.getElementById("minutes1${p.proID}").innerText = Math.floor((distance % (hour)) / (minute)),
+                            document.getElementById("seconds1${p.proID}").innerText = Math.floor((distance % (minute)) / second);
+
+                        //do something later when date is reached
+                        if (distance < 0) {
+                            document.getElementById("countdown1${p.proID}").style.display = "none";
+                            clearInterval(x);
+                        }
+                        //seconds
+                    }, 0)
+            }());
+            </c:forEach>
             (function () {
                 const second = 1000,
                     minute = second * 60,
@@ -431,7 +245,7 @@
                                         src="${pageContext.request.contextPath}/public/imgs/sp/${product.proID}/sub3.jpg"
                                         style="width:696px;height:533px;"/></div>
                             </div>
-                            <ul class="preview-thumbnail nav nav-tabs">
+                            <ul class="preview-thumbnail nav nav-tabs" style="flex-wrap: nowrap">
                                 <li class="active"><a data-target="#pic-1" data-toggle="tab"><img
                                         src="${pageContext.request.contextPath}/public/imgs/sp/${product.proID}/main.jpg"
                                         style="width:163px;height:158px;"/></a></li>
@@ -454,12 +268,12 @@
                             <c:choose>
                                 <c:when test="${product.highestPaidPrice == 0}">
                                     <h4 class="price">Giá khởi điểm: <span><fmt:formatNumber
-                                            value="${product.startingPrice}" type="number"/></span></h4>
+                                            value="${product.startingPrice}" type="number"/> đ</span></h4>
                                     <c:set value="${product.startingPrice}" var="value"/>
                                 </c:when>
                                 <c:otherwise>
                                     <h4 class="price">Giá trả cao nhất: <span><fmt:formatNumber
-                                            value="${product.highestPaidPrice}" type="number"/></span></h4>
+                                            value="${product.highestPaidPrice}" type="number"/> đ</span></h4>
                                     <c:set value="${product.highestPaidPrice}" var="value"/>
                                     <h5 class="card-title text-danger">
                                         <c:forEach items="${user}" var="u">
@@ -474,19 +288,18 @@
                                 <c:forEach items="${user}" var="u">
                                     <c:if test="${u.id == product.userSellID}">
                                         Người bán sản phẩm: ${u.name}
-                                        <a class="btn btn-sm btn-outline-primary"
-                                           href="${pageContext.request.contextPath}/Account/FeedBackSeller?id=${u.id}"
+                                        <a href="${pageContext.request.contextPath}/Account/FeedBackSeller?id=${u.id}&idPro=${product.proID}"
                                            role="button">
-                                            <i class="fa fa-eye" aria-hidden="true"></i>
+                                            <i class="fa fa-eye" aria-hidden="true" style="margin-left: 10px;"></i>
                                         </a>
                                     </c:if>
                                 </c:forEach>
                             </h6>
-                            <p>Bước giá của sản phẩm: <span><fmt:formatNumber
-                                    value="${product.stepPrice}" type="number"/></span>(<span><fmt:formatNumber
-                                    value="${product.stepPrice + value}" type="number"/></span>)</p>
+                            <p>Số tiền đấu giá tối thiểu: <span><fmt:formatNumber
+                                    value="${product.stepPrice + value}" type="number"/> đ </span>(Bước giá:<span><fmt:formatNumber
+                                    value="${product.stepPrice }" type="number"/> đ</span>)</p>
                             <p>Số tiền đặt cọc: <span><fmt:formatNumber
-                                    value="${product.startingPrice * 20/100}" type="number"/></span></p>
+                                    value="${product.startingPrice * 20/100}" type="number"/> đ</span></p>
                             <div class="container">
                                 <div id="countdown">
                                     <ul>
@@ -522,10 +335,10 @@
                                                     <input value="${product.startingPrice}" id="start" hidden>
                                                 </label>
                                                 <label>
-                                                    <input name="price" id="numPrice">
+                                                    <input name="price" id="numPrice" type="number">
                                                 </label>
                                             </form>
-                                            <a class="add-to-cart btn btn-default"
+                                            <a class="add-to-cart btn btn-default" style="background-color: #e8de24;  margin-top: 18px;"
                                                href="javascript:$('#frmAuction${product.proID}').submit()">
                                                 <i class="fa fa-cart-plus" aria-hidden="true"></i>
                                                 Đấu giá
@@ -534,14 +347,14 @@
 
                                             <c:forEach items="${favourite}" var="f">
                                                 <c:if test="${f.userID == authUser.id && f.proID == product.proID && f.favourite == 0}">
-                                                    <a class="card-action" style=" margin: 7px 490px 7px 7px;"
+                                                    <a class="card-action" style=" margin: 7px 560px 7px 7px;"
                                                        href="javascript:$('#frmFavourite-Add${product.proID}').submit()">
                                                         <i class="fa fa-heart"></i>
                                                         <c:set var="Test" scope="session" value="${0}"/>
                                                     </a>
                                                 </c:if>
                                                 <c:if test="${f.userID == authUser.id && f.proID == product.proID && f.favourite == 1 }">
-                                                    <a class="card-action-off" style=" margin: 7px 490px 7px 7px;"
+                                                    <a class="card-action-off" style=" margin: 7px 560px 7px 7px;"
                                                        href="javascript:$('#frmFavourite-Delete${product.proID}').submit()">
                                                         <i class="fa fa-heart"></i>
                                                         <c:set var="Test" scope="session" value="${0}"/>
@@ -549,7 +362,7 @@
                                                 </c:if>
                                             </c:forEach>
                                             <c:if test="${Test == 1 }">
-                                                <a class="card-action" style=" margin: 7px 490px 7px 7px;"
+                                                <a class="card-action" style=" margin: 7px 560px 7px 7px;"
                                                    href="javascript:$('#frmFavourite${product.proID}').submit()">
                                                     <i class="fa fa-heart"></i>
                                                 </a>
@@ -561,7 +374,7 @@
                                                     <input name="price">
                                                 </label>
                                             </form>
-                                            <a class="add-to-cart btn btn-default"
+                                            <a class="add-to-cart btn btn-default" style="background-color: #e8de24;  margin-top: 18px;"
                                                data-toggle="modal" data-target="#exampleModal3">
                                                 <i class="fa fa-cart-plus" aria-hidden="true"></i>
                                                 Đấu giá
@@ -594,14 +407,14 @@
 
                                             <c:forEach items="${favourite}" var="f">
                                                 <c:if test="${f.userID == authUser.id && f.proID == product.proID && f.favourite == 0}">
-                                                    <a class="card-action" style=" margin: 7px 490px 7px 7px;"
+                                                    <a class="card-action" style=" margin: 7px 560px 7px 7px;"
                                                        href="javascript:$('#frmFavourite-Add${product.proID}').submit()">
                                                         <i class="fa fa-heart"></i>
                                                         <c:set var="Test" scope="session" value="${0}"/>
                                                     </a>
                                                 </c:if>
                                                 <c:if test="${f.userID == authUser.id && f.proID == product.proID && f.favourite == 1 }">
-                                                    <a class="card-action-off" style=" margin: 7px 490px 7px 7px;"
+                                                    <a class="card-action-off" style=" margin: 7px 560px 7px 7px;"
                                                        href="javascript:$('#frmFavourite-Delete${product.proID}').submit()">
                                                         <i class="fa fa-heart"></i>
                                                         <c:set var="Test" scope="session" value="${0}"/>
@@ -609,7 +422,7 @@
                                                 </c:if>
                                             </c:forEach>
                                             <c:if test="${Test == 1 }">
-                                                <a class="card-action" style=" margin: 7px 490px 7px 7px;"
+                                                <a class="card-action" style=" margin: 7px 560px 7px 7px;"
                                                    href="javascript:$('#frmFavourite${product.proID}').submit()">
                                                     <i class="fa fa-heart"></i>
                                                 </a>
@@ -621,7 +434,7 @@
 
                             <c:if test="${!auth}">
                                 <div class="action">
-                                    <a class="add-to-cart btn btn-default"
+                                    <a class="add-to-cart btn btn-default" style="background-color: #e8de24;  margin-top: 18px;"
                                        data-toggle="modal" data-target="#exampleModal1">
                                         <i class="fa fa-cart-plus" aria-hidden="true"></i>
                                         Đấu giá
@@ -649,7 +462,7 @@
                                             </div>
                                         </div>
                                     </div>
-                                    <a class="card-action" style=" margin: 7px 490px 7px 7px;"
+                                    <a class="card-action" style=" margin: 7px 560px 7px 7px;"
                                        data-toggle="modal" data-target="#exampleModal">
                                         <i class="fa fa-heart"></i>
                                     </a>
@@ -697,9 +510,10 @@
                                     <c:when test="${product.proID == a.proID && a.userID == u.id}">
                                     <tr>
                                         <th scope="row">${STT+1}</th>
-                                        <td>${a.date}</td>
+                                        <td>${a.strDate}</td>
                                         <td>${u.name}</td>
-                                        <td>${a.price}</td>
+                                        <td><span><fmt:formatNumber
+                                                value="${a.price}" type="number"/> đ</span></td>
 
                                         <c:set var="STT" scope="session" value="${STT + 1}"/>
 
@@ -873,12 +687,12 @@
                                                             ${p.proName}
                                                     </div>
                                                     <div class="container">
-                                                        <div id="countdown${p.proID}">
+                                                        <div id="countdown1${p.proID}">
                                                             <ul>
-                                                                <li><span id="days${p.proID}"></span>Ngày</li>
-                                                                <li><span id="hours${p.proID}"></span>Tiếng</li>
-                                                                <li><span id="minutes${p.proID}"></span>Phút</li>
-                                                                <li><span id="seconds${p.proID}"></span>Giây</li>
+                                                                <li><span id="days1${p.proID}"></span>Ngày</li>
+                                                                <li><span id="hours1${p.proID}"></span>Tiếng</li>
+                                                                <li><span id="minutes1${p.proID}"></span>Phút</li>
+                                                                <li><span id="seconds1${p.proID}"></span>Giây</li>
                                                             </ul>
                                                         </div>
                                                     </div>
@@ -890,7 +704,7 @@
                                                                     Giá khởi điểm:
                                                                     <span class="text-danger font-weight-bold"><fmt:formatNumber
                                                                             value="${p.startingPrice}"
-                                                                            type="number"/></span>
+                                                                            type="number"/> đ</span>
                                                                 </h5>
                                                             </c:when>
                                                             <c:otherwise>
@@ -898,7 +712,7 @@
                                                                     Giá trả cao nhất:
                                                                     <span class="text-danger font-weight-bold"><fmt:formatNumber
                                                                             value="${p.highestPaidPrice}"
-                                                                            type="number"/></span>
+                                                                            type="number"/> đ</span>
                                                                 </h5>
                                                                 <h6 class="card-title text-danger">
                                                                     <c:forEach items="${user}" var="u">

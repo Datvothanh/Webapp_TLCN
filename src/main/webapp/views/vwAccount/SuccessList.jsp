@@ -17,13 +17,12 @@
     </jsp:attribute>
     <jsp:body>
         <div class="card">
-        <h4 class="card-header d-flex justify-content-between">
-            Sản phẩm đấu giá thành công
-            <a class="btn btn-outline-success" href="${pageContext.request.contextPath}/Account/Profile"
-               role="button">
+        <h4 class="card-header d-flex">
+            <a href="${pageContext.request.contextPath}/Account/Profile"
+               role="button" style=" margin-right: 27px;">
                 <i class="bi bi-backspace-fill" aria-hidden="true"></i>
-                Trở về
             </a>
+            <p>Sản phẩm đấu giá kết thúc</p>
         </h4>
         <div class="card-body">
             <c:set var="Test" scope="session" value="${1}"/>
@@ -66,7 +65,7 @@
                                                 </label>
                                             </form>
                                             <td>${p.proID}</td>
-                                            <td>${p.endDay}</td>
+                                            <td>${p.strDate}</td>
                                             <c:if test="${test == 1}">
                                                 <c:if test="${stt == 0 || stt == 2}">
                                                     <c:choose>
@@ -85,7 +84,7 @@
                                                 <c:if test="${stt == 1}">
                                                     <td>
                                                         <i class="fa fa-dot-circle-o text-danger"></i><span class="ms-1"> Bạn cần nạp tiền để thanh toán số tiền: <span><fmt:formatNumber
-                                                            value="${price}" type="number"/></span> </span>
+                                                            value="${price}" type="number"/></span> </span> đ
                                                     </td>
                                                 </c:if>
                                                 <c:if test="${stt == 3}">
@@ -99,7 +98,7 @@
                                                 <c:if test="${stt == -1}">
                                                     <td>
                                                         <i class="fa fa-dot-circle-o text-danger"></i><span class="ms-1"> Bạn đã mất số tiền cộc là: <span><fmt:formatNumber
-                                                            value="${p.startingPrice * 20/100}" type="number"/></span></span>
+                                                            value="${p.startingPrice * 20/100}" type="number"/></span></span> đ
                                                     </td>
                                                 </c:if>
                                                 <c:if test="${stt == -3}">
@@ -131,9 +130,9 @@
                                             </c:if>
 
                                             <td class="text-end"><span class="fw-bolder"><span><fmt:formatNumber
-                                                    value="${p.highestPaidPrice}" type="number"/></span></span></td>
+                                                    value="${p.highestPaidPrice}" type="number"/></span></span> đ</td>
                                             <td>
-                                                <a href="${pageContext.request.contextPath}/Product/DetailProductEnd?id=${p.proID}">Xem</a>
+                                                <a href="${pageContext.request.contextPath}/Product/DetailProductEnd?id=${p.proID}"><p style="color: blue">Xem</p></a>
                                             </td>
                                         </tr>
                                         <c:set var="test" scope="session" value="${0}"/>
@@ -142,15 +141,15 @@
                                         <c:set var="Test" scope="session" value="${0}"/>
                                         <tr>
                                             <td>${p.proID}</td>
-                                            <td>${p.endDay}</td>
+                                            <td>${p.strDate}</td>
                                             <td>
                                                 <i class="fa fa-dot-circle-o text-danger"></i><span class="ms-1"> Đấu giá thất bại!</span>
                                             </td>
 
                                             <td class="text-end"><span class="fw-bolder"><span><fmt:formatNumber
-                                                    value="${a.price}" type="number"/></span></span></td>
+                                                    value="${a.price}" type="number"/></span></span> đ</td>
                                             <td>
-                                                <a href="${pageContext.request.contextPath}/Product/DetailProductEnd?id=${p.proID}">Xem</a>
+                                                <a href="${pageContext.request.contextPath}/Product/DetailProductEnd?id=${p.proID}"><p style="color: blue">Xem</p></a>
                                             </td>
                                         </tr>
                                         <c:set var="test" scope="session" value="${0}"/>

@@ -73,7 +73,7 @@
                                                 <input type="email" class="form-control" name="email" id="inputEmail"
                                                        placeholder="Email">
                                             </div>
-                                            <button type="submit" class="btn btn-primary mb-2">Tiếp theo</button>
+                                            <button type="submit" class="btn btn-primary mb-2">Xác nhận</button>
                                         </form>
                                     </div>
                                 </div>

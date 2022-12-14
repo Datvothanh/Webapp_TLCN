@@ -17,7 +17,7 @@ public class FeedBackModel {
 
 
     public static void add(FeedBack f) {
-        String Sql = "INSERT INTO feedbacks (ProID,UserFbID,UserSellID,FeedBack,Happy) VALUES (:ProID , :UserFbID , :UserSellID,:FeedBack , :Happy)";
+        String Sql = "INSERT INTO feedbacks (ProID,UserFbID,UserSellID,FeedBack,Happy,Date,StrDate) VALUES (:ProID , :UserFbID , :UserSellID,:FeedBack , :Happy , :Date , :StrDate)";
         try (Connection con = DbUtils.getConnection()) {
             con.createQuery(Sql)
                     .addParameter("ProID",f.getProID() )
@@ -25,6 +25,8 @@ public class FeedBackModel {
                     .addParameter("UserSellID",f.getUserSellID() )
                     .addParameter("FeedBack",f.getFeedBack() )
                     .addParameter("Happy",f.getHappy())
+                    .addParameter("Date",f.getDate())
+                    .addParameter("StrDate",f.getStrDate())
                     .executeUpdate();
         }
     }

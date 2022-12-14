@@ -101,12 +101,11 @@
                                                      alt="avatar"
                                                      class="rounded-circle img-fluid" style="width: 150px;">
                                                 <h5 class="my-3">${u.name}</h5>
-                                                <p class="text-muted mb-1">Người bán</p>
                                             </div>
                                         </div>
                                         <c:if test="${u.permission == 1}">
                                             <div class="list-group list-group-flush">
-                                                <a href="${pageContext.request.contextPath}/Account/UpdateSeller"
+                                                <a href="${pageContext.request.contextPath}/Account/UpdateInfo"
                                                    class="list-group-item list-group-item-action"><i
                                                         class="fa fa-caret-right"
                                                         aria-hidden="true"></i>
@@ -152,7 +151,7 @@
                                                                     </div>
                                                                     <div class="modal-footer">
                                                                         <button type="button" class="btn btn-secondary"
-                                                                                data-dismiss="modal">Close
+                                                                                data-dismiss="modal">Đóng
                                                                         </button>
                                                                     </div>
                                                                 </div>
@@ -166,26 +165,24 @@
                                                    class="list-group-item list-group-item-action"><i
                                                         class="fa fa-caret-right"
                                                         aria-hidden="true"></i>
-                                                    Danh sách sản phẩm đang bán </a>
+                                                    Sản phẩm đang bán </a>
                                                 <a href="${pageContext.request.contextPath}/Account/EndingList"
                                                    class="list-group-item list-group-item-action"><i
                                                         class="fa fa-caret-right"
                                                         aria-hidden="true"></i>
-                                                    Danh sách sản phẩm đã kết thúc </a>
+                                                    Sản phẩm bán đã kết thúc </a>
                                                 <a href="${pageContext.request.contextPath}/Account/WatchList"
                                                    class="list-group-item list-group-item-action"><i
                                                         class="fa fa-caret-right"
                                                         aria-hidden="true"></i>
-                                                    Danh sách sản phầm yêu thích</a>
+                                                    Sản phầm yêu thích</a>
                                                 <a href="${pageContext.request.contextPath}/Account/AuctionList"
                                                    class="list-group-item list-group-item-action"><i
                                                         class="fa fa-caret-right"
-                                                        aria-hidden="true"></i> Sản phẩm đang
-                                                    đấu giá </a>
+                                                        aria-hidden="true"></i> Sản phẩm đang tham gia đấu giá </a>
                                                 <a href="${pageContext.request.contextPath}/Account/SuccessList"
                                                    class="list-group-item list-group-item-action">
-                                                    <i class="fa fa-caret-right" aria-hidden="true"></i> Sản phẩm
-                                                    đấu giá thành công</a>
+                                                    <i class="fa fa-caret-right" aria-hidden="true"></i> Sản phẩm đấu giá kết thúc</a>
                                             </div>
                                         </c:if>
                                     </div>

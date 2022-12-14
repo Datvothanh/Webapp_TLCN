@@ -95,7 +95,7 @@
                         <input type="text" class="form-control" id="UserSellID" name="UserSellID"
                                value="${authUser.id}">
                     </div>
-                    <div class="form-group">
+                    <div class="form-group" hidden>
                         <label for="ProID">ProID</label>
                         <input type="text" class="form-control" id="ProID" name="ProID" value="${idProEnd + 1}">
                     </div>

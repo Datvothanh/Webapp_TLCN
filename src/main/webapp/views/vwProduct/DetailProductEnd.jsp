@@ -25,7 +25,6 @@
                             <div class="details col-md-6">
                                 <h3 class="product-title">${product.proName}</h3>
                                 <p class="product-description">${product.fullDes}</p>
-
                                 <c:choose>
                                     <c:when test="${product.highestPaidPrice == 0}">
                                         <h4 class="price">Giá khởi điểm: <span><fmt:formatNumber
@@ -43,6 +42,11 @@
                                         </h5>
                                     </c:otherwise>
                                 </c:choose>
+                                <p>Số tiền đấu giá tối thiểu: <span><fmt:formatNumber
+                                        value="${product.stepPrice + value}" type="number"/> đ </span>(Bước giá:<span><fmt:formatNumber
+                                        value="${product.stepPrice }" type="number"/> đ</span>)</p>
+                                <p>Số tiền đặt cọc: <span><fmt:formatNumber
+                                        value="${product.startingPrice * 20/100}" type="number"/> đ</span></p>
                                 <div style="padding-top: 45px;">
                                     <table class="table table-striped">
                                         <thead>
@@ -62,7 +66,7 @@
                                         <tr>
                                             <th scope="row">${STT}</th>
                                             <td>${a.date}</td>
-                                            <td>${u.name}</td>
+                                            <td><a href="${pageContext.request.contextPath}/Account/Info?id=${u.id}"><p style="color: blue">${u.name}</p></a></td>
                                             <td>${a.price}</td>
 
                                             <c:set var="STT" scope="session" value="${STT + 1}"/>

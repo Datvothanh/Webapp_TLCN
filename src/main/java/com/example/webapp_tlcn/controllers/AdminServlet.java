@@ -1,6 +1,6 @@
 package com.example.webapp_tlcn.controllers;
-import com.example.webapp_tlcn.beans.Product;
-import com.example.webapp_tlcn.models.ProductModel;
+import com.example.webapp_tlcn.beans.*;
+import com.example.webapp_tlcn.models.*;
 import com.example.webapp_tlcn.utils.ServletUtils;
 
 import javax.servlet.ServletException;
@@ -26,6 +26,23 @@ public class AdminServlet extends HttpServlet {
                 List<Product> list = ProductModel.findAll(0);
                 request.setAttribute("products", list);
                 ServletUtils.forward("/views/vwProduct/Index.jsp", request, response);
+                break;
+            case "/Statistical":
+                List<Product> ListAllSucces = ProductModel.findAll(1);
+                List<Auction> ListAuction = AuctionModel.findAll();
+                List<Notice> listNotices = NoticeModel.findAll();
+                request.setAttribute("listNotices", listNotices);
+                request.setAttribute("productAll", ListAllSucces);
+                request.setAttribute("listAuction", ListAuction);
+                List<GroupCategory> listGroupCategory = GroupCategoryModel.findAll();
+                request.setAttribute("listGrCat", listGroupCategory);
+                List<Product> listProduct1 = ProductModel.findAll(1);
+                request.setAttribute("listPro1", listProduct1);
+                List<Product> listProduct = ProductModel.findAll(0);
+                request.setAttribute("listPro0", listProduct);
+                List<User> listUser = UserModel.findAll();
+                request.setAttribute("listUser", listUser);
+                ServletUtils.forward("/views/vwHome/Statistical.jsp", request, response);
                 break;
             case "/User":
                 ServletUtils.forward("/views/vwAccount/About.jsp", request, response);

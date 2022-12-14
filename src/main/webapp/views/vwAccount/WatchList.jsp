@@ -103,12 +103,11 @@
     <jsp:body>
         <div class="card">
             <h4 class="card-header d-flex ">
-                <a class="btn btn-outline-success" href="${pageContext.request.contextPath}/Account/Profile"
-                   role="button">
+                <a href="${pageContext.request.contextPath}/Account/Profile"
+                   role="button" style=" margin-right: 27px;">
                     <i class="bi bi-backspace-fill" aria-hidden="true"></i>
-                    Trở về
                 </a>
-                Danh sách yêu thích
+                <p> Danh sách yêu thích</p>
 
             </h4>
             <div class="card-body">
@@ -301,14 +300,15 @@
                                     </c:if>
                                 </c:forEach>
                             </c:forEach>
+                            <c:if test="${Test1 == 1}">
+                                <p class="card-text">Không có sản phẩm được yêu thích.</p>
+                            </c:if>
                         </div>
                     </div>
 
+
                 </ul>
             </div>
-            <c:if test="${Test1 == 1}">
-                <p class="card-text">Không có dữ liệu.</p>
-            </c:if>
         </div>
     </jsp:body>
 </t:main>

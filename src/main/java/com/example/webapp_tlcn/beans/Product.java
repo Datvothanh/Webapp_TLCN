@@ -4,7 +4,7 @@ import java.time.LocalDateTime;
 
 public class Product {
     private int ProID, StartingPrice, CatID, StepPrice, HighestPaidPrice, UserID ,Sell , CountAuction ,UserSellID, Top , Ship;
-    private String ProName, TinyDes, FullDes;
+    private String ProName, TinyDes, FullDes , StrDate;
     private LocalDateTime EndDay;
     private int Year , Month , Day , Hour , Minute , Second , Delete , Paid;
 
@@ -25,7 +25,7 @@ public class Product {
         Top = top;
     }
 
-    public Product(int proID, int startingPrice, int catID, int stepPrice, int highestPaidPrice,  String proName, String tinyDes, String fullDes, LocalDateTime endDay, int top, int year , int month , int day , int hour , int minute , int second, int delete , int paid) {
+    public Product(int proID, int startingPrice, int catID, int stepPrice, int highestPaidPrice,  String proName, String tinyDes, String fullDes, LocalDateTime endDay, int top, int year , int month , int day , int hour , int minute , int second, int delete , int paid , String strDate) {
         ProID = proID;
         StartingPrice = startingPrice;
         CatID = catID;
@@ -44,9 +44,10 @@ public class Product {
         Second = second;
         Delete = delete;
         Paid = paid;
+        StrDate = strDate;
     }
 
-    public Product(int proID , int startingPrice, int catID, int stepPrice, int highestPaidPrice,  int userID, int sell,int countAuction ,int userSellID, String proName, String tinyDes, String fullDes, LocalDateTime endDay, int top, int ship , int year , int month , int day , int hour , int minute , int second , int delete , int paid)  {
+    public Product(int proID , int startingPrice, int catID, int stepPrice, int highestPaidPrice,  int userID, int sell,int countAuction ,int userSellID, String proName, String tinyDes, String fullDes, LocalDateTime endDay, int top, int ship , int year , int month , int day , int hour , int minute , int second , int delete , int paid , String strDate)  {
         ProID = proID;
         StartingPrice = startingPrice;
         CatID = catID;
@@ -70,6 +71,15 @@ public class Product {
         Second = second;
         Delete = delete;
         Paid = paid;
+        StrDate = strDate;
+    }
+
+    public String getStrDate() {
+        return StrDate;
+    }
+
+    public void setStrDate(String strDate) {
+        StrDate = strDate;
     }
 
     public int getPaid() {

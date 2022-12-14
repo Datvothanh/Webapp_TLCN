@@ -131,7 +131,7 @@
                                  style="background-color: #eeeeee ; padding-left: 12px; border-radius: 12px;">
                                 <a class="dropdown-item" href="${pageContext.request.contextPath}/Account/Profile">
                                     <i class="fa fa-user" aria-hidden="true"></i>
-                                    Hồ sơ cá nhân
+                                    Quản lý cá nhân
                                 </a>
                                 <div class="dropdown-divider" style="border-top:0.5px solid #e7d9d9;"></div>
                                 <a class="dropdown-item" href="#">
