@@ -414,11 +414,6 @@ public class AccountServlet extends HttpServlet {
 
                     }
                 }
-                PrintWriter out4 = response.getWriter();
-                response.setContentType("application/json");
-                response.setCharacterEncoding("utf-8");
-                out4.print(true);
-                out4.flush();
                 break;
             default:
                 ServletUtils.forward("/views/404.jsp", request, response);

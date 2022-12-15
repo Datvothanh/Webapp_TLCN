@@ -46,9 +46,6 @@ public class AdminServlet extends HttpServlet {
                 request.setAttribute("listUser", listUser);
                 ServletUtils.forward("/views/vwHome/Statistical.jsp", request, response);
                 break;
-            case "/User":
-                ServletUtils.forward("/views/vwAccount/About.jsp", request, response);
-                break;
             default:
                 ServletUtils.forward("/views/404.jsp", request, response);
                 break;

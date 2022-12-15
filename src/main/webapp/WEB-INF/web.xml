@@ -38,13 +38,13 @@
     <filter-mapping>
         <filter-name>AuthFilter</filter-name>
         <url-pattern>/Account/Profile</url-pattern>
+        <url-pattern>/Admin/Product/AddOfSeller</url-pattern>
         <url-pattern>/Account/UpdatePassword</url-pattern>
-        <url-pattern>/Account/UpdateSeller</url-pattern>
-        <url-pattern>/Account/UpdateBidder</url-pattern>
+        <url-pattern>/Account/UpdateInfo</url-pattern>
         <url-pattern>/Account/WatchList</url-pattern>
         <url-pattern>/Account/SuccessList</url-pattern>
         <url-pattern>/Account/AuctionList</url-pattern>
-        <url-pattern>/Account/Recharge</url-pattern>
+        <url-pattern>/Account/SellingList</url-pattern>
         <url-pattern>/Account/EndingList</url-pattern>
         <url-pattern>/Admin/*</url-pattern>
     </filter-mapping>
@@ -57,20 +57,15 @@
 
     <filter-mapping>
         <filter-name>AuthAdminFilter</filter-name>
-        <url-pattern>/Admin/Permission/*</url-pattern>
+        <url-pattern>/Admin/Statistical</url-pattern>
+        <url-pattern>/Admin/Permission/Index</url-pattern>
+        <url-pattern>/Admin/Product/Index</url-pattern>
+        <url-pattern>/Admin/Product/Add</url-pattern>
+        <url-pattern>/Admin/Product/Edit</url-pattern>
+        <url-pattern>/Admin/Product/End</url-pattern>
         <url-pattern>/Admin/GroupCategory/*</url-pattern>
         <url-pattern>/Admin/Category/*</url-pattern>
     </filter-mapping>
-
-
-
-
-
-    <filter-mapping>
-        <filter-name>AuthAddProductFilter</filter-name>
-        <url-pattern>/Admin/Product/Add</url-pattern>
-    </filter-mapping>
-
 
 
 </web-app>
