@@ -3,6 +3,7 @@
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
 <%@ taglib prefix="fmt" uri="http://java.sun.com/jsp/jstl/fmt" %>
 <jsp:useBean id="userList" scope="request" type="java.util.List<com.example.webapp_tlcn.beans.User>"/>
+<jsp:useBean id="bankList" scope="request" type="java.util.List<com.example.webapp_tlcn.beans.Bank>"/>
 <t:main>
     <jsp:attribute name="css">
         <link rel="stylesheet"
@@ -51,8 +52,14 @@
         </script>
     </jsp:attribute>
     <jsp:body>
+        <c:set var="test" value="0"/>
         <c:forEach items="${userList}" var="u">
             <c:if test="${u.id == authUser.id}">
+                <c:forEach items="${bankList}" var="b">
+                    <c:if test="${b.idUser == u.id}">
+                        <c:set var="test" value="1"/>
+                    </c:if>
+                </c:forEach>
                 <div class="card">
                     <h4 class="card-header d-flex justify-content-between">
                         Cập nhật mật khẩu
@@ -72,6 +79,10 @@
                                         </div>
                                         <c:if test="${u.permission == 1}">
                                             <div class="list-group list-group-flush">
+                                                <a href="${pageContext.request.contextPath}/Account/Profile"
+                                                   class="list-group-item list-group-item-action"><i class="fa fa-caret-right"
+                                                                                                     aria-hidden="true"></i>
+                                                    Thông tin cá nhân</a>
                                                 <a href="${pageContext.request.contextPath}/Account/UpdateInfo"
                                                    class="list-group-item list-group-item-action"><i
                                                         class="fa fa-caret-right"

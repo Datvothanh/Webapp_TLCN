@@ -107,7 +107,9 @@ public class AccountServlet extends HttpServlet {
                 ServletUtils.forward("/views/vwAccount/UpdateBidder.jsp", request, response);
                 break;
             case "/UpdatePassword":
+                List<Bank> bankList2 = BankModel.findAll();
                 List<User> UserLisT = UserModel.findAll();
+                request.setAttribute("bankList", bankList2);
                 request.setAttribute("userList", UserLisT);
                 ServletUtils.forward("/views/vwAccount/UpdatePassword.jsp", request, response);
                 break;

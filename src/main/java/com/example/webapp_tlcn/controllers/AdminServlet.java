@@ -18,13 +18,15 @@ public class AdminServlet extends HttpServlet {
     protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
         String path = request.getPathInfo();
         if (path == null || path.equals("/")) {
-            path = "/Product";
+            path = "/Statistical";
         }
 
         switch (path) {
             case "/Product":
                 List<Product> list = ProductModel.findAll(0);
                 request.setAttribute("products", list);
+                List<User> listUsers = UserModel.findAll();
+                request.setAttribute("listUsers", listUsers);
                 ServletUtils.forward("/views/vwProduct/Index.jsp", request, response);
                 break;
             case "/Statistical":

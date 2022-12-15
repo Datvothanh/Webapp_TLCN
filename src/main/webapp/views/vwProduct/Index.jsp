@@ -31,7 +31,6 @@
                                 <th scope="col">#</th>
                                 <th scope="col">Tên sản phẩm</th>
                                 <th scope="col">Giá khởi điểm</th>
-                                <th scope="col">Chú thích ngắn</th>
                                 <th scope="col">Bước giá</th>
                                 <th scope="col">Lúc kết thúc</th>
                                 <th scope="col">Người đăng sản phẩm</th>
@@ -48,10 +47,7 @@
                                 <tr>
                                     <th scope="row">${p.proID}</th>
                                     <td>${p.proName}</td>
-                                    <td>
-                                        <fmt:formatNumber value="${p.startingPrice}" type="number"/> đ
-                                    </td>
-                                    <td>${p.tinyDes}</td>
+                                    <td><fmt:formatNumber value="${p.startingPrice}" type="number"/> đ</td>
                                     <td><fmt:formatNumber value="${p.stepPrice}" type="number"/> đ</td>
                                     <td>${p.strDate}</td>
                                     <td>${userSell}</td>

@@ -105,6 +105,10 @@
                                         </div>
                                         <c:if test="${u.permission == 1}">
                                             <div class="list-group list-group-flush">
+                                                <a href="${pageContext.request.contextPath}/Account/Profile"
+                                                   class="list-group-item list-group-item-action"><i class="fa fa-caret-right"
+                                                                                                     aria-hidden="true"></i>
+                                                    Thông tin cá nhân</a>
                                                 <a href="${pageContext.request.contextPath}/Account/UpdateInfo"
                                                    class="list-group-item list-group-item-action"><i
                                                         class="fa fa-caret-right"
