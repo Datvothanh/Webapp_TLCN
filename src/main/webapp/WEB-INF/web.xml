@@ -58,7 +58,8 @@
     <filter-mapping>
         <filter-name>AuthAdminFilter</filter-name>
         <url-pattern>/Admin/Statistical</url-pattern>
-        <url-pattern>/Admin/Permission/Index</url-pattern>
+        <url-pattern>/Admin/Permission/*</url-pattern>
+        <url-pattern>/Admin/Product/</url-pattern>
         <url-pattern>/Admin/Product/Index</url-pattern>
         <url-pattern>/Admin/Product/Add</url-pattern>
         <url-pattern>/Admin/Product/Edit</url-pattern>
