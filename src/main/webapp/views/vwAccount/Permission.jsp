@@ -100,6 +100,20 @@
                                            href="javascript:$('#frmDelete${u.id}').submit()" role="button">
                                             <i class="bi bi-x-lg" aria-hidden="true"></i></a>
                                     </td>
+                                    <c:if test="${u.permission == 2}">
+                                        <td class="text-right">
+                                            <a class="btn btn-outline-info"
+                                               href="javascript:$('#frmUp${u.id}').submit()" role="button">
+                                                <i class="bi bi-arrow-up-square" aria-hidden="true"></i></a>
+                                        </td>
+                                    </c:if>
+                                    <c:if test="${u.permission == 1}">
+                                        <td class="text-right">
+                                            <a class="btn btn-outline-info"
+                                               href="javascript:$('#frmDown${u.id}').submit()" role="button">
+                                                <i class="bi bi-arrow-down-square" aria-hidden="true"></i></a>
+                                        </td>
+                                    </c:if>
                                 </tr>
                             </c:forEach>
                             </tbody>

@@ -9,7 +9,7 @@ import java.util.List;
 public class UserModel {
 
     public static List<User> findAll() {
-        final String query = "select * from users where not permission = 0";
+        final String query = "select * from users where not permission = 0 and not permission = 4";
         try (Connection con = DbUtils.getConnection()) {
             return con.createQuery(query)
                     .executeAndFetch(User.class);
