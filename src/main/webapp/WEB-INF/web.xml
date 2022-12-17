@@ -55,6 +55,11 @@
         <url-pattern>/Account/Otp</url-pattern>
     </filter-mapping>
 
+<!--    <filter-mapping>-->
+<!--        <filter-name>AuthSellerFilter</filter-name>-->
+<!--        <url-pattern>/Home</url-pattern>-->
+<!--    </filter-mapping>-->
+
     <filter-mapping>
         <filter-name>AuthAdminFilter</filter-name>
         <url-pattern>/Admin/Statistical</url-pattern>
